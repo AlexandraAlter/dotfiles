@@ -1,0 +1,6 @@
+[submodule "awesome/lain"]
+	path = awesome/lain
+	url = https://github.com/lcpz/lain.git
+[submodule "awesome/streetturtle-widgets"]
+	path = awesome/streetturtle-widgets
+	url = https://github.com/streetturtle/awesome-wm-widgets.git

@@ -163,6 +163,37 @@ local function client_restore_and_focus(sig_context)
   end
 end
 
+local function client_go_back()
+  awful.client.focus.history.previous()
+  if client.focus then
+      client.focus:raise()
+  end
+end
+
+-- move all clients to the opposite screen
+local function screens_swap_all()
+  for _, c in ipairs(client.get()) do
+    local tags = gears.table.clone(c:tags())
+    c:move_to_screen()
+    for _, t in ipairs(tags) do
+      c:toggle_tag(c.screen.tags[t.index])
+    end
+  end
+  
+  for s in screen do
+    -- refresh the taglist here?
+  end
+end
+
+local function prompt_lua()
+  awful.prompt.run {
+    prompt       = 'Run Lua code: ',
+    textbox      = awful.screen.focused().mypromptbox.widget,
+    exe_callback = awful.util.eval,
+    history_path = awful.util.get_cache_dir() .. '/history_eval'
+  }
+end
+
 local function set_wallpaper(s)
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
@@ -364,19 +395,24 @@ my_widgets.global = {
 }
 
 function my_widgets.make_left(s)
+  s.my_widgets = s.my_widgets or {}
+  s.my_widgets.taglist = my_widgets.taglist(s)
+  s.my_widgets.prompt = my_widgets.prompt()
   return {
     layout = wibox.layout.fixed.horizontal,
     my_widgets.global.launcher,
-    my_widgets.taglist(s),
-    my_widgets.prompt(),
+    s.my_widgets.taglist,
+    s.my_widgets.prompt,
   }
 end
 
 function my_widgets.make_center(s)
-  return my_widgets.tasklist(s)
+  s.my_widgets.tasklist = my_widgets.tasklist(s)
+  return s.my_widgets.tasklist
 end
 
 function my_widgets.make_right(s)
+  s.my_widgets.layout = my_widgets.layout(s)
   return {
     layout = wibox.layout.fixed.horizontal, 
     my_widgets.global.systray,
@@ -387,7 +423,7 @@ function my_widgets.make_right(s)
     my_widgets.global.battery,
     my_widgets.global.textclock,
     my_widgets.global.keyboardlayout,
-    my_widgets.layout(s),
+    s.my_widgets.layout,
   }
 end
 
@@ -451,66 +487,54 @@ local kbind_server = gears.table.join(
             {description = 'show main menu', group = 'awesome'}),
 
   -- Layout manipulation
-  awful.key({ modkey, shift }, 'j', function () awful.client.swap.byidx(  1) end,
+  awful.key({ modkey, shift }, 'j',   function () awful.client.swap.byidx(1) end,
             {description = 'swap with next client by index', group = 'client'}),
-  awful.key({ modkey, shift }, 'k', function () awful.client.swap.byidx( -1) end,
+  awful.key({ modkey, shift }, 'k',   function () awful.client.swap.byidx(-1) end,
             {description = 'swap with previous client by index', group = 'client'}),
-  awful.key({ modkey,       }, 'o', function () awful.screen.focus_relative( 1) end,
+  awful.key({ modkey,       }, 'o',   function () awful.screen.focus_relative(1) end,
             {description = 'focus the next screen', group = 'screen'}),
-  awful.key({ modkey,       }, 'u', awful.client.urgent.jumpto,
+  awful.key({ modkey, ctrl  }, 'o',   function () screens_swap_all() end,
+            {description = 'focus the next screen', group = 'screen'}),
+  awful.key({ modkey,       }, 'u',   awful.client.urgent.jumpto,
             {description = 'jump to urgent client', group = 'client'}),
-  awful.key({ modkey,       }, 'Tab',
-      function ()
-          awful.client.focus.history.previous()
-          if client.focus then
-              client.focus:raise()
-          end
-      end,
-      {description = 'go back', group = 'client'}),
+  awful.key({ modkey,       }, 'Tab', function () client_go_back() end,
+            {description = 'go back', group = 'client'}),
 
   -- Standard programs
   awful.key({ modkey,           }, 'Return', function () awful.spawn(terminal) end,
             {description = 'open a terminal', group = 'launcher'}),
-  awful.key({ modkey, ctrl      }, 'r', awesome.restart,
+  awful.key({ modkey, ctrl      }, 'r',      awesome.restart,
             {description = 'reload awesome', group = 'awesome'}),
-  awful.key({ modkey, ctrl      }, 'q', awesome.quit,
+  awful.key({ modkey, ctrl      }, 'q',      awesome.quit,
             {description = 'quit awesome', group = 'awesome'}),
 
-  awful.key({ modkey,           }, 'l',     function () awful.tag.incmwfact( 0.05) end,
+  awful.key({ modkey,       }, 'l', function () awful.tag.incmwfact( 0.05) end,
             {description = 'increase master width factor', group = 'layout'}),
-  awful.key({ modkey,           }, 'h',     function () awful.tag.incmwfact(-0.05) end,
+  awful.key({ modkey,       }, 'h', function () awful.tag.incmwfact(-0.05) end,
             {description = 'decrease master width factor', group = 'layout'}),
-  awful.key({ modkey, shift     }, 'h',     function () awful.tag.incnmaster( 1, nil, true) end,
+  awful.key({ modkey, shift }, 'h', function () awful.tag.incnmaster( 1, nil, true) end,
             {description = 'increase the number of master clients', group = 'layout'}),
-  awful.key({ modkey, shift     }, 'l',     function () awful.tag.incnmaster(-1, nil, true) end,
+  awful.key({ modkey, shift }, 'l', function () awful.tag.incnmaster(-1, nil, true) end,
             {description = 'decrease the number of master clients', group = 'layout'}),
-  awful.key({ modkey, alt       }, 'h',     function () awful.tag.incncol( 1, nil, true) end,
+  awful.key({ modkey, alt   }, 'h', function () awful.tag.incncol( 1, nil, true) end,
             {description = 'increase the number of columns', group = 'layout'}),
-  awful.key({ modkey, alt       }, 'l',     function () awful.tag.incncol(-1, nil, true) end,
+  awful.key({ modkey, alt   }, 'l', function () awful.tag.incncol(-1, nil, true) end,
             {description = 'decrease the number of columns', group = 'layout'}),
 
   -- Layouts
-  awful.key({ modkey,           }, 'space', function () awful.layout.inc( 1) end,
+  awful.key({ modkey,       }, 'space', function () awful.layout.inc( 1) end,
             {description = 'select next', group = 'layout'}),
-  awful.key({ modkey, shift     }, 'space', function () awful.layout.inc(-1) end,
+  awful.key({ modkey, shift }, 'space', function () awful.layout.inc(-1) end,
             {description = 'select previous', group = 'layout'}),
 
-  awful.key({ modkey, shift     }, 'n', function () client_restore_and_focus('key.unminimize') end,
+  awful.key({ modkey, shift }, 'n', function () client_restore_and_focus('key.unminimize') end,
             {description = 'restore minimized', group = 'client'}),
 
   -- Prompt
-  awful.key({ modkey            }, 'r', function () awful.screen.focused().mypromptbox:run() end,
+  awful.key({ modkey        }, 'r', function () awful.screen.focused().mypromptbox:run() end,
             {description = 'run prompt', group = 'launcher'}),
 
-  awful.key({ modkey }, 'x',
-            function ()
-                awful.prompt.run {
-                  prompt       = 'Run Lua code: ',
-                  textbox      = awful.screen.focused().mypromptbox.widget,
-                  exe_callback = awful.util.eval,
-                  history_path = awful.util.get_cache_dir() .. '/history_eval'
-                }
-            end,
+  awful.key({ modkey }, 'x', function () prompt_lua() end,
             {description = 'lua execute prompt', group = 'awesome'}),
 
   -- Menubar

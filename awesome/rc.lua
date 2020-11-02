@@ -237,10 +237,15 @@ my_submenus.layouts = {
   { 'a', '' },
 }
 
+my_submenus.lightdm = {
+  { 'switch user', 'dm-tool switch-to-greeter' },
+}
+
 my_menus.main = awful.menu({
   items = {
     { 'awesome', my_submenus.awesome, beautiful.awesome_icon },
     { 'xrandr', my_submenus.xrandr },
+    { 'lightdm', my_submenus.lightdm },
     { 'open terminal', terminal },
   },
 })

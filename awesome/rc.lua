@@ -205,6 +205,15 @@ local function set_wallpaper(s)
 end
 -- }}}
 
+-- {{{ Autostarting
+awful.spawn.with_shell(
+  'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
+  'xrdb -merge <<< "awesome.started:true";' ..
+  -- list each of your autostart commands, followed by ; inside single quotes, followed by ..
+  'dex --environment Awesome --autostart --search-paths "${XDG_CONFIG_DIRS:-/etc/xdg}/autostart:${XDG_CONFIG_HOME:-~/.config}/autostart"'
+)
+-- }}}
+
 -- {{{ Menu
 my_menus = {}
 my_submenus = {}
@@ -239,6 +248,7 @@ my_submenus.layouts = {
 
 my_submenus.lightdm = {
   { 'switch user', 'dm-tool switch-to-greeter' },
+  { 'lock',        'light-locker-command -l' },
 }
 
 my_menus.main = awful.menu({

@@ -163,6 +163,14 @@ local function client_restore_and_focus(sig_context)
   end
 end
 
+local function client_restore_and_fullscreen(sig_context)
+  local c = awful.client.restore()
+  if c then -- focus restored client
+    c.maximized = true
+    c:emit_signal('request::activate', sig_context, {raise = true})
+  end
+end
+
 local function client_go_back()
   awful.client.focus.history.previous()
   if client.focus then
@@ -188,7 +196,7 @@ end
 local function prompt_lua()
   awful.prompt.run {
     prompt       = 'Run Lua code: ',
-    textbox      = awful.screen.focused().mypromptbox.widget,
+    textbox      = awful.screen.focused().my_widgets.prompt.widget,
     exe_callback = awful.util.eval,
     history_path = awful.util.get_cache_dir() .. '/history_eval'
   }
@@ -236,10 +244,10 @@ end
 my_submenus.xrandr = {
   { 'External off', xrandr_cmd('--primary --auto', '--off') },
   { 'External dup', xrandr_cmd('--primary --auto', '--same-as ' .. scr_internal) },
-  { 'External above', xrandr_cmd('--auto', '--primary --above ' .. scr_internal) },
-  { 'External below', xrandr_cmd('--auto', '--primary --below ' .. scr_internal) },
-  { 'External left', xrandr_cmd('--auto', '--primary --left-of ' .. scr_internal) },
-  { 'External right', xrandr_cmd('--auto', '--primary --right-of ' .. scr_internal) },
+  { 'External above', xrandr_cmd('--auto', '--primary --auto --above ' .. scr_internal) },
+  { 'External below', xrandr_cmd('--auto', '--primary --auto --below ' .. scr_internal) },
+  { 'External left', xrandr_cmd('--auto', '--primary --auto --left-of ' .. scr_internal) },
+  { 'External right', xrandr_cmd('--auto', '--primary --auto --right-of ' .. scr_internal) },
 }
 
 my_submenus.layouts = {
@@ -544,9 +552,11 @@ local kbind_server = gears.table.join(
 
   awful.key({ modkey, shift }, 'n', function () client_restore_and_focus('key.unminimize') end,
             {description = 'restore minimized', group = 'client'}),
+  awful.key({ modkey, shift }, 'f', function () client_restore_and_fullscreen('key.refullscreen') end,
+            {description = 'restore minimized and fullscreen', group = 'client'}),
 
   -- Prompt
-  awful.key({ modkey        }, 'r', function () awful.screen.focused().mypromptbox:run() end,
+  awful.key({ modkey, shift }, 'p', function () awful.screen.focused().my_widgets.prompt:run() end,
             {description = 'run prompt', group = 'launcher'}),
 
   awful.key({ modkey }, 'x', function () prompt_lua() end,
@@ -672,6 +682,13 @@ awful.rules.rules = {
           'pop-up',       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
+
+    -- Fullscreen clients.
+    { rule_any = {
+        class = {
+          'steam_app_881100', -- Noita
+        },
+      }, properties = { fullscreen = true }},
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { 'normal', 'dialog' }

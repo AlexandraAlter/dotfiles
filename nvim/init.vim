@@ -30,6 +30,7 @@ Plug 'vim-airline/vim-airline'
 "" }}}
 
 "" {{{ editing
+Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -62,6 +63,7 @@ Plug 'mileszs/ack.vim'
 
 "" {{{ project management
 Plug 'tpope/vim-projectionist'
+Plug 'vim-syntastic/syntastic'
 "" }}}
 
 "" {{{ external tools
@@ -81,6 +83,8 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-ragtag' " html/xml
 Plug 'tpope/vim-jdaddy' " json
 Plug 'xolox/vim-lua-ftplugin' " lua
+Plug 'rust-lang/rust.vim' " rust
+Plug 'kchmck/vim-coffee-script' " coffeescript
 "" }}}
 
 "" {{{ session management
@@ -119,6 +123,27 @@ endif
 
 " {{{ appearance
 "autocmd FileType which_key highlight WhichKeyFloating ctermbg=120 ctermfg=7
+" }}}
+
+" {{{ languages
+" {{{ coffeescript
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+autocmd FileType coffee setlocal ts=2 sts=2 sw=2
+" }}}
+" }}}
+
+" {{{ syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_c_checkers = []
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"let g:syntastic_quiet_messages = { "!type": "errors" }
 " }}}
 
 " {{{ key mapping
@@ -195,10 +220,10 @@ tnoremap <silent> <C-z> <Cmd>FloatermHide<CR>
 
 nnoremap <silent> <F2> <Cmd>FloatermNew<CR>
 tnoremap <silent> <F2> <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <F3> <Cmd>FloatermNext<CR>
-tnoremap <silent> <F3> <C-\><C-n>:FloatermNext<CR>
-nnoremap <silent> <F4> <Cmd>FloatermPrev<CR>
-tnoremap <silent> <F4> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F3> <Cmd>FloatermPrev<CR>
+tnoremap <silent> <F3> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F4> <Cmd>FloatermNext<CR>
+tnoremap <silent> <F4> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F5> <Cmd>FloatermToggle<CR>
 tnoremap <silent> <F5> <C-\><C-n>:FloatermToggle<CR>
 """ }}}

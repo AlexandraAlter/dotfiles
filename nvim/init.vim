@@ -64,6 +64,9 @@ Plug 'mileszs/ack.vim'
 "" {{{ project management
 Plug 'tpope/vim-projectionist'
 Plug 'vim-syntastic/syntastic'
+"Plug 'vimwiki/vimwiki'
+"Plug 'lervag/wiki.vim'
+"Plug 'xolox/vim-notes'
 "" }}}
 
 "" {{{ external tools
@@ -227,6 +230,10 @@ nnoremap <silent> <F4> <Cmd>FloatermNext<CR>
 tnoremap <silent> <F4> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F5> <Cmd>FloatermToggle<CR>
 tnoremap <silent> <F5> <C-\><C-n>:FloatermToggle<CR>
+""" }}}
+
+""" {{{ External
+autocmd FileType python nnoremap <LocalLeader>= m':0,$!yapf<CR><C-o>
 """ }}}
 
 """ {{{ fzf.vim

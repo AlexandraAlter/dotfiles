@@ -233,8 +233,8 @@ my_submenus.awesome = {
    { 'quit', function () awesome.quit() end },
 }
 
-local scr_internal = 'eDP1'
-local scr_external = 'HDMI2'
+local scr_internal = 'eDP-1'
+local scr_external = 'HDMI-2'
 local function xrandr_cmd(int_opts, ext_opts)
   return 'xrandr ' ..
     ' --output ' .. scr_internal .. ' ' .. int_opts ..

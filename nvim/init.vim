@@ -280,6 +280,10 @@ nnoremap <silent> <F5> <Cmd>FloatermToggle<CR>
 tnoremap <silent> <F5> <C-\><C-n>:FloatermToggle<CR>
 """ }}}
 
+""" {{{ External
+autocmd FileType python nnoremap <LocalLeader>= m':0,$!yapf<CR><C-o>
+""" }}}
+
 """ {{{ fzf.vim
 let g:fzf_command_prefix = 'Fzf'
 

@@ -91,6 +91,8 @@ Plug 'xolox/vim-lua-ftplugin' " lua
 Plug 'rust-lang/rust.vim' " rust
 Plug 'leafgarland/typescript-vim' " typescript
 Plug 'JuliaEditorSupport/julia-vim' " julia
+Plug 'cespare/vim-toml' " toml
+Plug 'python-mode/python-mode' " python
 "" }}}
 
 "" {{{ session management
@@ -281,7 +283,7 @@ tnoremap <silent> <F5> <C-\><C-n>:FloatermToggle<CR>
 """ }}}
 
 """ {{{ External
-autocmd FileType python nnoremap <LocalLeader>= m':0,$!yapf<CR><C-o>
+autocmd FileType python nnoremap <LocalLeader>= m`:0,$!yapf<CR>``
 """ }}}
 
 """ {{{ fzf.vim

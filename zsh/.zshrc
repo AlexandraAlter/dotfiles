@@ -87,13 +87,22 @@ fi
 # }}}
 
 # {{{ powerline
-
 powerline-daemon -q
 . /usr/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
-
 # }}}
 
+# {{{ pyenv
 eval "$(pyenv init -)"
+# }}}
+
+# {{{ ssh-agent
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
+# }}}
 
 autoload -Uz compinit promptinit
 promptinit

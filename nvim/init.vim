@@ -42,6 +42,7 @@ Plug 'sirver/ultisnips'
 "" }}}
 
 "" {{{ completion
+Plug 'ycm-core/YouCompleteMe'
 Plug 'Shougo/deoplete.nvim'
 Plug 'mattn/emmet-vim'
 "" }}}
@@ -88,6 +89,7 @@ Plug 'tpope/vim-jdaddy' " json
 Plug 'xolox/vim-lua-ftplugin' " lua
 Plug 'rust-lang/rust.vim' " rust
 Plug 'kchmck/vim-coffee-script' " coffeescript
+Plug 'JuliaEditorSupport/julia-vim' " julia
 "" }}}
 
 "" {{{ session management
@@ -129,11 +131,16 @@ endif
 " }}}
 
 " {{{ languages
-" {{{ coffeescript
-autocmd FileType javascript setlocal ts=2 sts=2 sw=2
-autocmd FileType coffee setlocal ts=2 sts=2 sw=2
+"" {{{ all
+setlocal ts=2 sts=2 sw=2 et
+"" }}}
+"" {{{ javascript
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2 et
+"" }}}
+"" {{{ coffeescript
+autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et
 autocmd FileType coffee setlocal makeprg=make
-" }}}
+"" }}}
 " }}}
 
 " {{{ syntastic
@@ -148,6 +155,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_quiet_messages = { "!type": "errors" }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
 " }}}
 
 " {{{ key mapping
@@ -363,8 +371,8 @@ nnoremap <silent> <Leader>fSw <Cmd>SudoWrite<CR>
 "" }}}
 
 "" {{{ vim-easy-align
-"xmap ga <Plug>(EasyAlign)
-"nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 "" }}}
 
 "" {{{ deoplete.nvim

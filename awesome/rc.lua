@@ -33,8 +33,17 @@ local st_brightness_widget = require(st_w .. '.brightnessarc-widget.brightnessar
 local st_cpu_widget = require(st_w .. '.cpu-widget.cpu-widget')
 local st_volume_widget = require(st_w .. '.volumearc-widget.volumearc')
 local lain = require('lain')
+local lain_h = require('lain.helpers')
 local vicious = require('vicious')
 
+-- Data formats
+local json = require('lunajson')
+-- }}}
+
+-- {{{ Hostname
+local hostname = io.popen('uname -n'):read()
+
+local laptop = hostname == 'think-bell'
 -- }}}
 
 -- {{{ Error handling
@@ -112,8 +121,8 @@ awful.layout.layouts = {
 }
 
 my_tags = {
-  names = { '$', '&', '7', '5', '3', '1', '9', '0', '2', '4', '6', '8', '#' },
-  keys  = { '$', '&', '[', '{', '}', '(', '=', '*', ')', '+', ']', '!', '#' },
+  names = { '-', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' },
+  keys  = { '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' },
 }
 -- }}}
 
@@ -328,23 +337,23 @@ function my_widgets.cpu()
   return st_cpu_widget({})
 end
 
-local my_temp_files = {
-  '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp1_input',
-  '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp2_input',
-  '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp3_input',
-  '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp4_input',
-  '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp5_input',
-  '/sys/devices/virtual/thermal/thermal_zone0/temp',
-  '/sys/devices/virtual/thermal/thermal_zone1/temp',
-  '/sys/devices/virtual/thermal/thermal_zone2/temp',
-  '/sys/devices/virtual/thermal/thermal_zone3/temp',
-  '/sys/devices/virtual/thermal/thermal_zone4/temp',
-  '/sys/devices/virtual/thermal/thermal_zone5/temp',
-  '/sys/devices/virtual/thermal/thermal_zone6/temp',
-  '/sys/devices/virtual/thermal/thermal_zone7/temp',
-}
+function my_widgets.laptop_temps()
+  local files = {
+    '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp1_input',
+    '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp2_input',
+    '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp3_input',
+    '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp4_input',
+    '/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp5_input',
+    '/sys/devices/virtual/thermal/thermal_zone0/temp',
+    '/sys/devices/virtual/thermal/thermal_zone1/temp',
+    '/sys/devices/virtual/thermal/thermal_zone2/temp',
+    '/sys/devices/virtual/thermal/thermal_zone3/temp',
+    '/sys/devices/virtual/thermal/thermal_zone4/temp',
+    '/sys/devices/virtual/thermal/thermal_zone5/temp',
+    '/sys/devices/virtual/thermal/thermal_zone6/temp',
+    '/sys/devices/virtual/thermal/thermal_zone7/temp',
+  }
 
-function my_widgets.temp()
   local temp = lain.widget.temp {
     timeout = 2,
     settings = function ()
@@ -352,7 +361,7 @@ function my_widgets.temp()
       local max = 0
       local sum = 0
 
-      for i,f in ipairs(my_temp_files) do
+      for i,f in ipairs(desktop_temps) do
         temp = tonumber(temp_now[f])
         count = count + (temp and 1 or 0)
         if temp and (temp > max) then
@@ -365,7 +374,55 @@ function my_widgets.temp()
       widget:set_markup(string.format('Temp: ~%.1f &lt;%.1f', avg, max))
     end
   }
+
   return temp.widget
+end
+
+function my_widgets.sensors_temps(args)
+  args           = args or {}
+
+  local temp     = { widget = args.widget or wibox.widget.textbox() }
+  local timeout  = args.timeout or 30
+
+  function temp.update()
+    local file = assert(io.popen('sensors -j'))
+    local sensors = json.decode(file:read('*all'))
+    file:close()
+
+    local temps = {
+      sensors['nct6798-isa-0290'].SYSTIN.temp1_input,
+      sensors['nct6798-isa-0290'].CPUTIN.temp2_input,
+      sensors['k10temp-pci-00c3'].Tctl.temp1_input,
+    }
+
+    widget = temp.widget
+    local count = 0
+    local max = 0
+    local sum = 0
+
+    for i, temp in ipairs(temps) do
+      count = count + (temp and 1 or 0)
+      if temp and (temp > max) then
+        max = temp
+      end
+      sum = sum + (temp or 0)
+    end
+
+    local avg = sum / count
+    widget:set_markup(string.format('Temp: ~%.1f &lt;%.1f', avg, max))
+  end
+
+  lain_h.newtimer('thermal', timeout, temp.update)
+
+  return temp
+end
+
+function my_widgets.temps(args)
+  if laptop then
+    return my_widgets.laptop_temps(args)
+  else
+    return my_widgets.sensors_temps(args)
+  end
 end
 
 function my_widgets.volume()
@@ -377,6 +434,10 @@ function my_widgets.volume()
 end
 
 function my_widgets.brightness()
+  if not laptop then
+    return nil
+  end
+
   return st_brightness_widget({
     get_brightness_cmd = 'xbacklight -get',
     inc_brightness_cmd = 'xbacklight -inc 5',
@@ -385,6 +446,10 @@ function my_widgets.brightness()
 end
 
 function my_widgets.battery()
+  if not laptop then
+    return nil
+  end
+
   return st_battery_widget({
     display_notification = true
   })
@@ -409,7 +474,7 @@ my_widgets.global = {
   launcher = my_widgets.launcher(),
   systray = my_widgets.systray(),
   cpu = my_widgets.cpu(),
-  temp = my_widgets.temp(),
+  temps = my_widgets.temps(),
   volume = my_widgets.volume(),
   brightness = my_widgets.brightness(),
   battery = my_widgets.battery(),
@@ -440,7 +505,7 @@ function my_widgets.make_right(s)
     layout = wibox.layout.fixed.horizontal, 
     my_widgets.global.systray,
     my_widgets.global.cpu,
-    my_widgets.global.temp,
+    my_widgets.global.temps,
     my_widgets.global.volume,
     my_widgets.global.brightness,
     my_widgets.global.battery,

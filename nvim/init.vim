@@ -31,6 +31,8 @@ Plug 'vim-airline/vim-airline'
 
 "" {{{ editing
 Plug 'wellle/targets.vim'
+Plug 'bkad/CamelCaseMotion'
+"Plug 'chaoren/vim-wordmotion' " might mess with the boundaries of 'w'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -65,9 +67,9 @@ Plug 'mileszs/ack.vim'
 "" {{{ project management
 Plug 'tpope/vim-projectionist'
 Plug 'vim-syntastic/syntastic'
-"Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
 "Plug 'lervag/wiki.vim'
-"Plug 'xolox/vim-notes'
+Plug 'xolox/vim-notes'
 "" }}}
 
 "" {{{ external tools
@@ -89,7 +91,10 @@ Plug 'tpope/vim-jdaddy' " json
 Plug 'xolox/vim-lua-ftplugin' " lua
 Plug 'rust-lang/rust.vim' " rust
 Plug 'kchmck/vim-coffee-script' " coffeescript
+Plug 'leafgarland/typescript-vim' " typescript
 Plug 'JuliaEditorSupport/julia-vim' " julia
+Plug 'cespare/vim-toml' " toml
+Plug 'python-mode/python-mode' " python
 "" }}}
 
 "" {{{ session management
@@ -97,6 +102,7 @@ Plug 'tpope/vim-obsession'
 "" }}}
 
 "" {{{ other tools
+"Plug 'neoclide/coc.nvim', { 'branch' : 'release' }
 "Plug 'Shougo/denite.nvim'
 "" }}}
 
@@ -124,23 +130,37 @@ let g:powerline_pycmd="py3"
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+let g:coc_global_extensions = [ 'coc-tsserver' ]
 " }}}
 
 " {{{ appearance
-"autocmd FileType which_key highlight WhichKeyFloating ctermbg=120 ctermfg=7
+highlight PMenu ctermfg=7* ctermbg=0
 " }}}
 
 " {{{ languages
+
 "" {{{ all
 setlocal ts=2 sts=2 sw=2 et
 "" }}}
-"" {{{ javascript
+
+"" {{{ filetyped
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2 et
-"" }}}
-"" {{{ coffeescript
-autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et
-autocmd FileType coffee setlocal makeprg=make
-"" }}}
+autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et makeprg=make
+autocmd FileType nim setlocal makeprg=make
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2 makeprg=make expandtab formatprg=prettier\ --parser\ typescript
+" }}}
+
+" {{{ julia
+let g:julia_indent_align_import = 0
+let g:julia_indent_align_brackets = 0
+let g:julia_indent_align_funcargs = 0
+" }}}
+" }}}
+
+" {{{ searching
+set ignorecase
+set smartcase
 " }}}
 
 " {{{ syntastic
@@ -187,12 +207,41 @@ let g:which_key_local_map = {}
 
 "" {{{ categories
 let g:which_key_leader_map.b = { 'name': '+buffers' }
-let g:which_key_leader_map.w = { 'name': '+windows' }
 let g:which_key_leader_map.s = { 'name': '+search' }
 let g:which_key_leader_map.q = { 'name': '+quit' }
 let g:which_key_leader_map.t = { 'name': '+text' }
 let g:which_key_leader_map.j = { 'name': '+jump' }
 let g:which_key_leader_map.n = { 'name': '+numbers' }
+"" }}}
+
+"" {{{ windows
+let g:which_key_leader_map.w = {
+      \ 'name': '+windows',
+      \ 'k': 'up',
+      \ 'j': 'down',
+      \ 'l': 'right',
+      \ 'h': 'left',
+      \ 'K': 'move up',
+      \ 'J': 'move down',
+      \ 'L': 'move right',
+      \ 'H': 'move left',
+      \ '=': 'balance',
+      \ }
+
+""" {{{ navigation
+nnoremap <silent> <Leader>wk <C-w>k
+nnoremap <silent> <Leader>wj <C-w>j
+nnoremap <silent> <Leader>wl <C-w>l
+nnoremap <silent> <Leader>wh <C-w>h
+
+nnoremap <silent> <Leader>wK <C-w>K
+nnoremap <silent> <Leader>wJ <C-w>J
+nnoremap <silent> <Leader>wL <C-w>L
+nnoremap <silent> <Leader>wH <C-w>H
+
+nnoremap <silent> <Leader>w= <C-w>=
+
+""" }}}
 "" }}}
 
 "" {{{ applications
@@ -241,7 +290,7 @@ tnoremap <silent> <F5> <C-\><C-n>:FloatermToggle<CR>
 """ }}}
 
 """ {{{ External
-autocmd FileType python nnoremap <LocalLeader>= m':0,$!yapf<CR><C-o>
+autocmd FileType python nnoremap <LocalLeader>= m`:0,$!yapf<CR>``
 """ }}}
 
 """ {{{ fzf.vim
@@ -314,6 +363,7 @@ nnoremap <silent> <Leader>fSw <Cmd>SudoWrite<CR>
 "" }}}
 
 "" {{{ ctrlp.vim
+let g:ctrlp_extensions = ['autoignore']
 "" }}}
 
 "" {{{ ack.vim
@@ -350,6 +400,13 @@ nnoremap <silent> <Leader>fSw <Cmd>SudoWrite<CR>
 "" }}}
 
 "" {{{ vim-easymotion
+"" }}}
+
+"" {{{ targets.vim
+"" }}}
+
+"" {{{ CamelCaseMotion
+let g:camelcasemotion_key = '<localleader>'
 "" }}}
 
 "" {{{ vim-repeat
@@ -391,6 +448,21 @@ nmap ga <Plug>(EasyAlign)
 "" }}}
 
 "" {{{ fzf-floaterm
+"" }}}
+
+"" {{{ coc
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <c-space> coc#refresh()
 "" }}}
 
 " }}}

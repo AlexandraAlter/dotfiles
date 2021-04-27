@@ -12,6 +12,10 @@ if [[ -d "$HOME/bin" ]] {
 if [[ -d "$HOME/.local/bin" ]] {
   export PATH="$HOME/.local/bin:${PATH}"
 }
+
+if [[ -d "$HOME/.cargo/bin" ]] {
+  export PATH="$HOME/.cargo/bin:${PATH}"
+}
 # }}}
 
 # {{{ gpg
@@ -20,10 +24,12 @@ export GPG_TTY="$(tty)"
 # }}}
 
 # {{{ ssh-agent
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+if [[ -v XDG_RUNTIME_DIR ]]; then
+  if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! "$SSH_AUTH_SOCK" ]]; then
+  fi
+  if [[ ! "$SSH_AUTH_SOCK" ]]; then
     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+  fi
 fi
 # }}}

@@ -710,7 +710,7 @@ awful.rules.rules = {
         keys = kbind_client,
         buttons = mbind_client,
         screen = awful.screen.preferred,
-        placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+        placement = awful.placement.no_overlap + awful.placement.no_offscreen,
       }
     },
 
@@ -758,6 +758,11 @@ awful.rules.rules = {
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { 'normal', 'dialog' }
       }, properties = { titlebars_enabled = true }
+    },
+
+    -- Ignore certain pop-up dialogues
+    { rule = { instance = 'VelotypeAcademy', floating = true
+      }, properties = { focusable = false }
     },
 
     -- Set Firefox to always map on the tag named '2' on screen 1.

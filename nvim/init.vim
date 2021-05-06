@@ -44,6 +44,7 @@ Plug 'sirver/ultisnips'
 "" }}}
 
 "" {{{ completion
+Plug 'ycm-core/YouCompleteMe'
 Plug 'Shougo/deoplete.nvim'
 Plug 'mattn/emmet-vim'
 "" }}}
@@ -89,6 +90,7 @@ Plug 'tpope/vim-ragtag' " html/xml
 Plug 'tpope/vim-jdaddy' " json
 Plug 'xolox/vim-lua-ftplugin' " lua
 Plug 'rust-lang/rust.vim' " rust
+Plug 'kchmck/vim-coffee-script' " coffeescript
 Plug 'leafgarland/typescript-vim' " typescript
 Plug 'JuliaEditorSupport/julia-vim' " julia
 Plug 'cespare/vim-toml' " toml
@@ -137,12 +139,16 @@ highlight PMenu ctermfg=7* ctermbg=0
 " }}}
 
 " {{{ languages
-" {{{ coffeescript
-autocmd FileType javascript setlocal ts=2 sts=2 sw=2
-autocmd FileType coffee setlocal ts=2 sts=2 sw=2 makeprg=make
+
+"" {{{ all
+setlocal ts=2 sts=2 sw=2 et
+"" }}}
+
+"" {{{ filetyped
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2 et
+autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et makeprg=make
 autocmd FileType nim setlocal makeprg=make
-autocmd FileType typescript setlocal ts=2 sts=2 sw=2 makeprg=make expandtab
-autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2 makeprg=make expandtab formatprg=prettier\ --parser\ typescript
 " }}}
 
 " {{{ julia
@@ -169,6 +175,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_quiet_messages = { "!type": "errors" }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
 " }}}
 
 " {{{ key mapping

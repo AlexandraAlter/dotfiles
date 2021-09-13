@@ -148,13 +148,20 @@ setlocal ts=2 sts=2 sw=2 et
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2 et
 autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et makeprg=make
 autocmd FileType nim setlocal makeprg=make
-autocmd FileType typescript setlocal ts=2 sts=2 sw=2 makeprg=make expandtab formatprg=prettier\ --parser\ typescript
+autocmd FileType rust setlocal ts=2 sts=2 sw=2 et
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2 et makeprg=make formatprg=prettier\ --parser\ typescript
+autocmd FileType html setlocal ts=2 sts=2 sw=2 et
 " }}}
 
 " {{{ julia
 let g:julia_indent_align_import = 0
 let g:julia_indent_align_brackets = 0
 let g:julia_indent_align_funcargs = 0
+" }}}
+
+" {{{ python
+let g:syntastic_python_checkers = ["flake8"]
+let g:pymode_lint_on_write = 0
 " }}}
 " }}}
 

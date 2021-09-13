@@ -148,6 +148,7 @@ setlocal ts=2 sts=2 sw=2 et
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2 et
 autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et makeprg=make
 autocmd FileType nim setlocal makeprg=make
+autocmd FileType rust setlocal ts=2 sts=2 sw=2 et
 autocmd FileType typescript setlocal ts=2 sts=2 sw=2 makeprg=make expandtab formatprg=prettier\ --parser\ typescript
 " }}}
 

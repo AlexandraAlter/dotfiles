@@ -739,6 +739,7 @@ awful.rules.rules = {
         name = {
           'Event Tester',  -- xev.
           'Steam Guard',
+          'Krita - Edit Text — Krita',
         },
 
         role = {

@@ -163,6 +163,11 @@ set ignorecase
 set smartcase
 " }}}
 
+" {{{ folding
+set foldopen=hor,mark,percent,quickfix,search,tag,undo
+let g:vimwiki_folding='expr'
+" }}}
+
 " {{{ syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}

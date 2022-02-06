@@ -24,8 +24,8 @@ Plug 'xolox/vim-misc' " needed for xolox/vim-lua-ftplugin
 
 "" {{{ interface/information
 Plug 'tpope/vim-characterize'
-Plug 'tpope/vim-flagship'
 Plug 'liuchengxu/vim-which-key'
+Plug 'tpope/vim-flagship'
 Plug 'vim-airline/vim-airline'
 "" }}}
 

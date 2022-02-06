@@ -1,2 +1,20 @@
-ZDOTDIR=$HOME/dotfiles/zsh
-. $ZDOTDIR/.zshenv
+
+typeset -U PATH path
+
+if [ -d "~/.cargo" ]; then
+  path=(~/.cargo/bin $path)
+fi
+
+export PATH
+
+export EDITOR="/usr/bin/vi -e"
+export VISUAL="/usr/bin/nvim"
+
+export GPG_TTY=$(tty)
+
+export TASKRC=~/documents/task/taskrc
+export TASKDATA=~/documents/task
+export TIMEWARRIORDB=~/documents/time
+
+export M_TASKDATA=~/external/phone-tasks/data
+

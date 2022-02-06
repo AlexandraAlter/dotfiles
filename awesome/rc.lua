@@ -425,11 +425,34 @@ function my_widgets.temps(args)
   end
 end
 
+local alsa_card = 'sysdefault:CARD=Creative'
+local alsa_cmd = 'amixer -D \'' .. alsa_card .. '\' '
+local alsa_default = [[
+
+sset Front 70%
+sset Surround 70%
+sset Center 70%
+sset LFE 70%
+]]
+local alsa_toggle = [[
+
+sset Master toggle
+sset Front toggle
+sset Surround toggle
+sset Center toggle
+sset LFE toggle
+]]
+
+function make_alsa_cmd(cmd)
+  return 'bash -c "' .. alsa_cmd .. '-s << EOF\n' .. cmd .. alsa_default .. '\nEOF"'
+end
+
 function my_widgets.volume()
   return st_volume_widget({
-    get_volume_cmd = 'amixer -D pulse sget Master',
-    inc_volume_cmd = 'amixer -D pulse sset Master 5%+',
-    dec_volume_cmd = 'amixer -D pulse sset Master 5%-',
+    get_volume_cmd = alsa_cmd .. 'sget Master',
+    inc_volume_cmd = make_alsa_cmd('sset Master 5%+'),
+    dec_volume_cmd = make_alsa_cmd('sset Master 5%-'),
+    tog_volume_cmd = make_alsa_cmd(alsa_toggle),
   })
 end
 

@@ -4,3 +4,6 @@
 [submodule "awesome/streetturtle-widgets"]
 	path = awesome/streetturtle-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
+[submodule "nvim/pack/lament/start/fugitive"]
+	path = nvim/pack/lament/start/fugitive
+	url = https://tpope.io/vim/fugitive.git

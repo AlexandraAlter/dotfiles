@@ -5,5 +5,5 @@
 	path = awesome/streetturtle-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
 [submodule "nvim/pack/lament/start/fugitive"]
-	path = nvim/pack/lament/start/fugitive
+	path = nvim/pack/lament/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git

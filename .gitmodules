@@ -118,3 +118,6 @@
 [submodule "nvim/pack/lament/start/neomake"]
 	path = nvim/pack/lament/start/neomake
 	url = https://github.com/neomake/neomake.git
+[submodule "nvim/pack/lament/start/ultisnips"]
+	path = nvim/pack/lament/start/ultisnips
+	url = https://github.com/SirVer/ultisnips.git

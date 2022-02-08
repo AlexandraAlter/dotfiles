@@ -32,38 +32,49 @@ highlight PMenu ctermfg=7* ctermbg=0
 " " {{{ characterize
 " " }}}
 
+" }}}
+
 " " {{{ which-key
 set timeoutlen=500
-let g:which_key_global_map = {}
 
 let g:mapleader = "\<Space>"
-nnoremap <silent> <Leader> <Cmd>WhichKey '<Space>'<CR>
-"inoremap <silent> <C-i>    <Cmd>WhichKey '<Space>'<CR>
-call which_key#register('<Space>', 'g:which_key_leader_map')
-let g:which_key_leader_map = {}
-
 let g:maplocalleader = ','
-nnoremap <silent> <LocalLeader> :<c-u>WhichKey ','<CR>
-call which_key#register(',', 'g:which_key_local_map')
-let g:which_key_local_map = {}
 
-"nnoremap <silent> g :<c-u>WhichKey 'g'<CR>
-"call which_key#register('g', 'g:which_key_g_map')
-"let g:which_key_g_map = {
-      "\ 'a': 'get-ascii',
-      "\ '8': 'get-hex',
-      "\ }
+nnoremap <silent> <Leader>      <Cmd>WhichKey       '<Space>'<CR>
+vnoremap <silent> <Leader>      <Cmd>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <LocalLeader> <Cmd>WhichKey       ','<CR>
+vnoremap <silent> <LocalLeader> <Cmd>WhichKeyVisual ','<CR>
 
-"nnoremap ga ga
-"nnoremap g8 g8
+call which_key#register('<Space>', 'g:leader_map')
+call which_key#register(',', 'g:local_map')
 
-let g:which_key_leader_map.b = { 'name': '+buffers' }
-let g:which_key_leader_map.s = { 'name': '+search' }
-let g:which_key_leader_map.q = { 'name': '+quit' }
-let g:which_key_leader_map.t = { 'name': '+text' }
-let g:which_key_leader_map.j = { 'name': '+jump' }
-let g:which_key_leader_map.n = { 'name': '+numbers' }
-" " }}}
+let g:leader_map = {
+      \ 'a': { 'name': '+apps' },
+      \ 'q': { 'name': '+quit' },
+      \ 'j': { 'name': '+jump' },
+      \ 'f': { 'name': '+files' },
+      \ 'b': { 'name': '+buffers' },
+      \ 'h': { 'name': '+help' },
+      \ 't': { 'name': '+text' },
+      \ 'x': { 'name': '+text' },
+      \ 'w': { 'name': '+windows' },
+      \ 'n': { 'name': '+numeric' },
+      \ 's': { 'name': '+search' },
+      \ }
+
+let g:local_map = {
+      \ '=': 'reformat',
+      \ }
+
+
+let g:leader_map.b.1 = ['b1', 'buffer 1']
+let g:leader_map.b.2 = ['b2', 'buffer 2']
+
+      " 'd' : ['bd',        'delete-buffer'],
+      " 'f' : ['bfirst',    'first-buffer'],
+      " 'l' : ['blast',     'last-buffer'],
+      " 'n' : ['bnext',     'next-buffer'],
+      " 'p' : ['bprevious', 'previous-buffer'],
 
 " }}}
 
@@ -98,8 +109,9 @@ nnoremap <silent> <Leader>w= <C-w>=
 " {{{ editing
 
 " " {{{ easy-align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+let g:leader_map.x.a = ['<Plug>(EasyAlign)', 'align']
+xmap gA <Plug>(EasyAlign)
+nmap gA <Plug>(EasyAlign)
 " " }}}
 
 " " {{{ repeat
@@ -108,7 +120,7 @@ nmap ga <Plug>(EasyAlign)
 " " {{{ surround
 " " }}}
 
-" " {{{ commentary
+" " {{{ cwhich_key_mapommentary
 " " }}}
 
 " " {{{ abolish
@@ -118,9 +130,9 @@ nmap ga <Plug>(EasyAlign)
 " " }}}
 
 " " {{{ ultisnips
-let g:UltiSnipsExpandTrigger=""
-let g:UltiSnipsJumpForwardTrigger=""
-let g:UltiSnipsJumpBackwardTrigger=""
+"let g:UltiSnipsExpandTrigger=""
+"let g:UltiSnipsJumpForwardTrigger=""
+"let g:UltiSnipsJumpBackwardTrigger=""
 " " }}}
 
 " " {{{ snippets
@@ -131,15 +143,16 @@ let g:UltiSnipsJumpBackwardTrigger=""
 " {{{ completion
 
 " " {{{ cmp
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,noinsert,noselect
 
 lua <<EOF
-  local cmp = require'cmp'
+  local cmp = require('cmp')
+  local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
   cmp.setup({
     snippet = {
       expand = function(args)
-        vim.fn["UltiSnips#Anon"](args.body)
+        vim.fn['UltiSnips#Anon'](args.body)
       end,
     },
     mapping = {
@@ -248,36 +261,16 @@ endif
 let g:netrw_home=expand(stdpath('data'))
 
 "" {{{ files
-let g:which_key_leader_map.f = {
-      \ 'name': '+files',
-      \ 's': 'write',
-      \ 'w': 'write',
-      \ 'S': {
-      \   'name': '+sudo',
-      \   'e': 'edit',
-      \   's': 'write',
-      \   'w': 'write',
-      \ },
-      \ 'c': {
-      \   'name': '+config',
-      \   'r': 'reload',
-      \   'e': 'edit',
-      \ },
-      \ 'r': '?recent',
-      \ 'R': '?rename',
-      \ 'f': 'find',
-      \ }
+let g:leader_map.f.s = [':update', 'save']
 
-nnoremap <silent> <Leader>fs <Cmd>write<CR>
-nnoremap <silent> <Leader>fw <Cmd>write<CR>
-nnoremap <silent> <Leader>ff <Cmd>Explore<CR>
+let g:leader_map.f.c = { 'name': '+config' }
+let g:leader_map.f.c.e = [':edit $MYVIMRC', 'edit']
+let g:leader_map.f.c.r = [':ConfigReload', 'reload']
+command -bar ConfigReload source $MYVIMRC | echo 'Sourced' $MYVIMRC
 
-nnoremap <silent> <Leader>fcr <Cmd>source $MYVIMRC<CR><Cmd>echo 'Sourced' $MYVIMRC<CR>
-nnoremap <silent> <Leader>fce <Cmd>edit $MYVIMRC<CR>
-
-nnoremap <silent> <Leader>fSe <Cmd>SudoEdit<CR>
-nnoremap <silent> <Leader>fSs <Cmd>SudoWrite<CR>
-nnoremap <silent> <Leader>fSw <Cmd>SudoWrite<CR>
+let g:leader_map.f.S = { 'name': '+sudo' }
+let g:leader_map.f.S.e = [':SudoEdit', 'edit']
+let g:leader_map.f.S.s = [':SudoWrite', 'save']
 
 " " {{{ projectionist
 " " }}}
@@ -286,13 +279,20 @@ nnoremap <silent> <Leader>fSw <Cmd>SudoWrite<CR>
 " " }}}
 
 " " {{{ enuch
+call extend(g:leader_map.f, { 'R': 'rename', 'M': 'move', 'C': 'chmod', 'D': 'mkdir' })
+nnoremap <silent> <Leader>fR <Cmd>call feedkeys(':Rename ')<CR>
+nnoremap <silent> <Leader>fM <Cmd>call feedkeys(':Move ')<CR>
+nnoremap <silent> <Leader>fC <Cmd>call feedkeys(':Chmod ')<CR>
+nnoremap <silent> <Leader>fD <Cmd>call feedkeys(':Mkdir ')<CR>
+let g:leader_map.f.W = [':Wall', 'write all']
 " " }}}
 
 " " {{{ telescope
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+let g:leader_map.f.r = [':Telescope oldfiles', 'recent']
+let g:leader_map.f.f = [':Telescope find_files', 'find']
+let g:leader_map.b.f = [':Telescope buffers', 'find']
+let g:leader_map.h.f = [':Telescope help_tags', 'find']
+let g:leader_map.s.s = [':Telescope live_grep', 'search']
 " " }}}
 
 " " {{{ telescope-fzf-native
@@ -302,7 +302,7 @@ lua require('telescope').load_extension('fzf')
 " }}}
 
 " {{{ windows
-let g:which_key_leader_map.w = {
+let g:leader_map.w = {
       \ 'name': '+windows',
       \ 'k': 'up',
       \ 'j': 'down',
@@ -317,7 +317,7 @@ let g:which_key_leader_map.w = {
 " }}}
 
 " {{{ integration
-let g:which_key_leader_map.a = {
+let g:leader_map.a = {
       \ 'name': '+apps',
       \ 'f': {
       \   'name': '+float',

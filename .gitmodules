@@ -121,3 +121,6 @@
 [submodule "nvim/pack/lament/start/ultisnips"]
 	path = nvim/pack/lament/start/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
+[submodule "nvim/pack/lament/start/coffee-script"]
+	path = nvim/pack/lament/start/coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git

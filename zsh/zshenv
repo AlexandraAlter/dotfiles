@@ -7,10 +7,14 @@ fi
 
 export PATH
 
-export EDITOR="/usr/bin/vi -e"
+export EDITOR="/usr/bin/nvim"
 export VISUAL="/usr/bin/nvim"
 
 export GPG_TTY=$(tty)
+unset SSH_AGENT_PID
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+alias gpgtty="gpg-connect-agent updatestartuptty /bye >/dev/null"
+gpgtty
 
 export TASKRC=~/documents/task/taskrc
 export TASKDATA=~/documents/task

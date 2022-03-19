@@ -46,7 +46,7 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-# {{{ {{{ keybindings
+# # {{{ keybindings
 typeset -g -A key
 
 key[Home]="${terminfo[khome]}"
@@ -88,7 +88,7 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
   add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
   add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
-# }}} }}}
+# # }}}
 # }}}
 
 # {{{ prompt
@@ -113,7 +113,7 @@ zmodload zsh/net/tcp
 # }}}
 
 # {{{ aliases
-# {{{ {{{ oh-my-zsh common
+# # {{{ oh-my-zsh common
 alias l='ls -lFh'
 alias la='ls -lAFh'
 alias lr='ls -tRFh'
@@ -185,24 +185,13 @@ alias -s rar="unrar l"
 alias -s tar="tar tf"
 alias -s tar.gz="echo "
 alias -s ace="unace l"
-# }}} }}}
+# # }}}
 
 alias mtask="task rc.data.location=${M_TASKDATA}"
 # }}}
 
 # {{{ services
-# {{{ {{{ ssh-agent
-if [[ -x "${commands[ssh-agent]}" ]]; then
-  ssh_env_cache="$HOME/.ssh/ssh-agent.env"
-
-  if [[ -f "$ssh_env_cache" ]]; then
-    . "$ssh_env_cache" > /dev/null
-  else
-    ssh-agent -t 1h | sed '/^echo/d' >! "$ssh_env_cache"
-  fi
-
-  unset ssh_env_cache
-fi
-# }}} }}}
+# # {{{ ssh-agent
+# # }}}
 # }}}
 

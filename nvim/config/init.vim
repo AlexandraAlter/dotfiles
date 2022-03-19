@@ -10,6 +10,8 @@
 " {{{ general
 set nocompatible
 set mouse=a
+set spelllang=en_us,cjk
+set spellsuggest=best,9
 
 " " {{{ sensible
 " " }}}
@@ -55,7 +57,7 @@ let g:leader_map = {
       \ 'f': { 'name': '+files' },
       \ 'b': { 'name': '+buffers' },
       \ 'h': { 'name': '+help' },
-      \ 't': { 'name': '+text' },
+      \ 't': { 'name': '+toggle' },
       \ 'x': { 'name': '+text' },
       \ 'w': { 'name': '+windows' },
       \ 'n': { 'name': '+numeric' },
@@ -66,6 +68,7 @@ let g:local_map = {
       \ '=': 'reformat',
       \ }
 
+nnoremap <LocalLeader>= m`gg=G``
 
 let g:leader_map.b.1 = ['b1', 'buffer 1']
 let g:leader_map.b.2 = ['b2', 'buffer 2']
@@ -120,7 +123,7 @@ nmap gA <Plug>(EasyAlign)
 " " {{{ surround
 " " }}}
 
-" " {{{ cwhich_key_mapommentary
+" " {{{ commentary
 " " }}}
 
 " " {{{ abolish
@@ -200,10 +203,10 @@ lua <<EOF
     })
   })
 
-  -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-  --   capabilities = capabilities
-  -- }
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  require('lspconfig')['eslint'].setup {
+    capabilities = capabilities
+  }
 EOF
 " " }}}
 
@@ -226,15 +229,13 @@ EOF
 
 " {{{ formats
 setlocal ts=2 sts=2 sw=2 et
+setlocal makeprg=make
+autocmd FileType * setlocal ts=2 sts=2 sw=2 et
 
-autocmd FileType javascript setlocal ts=2 sts=2 sw=2 et
-autocmd FileType coffee setlocal ts=2 sts=2 sw=2 et makeprg=make
-autocmd FileType nim setlocal makeprg=make
-autocmd FileType rust setlocal ts=2 sts=2 sw=2 et
-autocmd FileType typescript setlocal ts=2 sts=2 sw=2 et makeprg=make formatprg=prettier\ --parser\ typescript
-autocmd FileType html setlocal ts=2 sts=2 sw=2 et
-
-autocmd FileType python nnoremap <LocalLeader>= m`:0,$!yapf<CR>``
+autocmd FileType python setlocal equalprg=yapf
+autocmd FileType javascript setlocal equalprg=prettier\ --stdin-filepath\ %
+autocmd FileType typescript setlocal equalprg=prettier\ --stdin-filepath\ %
+autocmd FileType cpp setlocal equalprg=clang-format cino=N-s\ g0
 
 " " {{{ sleuth
 " " }}}
@@ -379,6 +380,12 @@ tnoremap <silent> <F10> <C-\><C-n>:FloatermToggle<CR>
 " " }}}
 " " {{{ fugitive
 " " }}}
+
+" }}}
+
+" {{{ toggles
+let g:leader_map.t.s = [':set spell!', 'spelling']
+" }}}
 
 " {{{ discarded
 " wordmotion

@@ -1,0 +1,277 @@
+name = "Krita"
+
+[layouts]
+
+[layouts.main]
+
+[layouts.main.prime]
+side = "alt"
+top = "shift"
+tall = "ctrl"
+short = "pan"
+
+side_x2 = "cancel"
+top_x2 = "layout_change"
+tall_x2 = "colors_swap"
+short_x2 = "eraser"
+
+side_top = "none"
+side_tall = "sel_invert"
+side_short = "sel_end"
+top_tall = "none"
+top_short = "none"
+tall_short = "confirm"
+
+[layouts.main.kit]
+tour = "popup"
+
+up = "tool_sampler"
+down = "tool_fill"
+left = "tool_gradi"
+right = "tool_brush"
+
+top_up = "tool_move"
+top_down = "sel_feather"
+top_left = "tool_trans"
+top_right = "tool_crop"
+side_up = "tool_sel_elip"
+side_down = "tool_sel_cont"
+side_left = "tool_sel_rect"
+side_right = "tool_sel_free"
+
+c1 = "undo"
+c2 = "layer_sel"
+
+tall_c1 = "none"
+tall_c2 = "layer_sel_mul"
+short_c1 = "redo"
+short_c2 = "layer_last"
+
+[layouts.main.knob]
+press = "preset_last"
+turn = "brush_dec/brush_inc"
+
+tall_turn = "opacity_inc/opacity_dec"
+short_turn = "brush_darken/brush_lighten"
+top_turn = "left/right"
+side_turn = "preset_next/preset_prev"
+
+[layouts.main.scroll]
+press = "zoom_reset"
+turn = "zoom_out/zoom_in"
+
+tall_turn = "layer_prev/layer_next"
+short_turn = "none"
+top_turn = "down/up"
+side_turn = "blend_next/blend_prev"
+
+[layouts.main.dial]
+press = "rotate_reset"
+turn = "rotate_right/rotate_left"
+
+[shortcuts]
+
+layout_change = "D-space"
+
+# canvas
+confirm = "enter"
+cancel = "esc"
+
+pan = "space"
+
+rotate_left = "4"
+rotate_right = "6"
+rotate_reset = "5"
+
+zoom_in = "equal"
+zoom_out = "minus"
+zoom_reset = "1"
+zoom_page = "2"
+zoom_width = "3"
+
+layer_sel = "r"
+layer_sel_mul = "S-r"
+
+exposure = "y"
+
+popup = "f1" # custom
+
+# blending
+blend_next = "A-S-plus"
+blend_prev = "A-S-minus"
+
+blend_behind = "A-S-q"
+blend_clear = "A-S-r"
+blend_c = "A-S-c"
+blend_c_burn = "A-S-b"
+blend_c_dodge = "A-S-d"
+blend_darken = "A-S-k"
+blend_diff = "A-S-e"
+blend_dissolve = "A-S-i"
+blend_excl = "A-S-x"
+blend_h_l = "A-S-h"
+blend_h_mix = "A-S-l"
+blend_h_overlay = "A-S-p"
+blend_hue = "A-S-u"
+blend_lighten = "A-S-g"
+blend_lin_burn = "A-S-a"
+blend_lin_dodge = "A-S-w"
+blend_lin_l = "A-S-j"
+blend_lum = "A-S-y"
+blend_mult = "A-S-m"
+blend_normal = "A-S-n"
+blend_overlay = "A-S-o"
+blend_pin_l = "A-S-z"
+blend_sat = "A-S-t"
+blend_screen = "A-S-s"
+blend_soft_l = "A-S-f"
+blend_vivid_l = "A-S-v"
+
+# filters
+filt_levels = "C-l"
+filt_inv = "C-i"
+filt_hsv = "C-u"
+filt_desat = "C-S-u"
+filt_bal = "C-b"
+filt_adj = "C-m"
+
+# general
+sel_invert = "C-S-i"
+
+actions_search = "C-enter"
+
+brush_editor = "f5"
+brush_presets = "f6"
+
+color_history = "h"
+color_common = "u"
+color_sel = "S-i"
+
+shade_sel = "S-n"
+shade_mypaint = "S-m"
+
+tool_opts = "\\"
+
+# layers
+layer_next = "pageup"
+layer_prev = "pagedown"
+layer_last = ";"
+
+layer_new_paint = "insert"
+layer_new_vector = "S-insert"
+layer_new_dup = "C-j"
+layer_new_copy = "C-A-j"
+layer_new_cut = "C-S-j"
+
+layer_merge = "C-e"
+layer_merge_all = "C-S-e"
+
+layer_move_down = "C-pagedown"
+layer_move_up = "C-pageup"
+
+layer_del = "S-delete"
+layer_rename = "f2"
+layer_props = "f3"
+
+quick_group = "C-g"
+quick_ungroup = "C-A-g"
+quick_clip_group = "C-S-g"
+
+# painting
+brush_inc = "]"
+brush_dec = "["
+
+opacity_inc = "o"
+opacity_dec = "i"
+
+brush_darken = "k"
+brush_lighten = "l"
+
+preset_next = ","
+preset_prev = "."
+preset_last = "/"
+
+eraser = "e"
+colors_swap = "x"
+colors_bw = "d"
+
+# editing
+undo = "C-z"
+redo = "C-S-z"
+
+# selecting
+sel_all = "C-a"
+sel_end = "C-S-a"
+sel_disp = "C-h"
+sel_feather = "S-f6"
+sel_resel = "C-S-d"
+
+# viewing
+canvas_only = "tab"
+grid_show = "C-S-'"
+fullscreen = "C-S-f"
+mirror = "m"
+wrap = "C-w"
+
+snap_opts = "S-s"
+inst_preview = "S-l"
+
+# scripts
+brush_0 = "C-A-0"
+brush_1 = "C-A-1"
+brush_2 = "C-A-2"
+brush_3 = "C-A-3"
+brush_4 = "C-A-4"
+brush_5 = "C-A-5"
+brush_6 = "C-A-6"
+brush_7 = "C-A-7"
+brush_8 = "C-A-8"
+brush_9 = "C-A-9"
+
+script_0 = "C-S-0"
+script_1 = "C-S-1"
+script_2 = "C-S-2"
+script_3 = "C-S-3"
+script_4 = "C-S-4"
+script_5 = "C-S-5"
+script_6 = "C-S-6"
+script_7 = "C-S-7"
+script_8 = "C-S-8"
+script_9 = "C-S-9"
+
+# svg
+
+# interaction tool
+inter_front = "C-S-]"
+inter_raise = "C-A-]"
+inter_lower = "C-A-["
+inter_back = "C-S-["
+
+# path tool
+path_ins = "insert"
+path_rem = "delete"
+path_join = "j"
+seg_to_curve = "S-c"
+seg_to_line = "f"
+to_path = "p"
+
+# tool shortcuts
+tool_sampler = "p"
+tool_rect = "S-r"
+tool_elip = "S-j"
+tool_sel_rect = "C-r"
+tool_sel_elip = "j"
+tool_sel_free = "C-1" # custom
+tool_sel_cont = "C-2" # custom
+tool_move = "t"
+tool_crop = "c"
+tool_trans = "C-t"
+tool_brush = "b"
+tool_multibrush = "q"
+tool_fill = "f"
+tool_gradi = "g"
+
+[macros]
+
+[menus]
+

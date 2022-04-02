@@ -65,10 +65,10 @@ let g:leader_map = {
       \ }
 
 let g:local_map = {
-      \ '=': 'reformat',
+      \ '=': [ 'm`gg=G``', 'reformat' ],
       \ }
 
-nnoremap <LocalLeader>= m`gg=G``
+"nnoremap <LocalLeader>= m`gg=G``
 
 let g:leader_map.b.1 = ['b1', 'buffer 1']
 let g:leader_map.b.2 = ['b2', 'buffer 2']
@@ -291,8 +291,8 @@ let g:leader_map.f.W = [':Wall', 'write all']
 " " {{{ telescope
 let g:leader_map.f.r = [':Telescope oldfiles', 'recent']
 let g:leader_map.f.f = [':Telescope find_files', 'find']
-let g:leader_map.b.f = [':Telescope buffers', 'find']
-let g:leader_map.h.f = [':Telescope help_tags', 'find']
+let g:leader_map.b.b = [':Telescope buffers', 'find']
+let g:leader_map.h.h = [':Telescope help_tags', 'find']
 let g:leader_map.s.s = [':Telescope live_grep', 'search']
 " " }}}
 

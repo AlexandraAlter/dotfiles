@@ -24,17 +24,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
         <!--- keyboard, multiple layers -->
         <panel>
           <panel layer="alpha" filename="Compact DV-Alpha.svg">
-            ;qjkx
-            bmwvz
             <!-- row 5 -->
             <key group="alphanumeric" id="TLDE" char="'" label="'" shift_label="&quot;"/>
-            <key group="alphanumeric" id="AE01" char="b" label="b" shift_label="B"/>
-            <key group="alphanumeric" id="AE02" char="m" label="m" shift_label="M"/>
-            <key group="alphanumeric" id="AE03" char="w" label="w" shift_label="W"/>
-            <key group="alphanumeric" id="AE04" char="v" label="v" shift_label="V"/>
-            <key group="alphanumeric" id="AE05" char="z" label="z" shift_label="Z"/>
-            <key group="alphanumeric" id="AE06" char="," label="," shift_label="&lt;"/>
-            <key group="alphanumeric" id="AE07" char="." label="." shift_label="&gt;"/>
+            <key group="alphanumeric" id="AE01" char="," label="," shift_label="&lt;"/>
+            <key group="alphanumeric" id="AE02" char="." label="." shift_label="&gt;"/>
+            <key group="alphanumeric" id="AE03" char="b" label="b" shift_label="B"/>
+            <key group="alphanumeric" id="AE04" char="m" label="m" shift_label="M"/>
+            <key group="alphanumeric" id="AE05" char="w" label="w" shift_label="W"/>
+            <key group="alphanumeric" id="AE06" char="v" label="v" shift_label="V"/>
+            <key group="alphanumeric" id="AE07" char="z" label="z" shift_label="Z"/>
             <key group="alphanumeric" id="AE08" char="[" label="[" shift_label="{"/>
             <key group="alphanumeric" id="AE09" char="]" label="]" shift_label="}"/>
             <key group="alphanumeric" id="AE10" char="1" label="1" shift_label="!"/>

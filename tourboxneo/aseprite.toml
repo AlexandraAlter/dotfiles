@@ -1,0 +1,277 @@
+name = "Aseprite"
+
+[layouts]
+
+[layouts.main]
+
+[layouts.main.prime]
+side = "ctrl"
+top = "shift"
+tall = "alt"
+short = "pan"
+
+side_x2 = "cancel"
+top_x2 = "layout_change"
+tall_x2 = "col_swap"
+short_x2 = "none"
+
+side_top = "C-shift"
+side_tall = "sel_invert"
+side_short = "sel_none"
+top_tall = "A-shift"
+top_short = "none"
+tall_short = "confirm"
+
+[layouts.main.kit]
+tour = "none"
+
+up = "none"
+down = "tool_eraser"
+left = "tools_fill"
+right = "tools_draw"
+
+top_up = "tools_blur"
+top_down = "tools_shape"
+top_left = "tools_cont"
+top_right = "tools_line"
+
+side_up = "sel_all"
+side_down = "tools_marq"
+side_left = "tool_wand"
+side_right = "tools_lasso"
+
+c1 = "undo"
+c2 = "none"
+
+tall_c1 = "del"
+tall_c2 = "none"
+short_c1 = "redo"
+short_c2 = "none"
+
+[layouts.main.knob]
+press = "none"
+turn = "brush_dec/brush_inc"
+
+tall_turn = "none"
+short_turn = "none"
+top_turn = "left/right"
+side_turn = "none"
+
+[layouts.main.scroll]
+press = "zoom_reset"
+turn = "zoom_out/zoom_in"
+
+tall_turn = "none"
+short_turn = "none"
+top_turn = "down/up"
+side_turn = "none"
+
+[layouts.main.dial]
+press = "col_swap"
+turn = "col_next/col_prev"
+
+[shortcuts]
+
+layout_change = "D-space"
+
+confirm = "enter"
+cancel = "esc"
+
+pan = "space"
+
+# # commands
+
+# other
+
+dup_cels = "A-d"
+dup_cels_linked = "A-m"
+
+# files
+
+file_new = "C-n"
+file_open = "C-o"
+file_reopen = "C-S-t"
+file_save = "C-s"
+file_save_as = "C-S-s"
+file_close = "C-w"
+file_close_all = "C-S-w"
+export = "C-A-S-s"
+export_repeat = "C-S-x"
+export_sprites = "C-e"
+import_sprites = "C-i"
+exit = "C-q"
+
+# edit
+
+undo = "C-z"
+redo = "C-y"
+
+copy = "C-c"
+copy_merged = "C-S-c"
+cut = "C-x"
+paste = "C-v"
+paste_as_layer = "C-S-v"
+
+del = "delete"
+
+fill = "f"
+stroke = "s"
+flip_sel_h = "S-h"
+flip_sel_v = "S-v"
+transform = "C-t"
+
+new_from_sel = "C-A-n"
+
+adj_hue = "C-u"
+adj_col_curve = "C-m"
+
+outline = "S-o"
+conv_matrix = "f9"
+
+text = "t"
+
+# sprite
+
+sprite_props = "C-p"
+sprite_size = "C-A-i"
+canvas_size = "c"
+
+# layer
+
+layer_props = "S-p"
+layer_vis = "S-x"
+layer_new = "S-n"
+layer_new_copy = "C-j"
+layer_new_cut = "C-S-j"
+layer_next = "up"
+layer_prev = "down"
+
+group_tog = "S-e"
+group_new = "A-S-n"
+
+layer_opc_1 = "S-1"
+layer_opc_2 = "S-2"
+layer_opc_3 = "S-3"
+layer_opc_4 = "S-4"
+
+# frame
+
+frame_props = "p"
+frame_new = "A-n"
+frame_new_empty = "A-b"
+frame_del = "A-c"
+frame_reverse = "A-i"
+frame_go = "C-g"
+frame_first = "home"
+frame_last = "end"
+frame_next = "right"
+frame_prev = "left"
+frame_next_tag = "."
+frame_prev_tag = ","
+
+# select
+
+sel_all = "C-a"
+sel_none = "C-d"
+sel_again = "C-S-d"
+sel_invert = "C-S-i"
+
+# view
+
+zoom_in = "C-equal"
+zoom_out = "C-minus"
+zoom_reset = "C-0"
+
+view_extras = "C-h"
+view_grid = "C-`"
+view_grid_pix = "C-S-`"
+
+grid_snap = "S-s"
+
+loop_set = "f2"
+view_onion = "f3"
+view_timeline = "tab"
+view_preview = "f7"
+view_advanced = "C-f"
+view_fullscreen = "f11"
+view_full_preview = "f8"
+view_refresh = "f5"
+
+view_timeline_thumbs = "f6"
+
+# palette
+
+col_prev = "9"
+col_next = "0"
+col_swap = "x"
+col_replace = "S-r"
+
+pallette_edit = "a"
+palette_edit_fore = "f4"
+
+# brushes
+
+brush_inc = "equal"
+brush_dec = "minus"
+
+brush_new = "C-b"
+
+brush_1 = "A-1"
+brush_2 = "A-2"
+brush_3 = "A-3"
+brush_4 = "A-4"
+brush_5 = "A-5"
+brush_6 = "A-6"
+brush_7 = "A-7"
+brush_8 = "A-8"
+brush_9 = "A-9"
+
+# masks
+
+mask_content = "C-t"
+
+# tabs
+
+tab_next = "C-tab"
+tab_prev = "C-S-tab"
+
+# # tools
+
+# tool shortcuts
+tool_blur = "r"
+tool_contour = "d"
+tool_curve = "S-l"
+tool_elip = "S-u"
+tool_sel_elip = "S-m"
+tool_eraser = "e"
+tool_eyedrop = "i"
+tool_gradi = "S-g"
+tool_hand = "h"
+tool_jumble = "r"
+tool_sel = "q"
+tool_line = "l"
+tool_wand = "w"
+tool_move = "v"
+tool_bucket = "g"
+tool_pencil = "b"
+tool_poly = "S-d"
+tool_sel_poly = "S-q"
+tool_rect = "u"
+tool_sel_rect = "m"
+tool_slice = "S-c"
+tool_spray = "S-b"
+tool_zoom = "z"
+
+tools_marq = "m" # custom to marquees
+tools_lasso = "q" # custom to lassos
+tools_draw = "b" # custom to pencil/spray
+tools_fill = "g" # custom to bucket/gradient
+tools_line = "l" # custom to line/curve
+tools_shape = "u" # custom to rect/elip
+tools_cont = "d" # custom to countour/poly
+tools_blur = "r" # custom to blur/jumble
+
+[macros]
+
+[menus]
+

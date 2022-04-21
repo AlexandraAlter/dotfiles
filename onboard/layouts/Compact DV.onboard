@@ -115,13 +115,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
             <key group="directions" id="LEFT" scan_priority="1"/>
             <key group="directions" id="RGHT" scan_priority="1"/>
             <key group="directions" id="UP" scan_priority="1"/>
-            <key group="directions" id="DOWN" scan_priority="1"/>
-            <key group="editing" id="INS"/>
+            <key group="directions" id="DOWN" scan_priority="1" label="⤓"/>
+            <key group="editing" id="INS" label="In"/>
             <key group="editing" id="DELE" label="Del" image=""/>
-            <key group="editing" id="HOME"/>
-            <key group="editing" id="END"/>
-            <key group="editing" id="PGUP"/>
-            <key group="editing" id="PGDN"/>
+            <key group="editing" id="HOME" label="Hm"/>
+            <key group="editing" id="END" label="En"/>
+            <key group="editing" id="PGUP" label="PU"/>
+            <key group="editing" id="PGDN" label="PD"/>
             <key group="bottomrow" id="ESC"/>
             <key group="fkeys" id="F1.rows_of_six"/>
             <key group="fkeys" id="F2.rows_of_six"/>
@@ -135,9 +135,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
             <key group="fkeys" id="F12.rows_of_six"/>
             <key group="fkeys" id="F10.rows_of_six"/>
             <key group="fkeys" id="F11.rows_of_six"/>
-            <key group="editing" id="Prnt" scan_priority="1"/>
-            <key group="editing" id="Pause" scan_priority="1"/>
-            <key group="editing" id="Scroll" scan_priority="1"/>
+            <key group="editing_rare" id="Prnt" scan_priority="1" label="⎙"/>
+            <key group="editing_rare" id="Pause" scan_priority="1" label="⎊"/>
+            <key group="editing_rare" id="Scroll" scan_priority="1" label="⤓"/>
           </panel>
           <panel layer="utils" filename="Compact DV-Utils.svg" border="2">
             <key group="snippets" id="m0"/>

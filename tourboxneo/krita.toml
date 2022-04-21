@@ -15,11 +15,11 @@ top_x2 = "layout_change"
 tall_x2 = "colors_swap"
 short_x2 = "eraser"
 
-side_top = "none"
-side_tall = "sel_invert"
+side_top = "A-shift"
+side_tall = "A-ctrl"
 side_short = "sel_end"
-top_tall = "none"
-top_short = "none"
+top_tall = "S-ctrl"
+top_short = "sel_invert"
 tall_short = "confirm"
 
 [layouts.main.kit]

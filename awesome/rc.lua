@@ -43,7 +43,8 @@ local json = require('lunajson')
 -- {{{ Hostname
 local hostname = io.popen('uname -n'):read()
 
-local laptop = hostname == 'think-bell'
+local desktop = hostname == 'megabell-arch'
+local laptop = hostname == 'thinkbell'
 -- }}}
 
 -- {{{ Error handling
@@ -242,8 +243,15 @@ my_submenus.awesome = {
    { 'quit', function () awesome.quit() end },
 }
 
-local scr_internal = 'eDP-1'
-local scr_external = 'HDMI-2'
+local scr_internal, scr_external
+if desktop then
+  scr_internal = 'DisplayPort-0'
+  scr_external = 'DisplayPort-1'
+else
+  scr_internal = 'eDP-1'
+  scr_external = 'HDMI-2'
+end
+
 local function xrandr_cmd(int_opts, ext_opts)
   return 'xrandr ' ..
     ' --output ' .. scr_internal .. ' ' .. int_opts ..
@@ -251,12 +259,13 @@ local function xrandr_cmd(int_opts, ext_opts)
 end
 
 my_submenus.xrandr = {
-  { 'External off', xrandr_cmd('--primary --auto', '--off') },
-  { 'External dup', xrandr_cmd('--primary --auto', '--same-as ' .. scr_internal) },
-  { 'External above', xrandr_cmd('--auto', '--primary --auto --above ' .. scr_internal) },
-  { 'External below', xrandr_cmd('--auto', '--primary --auto --below ' .. scr_internal) },
-  { 'External left', xrandr_cmd('--auto', '--primary --auto --left-of ' .. scr_internal) },
-  { 'External right', xrandr_cmd('--auto', '--primary --auto --right-of ' .. scr_internal) },
+  { 'Ext off', xrandr_cmd('--primary --auto', '--off') },
+  { 'Ext only', xrandr_cmd('--off', '--primary --auto') },
+  { 'Ext dupl', xrandr_cmd('--primary --auto', '--same-as ' .. scr_internal) },
+  { 'Ext above', xrandr_cmd('--auto', '--primary --auto --above ' .. scr_internal) },
+  { 'Ext below', xrandr_cmd('--auto', '--primary --auto --below ' .. scr_internal) },
+  { 'Ext left', xrandr_cmd('--auto', '--primary --auto --left-of ' .. scr_internal) },
+  { 'Ext right', xrandr_cmd('--auto', '--primary --auto --right-of ' .. scr_internal) },
 }
 
 my_submenus.layouts = {

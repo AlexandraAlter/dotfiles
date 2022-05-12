@@ -1,19 +1,19 @@
 # Emily's Symbol Dictionary
+# Modified by AlexandraAlter
 import re
 
-# define your starters here
-#                standard  custom
-uniqueStarters = ["SKWH", "#SKWH"]
+unique_starts = ["#!"]
+unique_ends = [""]
 
 # define if attachment keys define where "space"s or "attachment"s lie
-attachmentMethod = "space"
+method_spaces = True
 
 LONGEST_KEY = 1
 
-# variant format = ['', 'E', 'U', 'EU']
+# variant format = ["", "E", "U", "EU"]
 # if no variants exist, then a single string can be used for the symbol and the variant specifier keys will be valid but ignored
 symbols = {
-    uniqueStarters[0]: { # standard
+    unique_starts[0]: { # standard
         # more computer function-y symbols
         "FG"    : ["{#Tab}", "{#Backspace}", "{#Delete}", "{#Escape}"],
         "RPBG"  : ["{#Up}", "{#Left}", "{#Right}", "{#Down}"],
@@ -52,79 +52,74 @@ symbols = {
         "FPBG"   : ["~", "⊆", "⊇", "˜"],
         "FPBL"   : ["↑", "←", "→", "↓"]
     },
-    uniqueStarters[1]: { # custom
-        # add your own strokes here (or above, or wherever else you like)!
-        ""       : "test"
-    }
 }
 
+repetitions = {
+    "A": 1,
+    "O": 2,
+}
+
+variants = {
+    "E": 1,
+    "U": 2,
+}
+
+stroke_regex = re.compile(r"([#!+^STKPWHR]*)([AO]*)([*-]?)([EU]*)([FRPBLG]*)([TS]*)([DZ]*)")
+
+trans_numbers = str.maketrans("1234506789", "STPHAOFPLT")
 
 def lookup(chord):
 
-    # normalise stroke from embedded number, to preceding hash format
+    # extract the chord for easy use
     stroke = chord[0]
-    if any(k in stroke for k in "1234506789"):  # if chord contains a number
-        stroke = list(stroke)
-        numbers = ["O", "S", "T", "P", "H", "A", "F", "P", "L", "T"]
-        for key in range(len(stroke)):
-            if stroke[key].isnumeric():
-                stroke[key] = numbers[int(stroke[key])]  # set number key to letter
-                numberFlag = True
-        stroke = ["#"] + stroke
-        stroke = "".join(stroke)
 
-    # the regex decomposes a stroke into the following groups/variables:
-    # starter                #STKPWHR
-    # attachments                         AO
-    # capitalisation                             */-
-    # variants                                          EU
-    # pattern                                                  FRPBLG
-    # repetitions                                                         TS
-    #                                       (unused: DZ)
-    match = re.fullmatch(r'([#STKPWHR]*)([AO]*)([*-]?)([EU]*)([FRPBLG]*)([TS]*)', stroke)
+    # normalise stroke from embedded number, to preceding hash format
+    if any(k.isnumeric() for k in stroke): # if chord contains a number
+        stroke = "#" + stroke.translate(trans_numbers)
 
-    if match is None:
-        raise KeyError
-    (starter, attachments, capitalisation, variants, pattern, repetitions) = match.groups()
-
-    if starter not in uniqueStarters:
-        raise KeyError
+    # quick tests to avoid regex if non-relevant stroke is sent
     if len(chord) != 1:
         raise KeyError
     assert len(chord) <= LONGEST_KEY
 
+    # extract relevant parts of the stroke
+    match = stroke_regex.fullmatch(stroke)
+
+    # error out if there are no matches found
+    if match is None:
+        raise KeyError
+
+    # name the relevant extracted parts of the regex
+    (starter, attachments, caps_str, vari_str, pattern, reps_str, ender) = match.groups()
+
+    if starter not in unique_starts ender not in unique_ends:
+        raise KeyError
+
     # calculate the attachment method, and remove attachment specifier keys
-    attach = [(attachmentMethod == "space") ^ ('A' in attachments),
-              (attachmentMethod == "space") ^ ('O' in attachments)]
+    attach_before = method_spaces ^ ("A" in attachments)
+    attach_after = method_spaces ^ ("O" in attachments)
 
-    # detect if capitalisation is required, and remove specifier key
-    capital = capitalisation == '*'
+    # detect if capitalisation is required
+    caps = caps_str == "*"
 
-    # calculate the variant number, and remove variant specifier keys
-    variant = 0
-    if 'E' in variants:
-        variant = variant + 1
-    if 'U' in variants:
-        variant = variant + 2
+    # calculate the variant number
+    variant = sum(variants[v] for v in vari_str)
 
-    # calculate the repetition, and remove repetition specifier keys
-    repeat = 1
-    if 'S' in repetitions:
-        repeat = repeat + 1
-    if 'T' in repetitions:
-        repeat = repeat + 2
+    # calculate the repetition
+    reps = sum(repetitions[v] for v in reps_str) + 1
 
     if pattern not in symbols[starter]:
         raise KeyError
 
-    # extract symbol entry from the 'symbols' dictionary, with variant specification if available
+    # extract symbol entry from the 'symbols' dictionary
+    # with variant specification if available
     selection = symbols[starter][pattern]
     if type(selection) == list:
         selection = selection[variant]
     output = selection
 
     # repeat the symbol the specified number of times
-    output = output * repeat
+    output = output * reps
 
     # attachment space to either end of the symbol string to avoid escapement,
     # but prevent doing this for retrospective add/delete spaces, since it'll
@@ -132,24 +127,25 @@ def lookup(chord):
     if selection not in ["{*!}", "{*?}"]:
         output = " " + output + " "
 
-    # add appropriate attachment as specified (again, prevent doing this 
+    # add appropriate attachment as specified (again, prevent doing this
     # for retrospective add/delete spaces)
     if selection not in ["{*!}", "{*?}"]:
-        if attach[0]:
+        if attach_before:
             output = "{^}" + output
-        if attach[1]:
+        if attach_after:
             output = output + "{^}"
 
     # cancel out some formatting when using space attachment
-    if attachmentMethod == "space":
-        if not attach[0]:
+    if method_spaces:
+        if not attach_before:
             output = "{}" + output
-        if not attach[1]:
+        if not attach_after:
             output = output + "{}"
 
     # apply capitalisation
-    if capital:
+    if caps:
         output = output + "{-|}"
 
     # all done :D
     return output
+

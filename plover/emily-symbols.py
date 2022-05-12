@@ -92,7 +92,7 @@ def lookup(chord):
     # name the relevant extracted parts of the regex
     (starter, attachments, caps_str, vari_str, pattern, reps_str, ender) = match.groups()
 
-    if starter not in unique_starts ender not in unique_ends:
+    if starter not in unique_starts or ender not in unique_ends:
         raise KeyError
 
     # calculate the attachment method, and remove attachment specifier keys

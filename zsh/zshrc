@@ -188,6 +188,8 @@ alias -s ace="unace l"
 # # }}}
 
 alias mtask="task rc.data.location=${M_TASKDATA}"
+
+alias gmux="tmux -L game -f ~/.tmux.conf -f ~/dotfiles/tmux/nofn.conf new -A -s game"
 # }}}
 
 # {{{ services

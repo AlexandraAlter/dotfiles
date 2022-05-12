@@ -16,6 +16,8 @@ export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 alias gpgtty="gpg-connect-agent updatestartuptty /bye >/dev/null"
 gpgtty
 
+export RANGER_LOAD_DEFAULT_RC=FALSE.
+
 export TASKRC=~/documents/task/taskrc
 export TASKDATA=~/documents/task
 export TIMEWARRIORDB=~/documents/time

@@ -14,6 +14,7 @@
 - di/tabbing.json
 - di/fingerspelling.json
 - di/numbers.json
+- di/punctuation.json
 - emily-modifiers.py
 - emily-symbols.py
 - di/dict.json

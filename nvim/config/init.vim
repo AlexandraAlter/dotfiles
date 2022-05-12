@@ -70,8 +70,8 @@ let g:local_map = {
 
 "nnoremap <LocalLeader>= m`gg=G``
 
-let g:leader_map.b.1 = ['b1', 'buffer 1']
-let g:leader_map.b.2 = ['b2', 'buffer 2']
+let g:leader_map.b.1 = [':b1', 'buffer 1']
+let g:leader_map.b.2 = [':b2', 'buffer 2']
 
       " 'd' : ['bd',        'delete-buffer'],
       " 'f' : ['bfirst',    'first-buffer'],
@@ -82,9 +82,12 @@ let g:leader_map.b.2 = ['b2', 'buffer 2']
 " }}}
 
 " {{{ navigation
-set foldopen=hor,mark,percent,quickfix,search,tag,undo
 set ignorecase
 set smartcase
+set foldopen=hor,mark,percent,quickfix,search,tag,undo
+set foldenable
+let g:markdown_folding=1
+autocmd FileType markdown setlocal foldlevel=1
 
 nnoremap <silent> <Leader>wk <C-w>k
 nnoremap <silent> <Leader>wj <C-w>j
@@ -236,6 +239,7 @@ autocmd FileType python setlocal equalprg=yapf
 autocmd FileType javascript setlocal equalprg=prettier\ --stdin-filepath\ %
 autocmd FileType typescript setlocal equalprg=prettier\ --stdin-filepath\ %
 autocmd FileType cpp setlocal equalprg=clang-format cino=N-s\ g0
+autocmd FileType c setlocal equalprg=clang-format cino=N-s\ g0
 
 " " {{{ sleuth
 " " }}}

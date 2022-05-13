@@ -5,7 +5,17 @@
 - Emily's Modifiers from https://github.com/EPLHREU/emily-modifiers
 - Emily's Symbols from https://github.com/EPLHREU/emily-symbols
 
-# Config
+# Plugins
+
+- plover-plugins-manager
+- spectra-lexer
+- plover-english-stenotype-plus
+- plover-palantype
+- plover-syllabic
+- plover-python-dictionary
+- plover-dict-commands
+
+# Dictionaries
 
 - user.json
 - di/computer-use.json
@@ -17,4 +27,5 @@
 - di/punctuation.json
 - emily-modifiers.py
 - emily-symbols.py
+- jade-phrasing.py
 - di/dict.json

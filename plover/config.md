@@ -4,6 +4,7 @@
 - Di's dictionaries from https://github.com/didoesdigital/steno-dictionaries
 - Emily's Modifiers from https://github.com/EPLHREU/emily-modifiers
 - Emily's Symbols from https://github.com/EPLHREU/emily-symbols
+- Plover Phrasing from https://github.com/Jade-GG/plover\_phrasing
 
 # Plugins
 

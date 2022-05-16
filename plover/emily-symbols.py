@@ -2,7 +2,7 @@
 # Modified by AlexandraAlter
 import re
 
-unique_starts = ["#!"]
+unique_starts = ["#¶"]
 unique_ends = [""]
 
 # define if attachment keys define where "space"s or "attachment"s lie
@@ -64,7 +64,7 @@ variants = {
     "U": 2,
 }
 
-stroke_regex = re.compile(r"([#!+^STKPWHR]*)([AO]*)([*-]?)([EU]*)([FRPBLG]*)([TS]*)([DZ]*)")
+stroke_regex = re.compile(r"([#§¶STKPWHR]*)([AO]*)([+*^-]*)([EU]*)([FRPBLG]*)([TS]*)([DZ]*)")
 
 trans_numbers = str.maketrans("1234506789", "STPHAOFPLT")
 

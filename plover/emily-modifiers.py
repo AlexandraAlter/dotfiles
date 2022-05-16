@@ -2,7 +2,7 @@
 # Modified by AlexandraAlter
 import re
 
-unique_starts = ["!"]
+unique_starts = ["¶"]
 unique_ends = [""]
 
 LONGEST_KEY = 1
@@ -190,3 +190,4 @@ def lookup(chord):
     # package it up with the syntax
     parts = ["{#", *ms, character, *ms_ends, "}"]
     return "".join(parts)
+

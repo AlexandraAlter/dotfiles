@@ -1,0 +1,7 @@
+
+include /usr/share/doc/task/rc/dark-violets-256.theme
+
+uda.priority.values=H,M,,L
+urgency.uda.priority.L.coefficient=-1
+
+list.all.projects=1

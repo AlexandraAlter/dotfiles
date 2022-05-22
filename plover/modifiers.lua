@@ -1,5 +1,6 @@
+local modifiers = {}
 
-require'lib'
+local pl = require'plover'
 
 local prefix = '¶'
 local num_prefix = '¶AO'
@@ -104,13 +105,13 @@ local number_keys = {
 local numbers = {}
 for i = 0, 9 do
   local keys = defactor(i, number_keys)
-  numbers[normalize(keys)] = i
+  numbers[pl.normalize(keys)] = i
 end
 
 local functions = {}
 for i = 1, 12 do
   local keys = defactor(i, number_keys)
-  functions[normalize(keys)] = 'F' .. i
+  functions[pl.normalize(keys)] = 'F' .. i
 end
 
 -- abuse the factoring code to make modifier masks
@@ -133,11 +134,11 @@ for i = 0, (4 ^ 2) - 1 do
   local outputs = defactor(i, modifier_outputs)
   local starts = '{#' .. table.concat(outputs)
   local ends = string.rep(')', #outputs) .. '}'
-  mods[normalize(keys)] = {starts, ends}
+  mods[pl.normalize(keys)] = {starts, ends}
 end
 
-function build_modifiers()
-  local dict = Dict:new{}
+function modifiers.build()
+  local dict = pl.Dict:new{}
 
   for mk,mod in pairs(mods) do
     for ak,alpha in pairs(alphabet) do
@@ -168,3 +169,5 @@ function build_modifiers()
 
   return dict
 end
+
+return modifiers

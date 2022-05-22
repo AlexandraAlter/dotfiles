@@ -1,7 +1,8 @@
+local numbers = {}
 
-require'lib'
+local pl = require'plover'
 
-local numbers = {
+local nums = {
   ['S-'] = '1',
   ['T-'] = '2',
   ['P-'] = '3',
@@ -16,15 +17,15 @@ local numbers = {
 
 local num_prefix = '#-'
 
-function build_numbers()
-  local dict = Dict:new{}
+function numbers.build()
+  local dict = pl.Dict:new{}
 
-  for s,o in pairs(numbers) do
+  for s,o in pairs(nums) do
     dict:add({num_prefix, s}, o)
   end
 
-  for s1,o1 in pairs(numbers) do
-    for s2,o2 in pairs(numbers) do
+  for s1,o1 in pairs(nums) do
+    for s2,o2 in pairs(nums) do
       if o1 ~= o2 then
         dict:add({num_prefix, s1, s2}, o1 .. o2)
         dict:add({num_prefix, s1, s2, '-E', '-U'}, o2 .. o1)
@@ -34,7 +35,7 @@ function build_numbers()
     end
   end
 
-  for s,o in pairs(numbers) do
+  for s,o in pairs(nums) do
     local th = 'th'
     if o == '1' then
       th = 'st'
@@ -48,3 +49,6 @@ function build_numbers()
 
   return dict
 end
+
+return numbers
+

@@ -56,7 +56,7 @@ local function encode_nil(val)
 end
 
 
-local function encode_table(val, stack)
+local function encode_table(val, opts, stack)
   local res = {}
   stack = stack or {}
 
@@ -79,7 +79,7 @@ local function encode_table(val, stack)
     end
     -- Encode
     for i, v in ipairs(val) do
-      table.insert(res, encode(v, stack))
+      table.insert(res, encode(v, opts, stack))
     end
     stack[val] = nil
     return "[" .. table.concat(res, ",") .. "]"
@@ -96,7 +96,7 @@ local function encode_table(val, stack)
     table.sort(keys)
     for _, k in ipairs(keys) do
       local v = val[k]
-      table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))
+      table.insert(res, encode(k, opts, stack) .. ":" .. encode(v, opts, stack))
     end
     stack[val] = nil
     return "{" .. table.concat(res, ",") .. "}"
@@ -107,7 +107,7 @@ local function encode_table(val, stack)
       if type(k) ~= "string" then
         error("invalid table: mixed or invalid key types")
       end
-      table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))
+      table.insert(res, encode(k, opts, stack) .. ":" .. encode(v, opts, stack))
     end
     stack[val] = nil
     return "{" .. table.concat(res, ",") .. "}"
@@ -138,18 +138,19 @@ local type_func_map = {
 }
 
 
-encode = function(val, stack)
+encode = function(val, opts, stack)
   local t = type(val)
   local f = type_func_map[t]
   if f then
-    return f(val, stack)
+    return f(val, opts, stack)
   end
   error("unexpected type '" .. t .. "'")
 end
 
 
-function json.encode(val)
-  return ( encode(val) )
+function json.encode(val, opts)
+  opts = opts or {}
+  return ( encode(val, opts) )
 end
 
 

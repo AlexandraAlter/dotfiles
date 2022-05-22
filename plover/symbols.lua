@@ -1,9 +1,10 @@
+local symbols = {}
 
-require'lib'
+local pl = require'plover'
 
 local prefix = '¶#'
 
-local symbols = {
+local syms = {
   -- more computer function-y symbols
   ['FG']    = {'{#Tab}', '{#Backspace}', '{#Delete}', '{#Escape}'},
   ['RPBG']  = {'{#Up}', '{#Left}', '{#Right}', '{#Down}'},
@@ -57,10 +58,10 @@ local variants = {
   ['EU'] = 4,
 }
 
-function build_symbols()
-  local dict = Dict:new{}
+function symbols.build()
+  local dict = pl.Dict:new{}
 
-  for sk,symbol in pairs(symbols) do
+  for sk,symbol in pairs(syms) do
     for vk,variant in pairs(variants) do
       for rk,repetition in pairs(repetitions) do
         local sym = symbol[variant]
@@ -72,3 +73,5 @@ function build_symbols()
 
   return dict
 end
+
+return symbols

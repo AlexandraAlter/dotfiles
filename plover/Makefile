@@ -2,6 +2,10 @@ CC = gcc
 CFLAGS = -O2 -Wall -fPIC
 LDFLAGS = -shared -lyaml
 FILES = libyaml/*.c
+LUA = lua
+
+dicts: yaml.so
+	$(LUA) make.lua
 
 yaml.so:
 	$(CC) $(LDFLAGS) $(CFLAGS) $(FILES) -o $@
@@ -9,4 +13,4 @@ yaml.so:
 clean:
 	$(RM) yaml.so
 
-.PHONY: clean
+.PHONY: dicts clean

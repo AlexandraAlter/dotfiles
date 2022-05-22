@@ -1,7 +1,9 @@
+local pl = {}
 
 local json = require'json'
+local yaml = require'yaml'
 
-local keys = {
+pl.keys = {
   '§-', '¶-', '#-',
   'S-', 'T-', 'K-', 'P-', 'W-', 'H-', 'R-',
   'A-', 'O-',
@@ -11,7 +13,7 @@ local keys = {
 }
 
 -- keys with 1-long aliases
-local keys_1alias = {
+pl.keys_1alias = {
   '§-', '¶-', '#-',
   'S-', 'J-', 'V-', 'Z-',
   'T-', 'D-', 'F-', 'N-', 'G-',
@@ -39,9 +41,9 @@ local keys_1alias = {
   '-Z',
 }
 
-local implicit_hyphen_keys = {'A-', 'O-', '+-', '*', '-^', '-E', '-U'}
+pl.implicit_hyphen_keys = {'A-', 'O-', '+-', '*', '-^', '-E', '-U'}
 
-local aliases = {
+pl.aliases = {
   ['D-'] = {'T-', 'K-'},
   ['B-'] = {'P-', 'W-'},
   ['L-'] = {'H-', 'R-'},
@@ -95,8 +97,8 @@ local aliases = {
   ['9-'] = {'#-', '-T'},
 }
 
-function is_implicit_hyphen(part)
-  for _,m in ipairs(implicit_hyphen_keys) do
+function pl.is_implicit_hyphen(part)
+  for _,m in ipairs(pl.implicit_hyphen_keys) do
     if part == m then
       return true
     end
@@ -104,16 +106,16 @@ function is_implicit_hyphen(part)
   return false
 end
 
-function has_implicit_hyphen(parts)
+function pl.has_implicit_hyphen(parts)
   for _,v in ipairs(parts) do
-    if is_implicit_hyphen(v) then
+    if pl.is_implicit_hyphen(v) then
       return true
     end
   end
   return false
 end
 
-function split(part)
+function pl.split(part)
   local res = {}
   local last = 0
   for p,c in utf8.codes(part) do
@@ -121,12 +123,12 @@ function split(part)
     local char = utf8.char(c)
 
     if char == '-' then
-      last = index(keys_1alias, '*')
+      last = pl.index(pl.keys_1alias, '*')
       goto continue
     end
 
-    for i = last + 1, #keys_1alias do
-      local k = keys_1alias[i]
+    for i = last + 1, #pl.keys_1alias do
+      local k = pl.keys_1alias[i]
       if string.find(k, char, 1, true) then
         last = i
         table.insert(res, k)
@@ -142,23 +144,23 @@ function split(part)
   return res
 end
 
-function dealias(parts)
+function pl.dealias(parts)
   local res = {}
   for _,v in ipairs(parts) do
-    if aliases[v] then
+    if pl.aliases[v] then
       -- aliased key
-      for _,a in ipairs(aliases[v]) do
+      for _,a in ipairs(pl.aliases[v]) do
         table.insert(res, a)
       end
-    elseif index(keys, v) then
+    elseif pl.index(pl.keys, v) then
       -- plain key
       table.insert(res, v)
     else
       -- compound key
-      for _,s in ipairs(split(v)) do
-        if aliases[s] then
+      for _,s in ipairs(pl.split(v)) do
+        if pl.aliases[s] then
           -- aliased split
-          for _,a in ipairs(aliases[s]) do
+          for _,a in ipairs(pl.aliases[s]) do
             table.insert(res, a)
           end
         else
@@ -171,7 +173,7 @@ function dealias(parts)
   return res
 end
 
-function unique(parts)
+function pl.unique(parts)
   local hash = {}
   local res = {}
   for _,v in ipairs(parts) do
@@ -183,7 +185,7 @@ function unique(parts)
   return res
 end
 
-function strip_hyphens(parts)
+function pl.strip_hyphens(parts)
   for i,v in ipairs(parts) do
     if v ~= '-' then
       parts[i] = string.gsub(v, '-', '')
@@ -192,7 +194,7 @@ function strip_hyphens(parts)
   return parts
 end
 
-function index(tbl, val)
+function pl.index(tbl, val)
   for i,v in ipairs(tbl) do
     if v == val then
       return i
@@ -201,40 +203,51 @@ function index(tbl, val)
   return nil
 end
 
-function normalize(parts)
+function pl.normalize(parts)
   if type(parts) == 'string' then
-    parts = split(parts)
+    parts = pl.split(parts)
   end
   if #parts == 0 then
     return ''
   end
-  parts = dealias(parts)
-  parts = unique(parts)
-  if not has_implicit_hyphen(parts) then
+  parts = pl.dealias(parts)
+  parts = pl.unique(parts)
+  if not pl.has_implicit_hyphen(parts) then
     table.insert(parts, '-')
   end
-  table.sort(parts, function (a, b) return index(keys, a) < index(keys, b) end)
-  parts = strip_hyphens(parts)
+  local function psort(a, b) return pl.index(pl.keys, a) < pl.index(pl.keys, b) end
+  table.sort(parts, psort)
+  parts = pl.strip_hyphens(parts)
   return table.concat(parts)
 end
 
-Dict = {}
-Dict.__index = Dict
+pl.Dict = {}
+pl.Dict.__index = pl.Dict
 
-function Dict:new(o)
+function pl.Dict:new(o)
   local o = o or {}
   setmetatable(o, self)
   o.entries = {}
   return o
 end
 
-function Dict:add(stroke, output)
-  self.entries[normalize(stroke)] = output
+function pl.Dict:read_json(fname)
+  return pl.Dict:new{}
 end
 
-function Dict:write(file)
-  local entries = json.encode(self.entries)
-  file:write(entries)
-  file:flush()
+function pl.Dict:read_yaml(fname)
+  return pl.Dict:new{}
 end
 
+function pl.Dict:write(fname)
+  local f <close> = io.open(fname, 'w')
+  local entries = json.encode(self.entries, {sort = true})
+  f:write(entries)
+  f:flush()
+end
+
+function pl.Dict:add(stroke, output)
+  self.entries[pl.normalize(stroke)] = output
+end
+
+return pl

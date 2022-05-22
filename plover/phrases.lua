@@ -1,5 +1,6 @@
+local phrases = {}
 
-require'lib'
+local pl = require'plover'
 
 -- briefs are of the following forms:
 --  subject + adverb + verb
@@ -184,8 +185,8 @@ local verb_are_replacement = {
   [''] = 'are',
 }
 
-function build_phrases()
-  local dict = Dict:new{}
+function phrases.build()
+  local dict = pl.Dict:new{}
 
   for vk,verb in pairs(verbs) do
     for sk,subject in pairs(subjects) do
@@ -211,3 +212,5 @@ function build_phrases()
 
   return dict
 end
+
+return phrases

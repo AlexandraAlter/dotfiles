@@ -84,7 +84,7 @@ local function encode_table(val, opts, stack)
     stack[val] = nil
     return "[" .. table.concat(res, ",") .. "]"
 
-  elseif true then
+  elseif opts.sort then
     -- Treat as a sortable object
     local keys = {}
     for k, _ in pairs(val) do

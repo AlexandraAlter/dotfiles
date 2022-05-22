@@ -13,20 +13,22 @@
 - plover-english-stenotype-plus
 - plover-palantype
 - plover-syllabic
-- plover-python-dictionary
 - plover-dict-commands
 
 # Dictionaries
 
 - user.json
+- control.json
+- formatting.json
+- out/numbers.json
+- out/symbols.json
+- out/modifiers.json
+- out/phrases.json
+- misstrokes.json
+- dict.json
+
 - di/computer-use.json
-- di/plover-use.json
 - di/navigation.json
 - di/tabbing.json
 - di/fingerspelling.json
-- di/numbers.json
 - di/punctuation.json
-- emily-modifiers.py
-- emily-symbols.py
-- jade-phrasing.py
-- di/dict.json

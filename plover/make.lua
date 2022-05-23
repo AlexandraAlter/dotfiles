@@ -1,22 +1,26 @@
 -- AlexandraAlter's Plover Dictionaries
 
 local pl = require'plover'
-local numbers = require'numbers'
-local symbols = require'symbols'
-local modifiers = require'modifiers'
-local phrases = require'phrases'
 
-print('Generating main strokes...')
-pl.Dict:read_yaml('dict.yaml'):write('out/dict.json')
+local function gen_lua(mod_n, out_f)
+  print('Lua: ' .. mod_n .. ' > ' .. out_f)
+  local mod = require(mod_n)
+  mod.build():write(out_f)
+end
 
-print('Generating number strokes...')
-numbers.build():write('out/numbers.json')
+local function gen_json(in_f, out_f)
+  print('JSON: ' .. in_f .. ' > ' .. out_f)
+  pl.Dict:read_json(in_f):write(out_f)
+end
 
-print('Generating symbol strokes...')
-symbols.build():write('out/symbols.json')
+local function gen_yaml(in_f, out_f)
+  print('YAML: ' .. in_f .. ' > ' .. out_f)
+  pl.Dict:read_yaml(in_f):write(out_f)
+end
 
-print('Generating modifier strokes...')
-modifiers.build():write('out/modifiers.json')
-
-print('Generating phrase strokes...')
-phrases.build():write('out/phrases.json')
+gen_lua('numbers', 'out/numbers.json')
+gen_lua('symbols', 'out/symbols.json')
+gen_lua('modifiers', 'out/modifiers.json')
+gen_lua('phrases', 'out/phrases.json')
+gen_yaml('misstrokes.yaml', 'out/misstrokes.json')
+gen_yaml('dict.yaml', 'out/dict.json')

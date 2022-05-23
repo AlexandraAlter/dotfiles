@@ -2,49 +2,34 @@ local numbers = {}
 
 local pl = require'plover'
 
-local nums = {
-  ['S-'] = '1',
-  ['T-'] = '2',
-  ['P-'] = '3',
-  ['H-'] = '4',
-  ['A-'] = '5',
-  ['O-'] = '0',
-  ['-F'] = '6',
-  ['-P'] = '7',
-  ['-L'] = '8',
-  ['-T'] = '9',
-}
-
-local num_prefix = '#-'
-
 function numbers.build()
   local dict = pl.Dict:new{}
 
-  for s,o in pairs(nums) do
-    dict:add({num_prefix, s}, o)
+  for i = 0, 9 do
+    dict:add({'#-', i}, i)
   end
 
-  for s1,o1 in pairs(nums) do
-    for s2,o2 in pairs(nums) do
-      if o1 ~= o2 then
-        dict:add({num_prefix, s1, s2}, o1 .. o2)
-        dict:add({num_prefix, s1, s2, '-E', '-U'}, o2 .. o1)
+  for i = 0, 9 do
+    for j = i, 9 do
+      if i ~= j then
+        dict:add({'#-', i, j}, i .. j)
+        dict:add({'#-', i, j, '-E', '-U'}, j .. i)
       else
-        dict:add({num_prefix, s1, '-D'}, o1 .. o1)
+        dict:add({'#-', i, '-D'}, i .. i)
       end
     end
   end
 
-  for s,o in pairs(nums) do
+  for i = 0, 9 do
     local th = 'th'
-    if o == '1' then
+    if i == 1 then
       th = 'st'
-    elseif o == '2' then
+    elseif i == 2 then
       th = 'nd'
-    elseif o == '3' then
+    elseif i == 3 then
       th = 'rd'
     end
-    dict:add({num_prefix, s, '*', '-T'}, o .. th)
+    dict:add({'#-', i, '*', '-T'}, i .. th)
   end
 
   return dict

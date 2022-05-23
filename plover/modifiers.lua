@@ -2,10 +2,10 @@ local modifiers = {}
 
 local pl = require'plover'
 
-local prefix = '¶'
-local num_prefix = '¶AO'
-local fun_prefix = '¶FAO'
-local sym_prefix = '¶*'
+local pfx = '¶'
+local num_pfx = pfx .. 'AO'
+local fun_pfx = pfx .. 'FAO'
+local sym_pfx = pfx .. '*'
 
 local alphabet = {
   ['A'] = 'a',
@@ -105,13 +105,13 @@ local number_keys = {
 local numbers = {}
 for i = 0, 9 do
   local keys = defactor(i, number_keys)
-  numbers[pl.normalize(keys)] = i
+  numbers[pl.keys:normalize(keys)] = i
 end
 
 local functions = {}
 for i = 1, 12 do
   local keys = defactor(i, number_keys)
-  functions[pl.normalize(keys)] = 'F' .. i
+  functions[pl.keys:normalize(keys)] = 'F' .. i
 end
 
 -- abuse the factoring code to make modifier masks
@@ -134,7 +134,7 @@ for i = 0, (4 ^ 2) - 1 do
   local outputs = defactor(i, modifier_outputs)
   local starts = '{#' .. table.concat(outputs)
   local ends = string.rep(')', #outputs) .. '}'
-  mods[pl.normalize(keys)] = {starts, ends}
+  mods[pl.keys:normalize(keys)] = {starts, ends}
 end
 
 function modifiers.build()
@@ -143,7 +143,7 @@ function modifiers.build()
   for mk,mod in pairs(mods) do
     for ak,alpha in pairs(alphabet) do
       local out = mod[1] .. alpha .. mod[2]
-      dict:add({prefix, mk, ak}, out)
+      dict:add({pfx, mk, ak}, out)
     end
 
     for sk,sym in pairs(symbols) do
@@ -151,19 +151,19 @@ function modifiers.build()
         local v = sym[var]
         if v ~= nil then
           local out = mod[1] .. sym[var] .. mod[2]
-          dict:add({sym_prefix, mk, sk, vk}, out)
+          dict:add({sym_pfx, mk, sk, vk}, out)
         end
       end
     end
 
     for nk,num in pairs(numbers) do
       local out = mod[1] .. num .. mod[2]
-      dict:add({num_prefix, mk, nk}, out)
+      dict:add({num_pfx, mk, nk}, out)
     end
 
     for fk,fun in pairs(functions) do
       local out = mod[1] .. fun .. mod[2]
-      dict:add({fun_prefix, mk, fk}, out)
+      dict:add({fun_pfx, mk, fk}, out)
     end
   end
 

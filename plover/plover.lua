@@ -26,6 +26,19 @@ local function strip_hyphens(parts)
   return parts
 end
 
+local function count_non_hyphens(stroke)
+  local non_hyphens = string.gsub(stroke, '-', '')
+  return utf8.len(non_hyphens)
+end
+
+local function sort_non_hyphens(a, b)
+  return count_non_hyphens(a) < count_non_hyphens(b)
+end
+
+local function sort_non_hyphens_reverse(a, b)
+  return sort_non_hyphens(b, a)
+end
+
 local function stringify(parts)
   for i,v in ipairs(parts) do
     parts[i] = tostring(v)
@@ -65,7 +78,16 @@ function pl.Keymap:add_keys(keys)
 end
 
 function pl.Keymap:add_aliases(aliases)
-  for alias, keys in pairs(aliases) do
+  -- aliases that are subsets of each other cause problems
+  -- shorter aliases must come first, so they are processed last
+  local alias_list = {}
+  for alias, _ in pairs(aliases) do
+    table.insert(alias_list, alias)
+  end
+  table.sort(alias_list, sort_non_hyphens_reverse)
+
+  for _, alias in ipairs(alias_list) do
+    local keys = aliases[alias]
     local pos = 0
     for _, k in ipairs(keys) do
       local i = self:find(k)
@@ -76,6 +98,7 @@ function pl.Keymap:add_aliases(aliases)
         pos = i
       end
     end
+
     table.insert(self, pos + 1, alias)
     self[alias] = keys
   end
@@ -208,13 +231,19 @@ pl.keys:add_aliases{
   ['TH-'] = {'T-', 'H-'},
   ['CH-'] = {'K-', 'H-'},
 
-  ['OO-'] = {'O-', '-E'},
-  ['EE-'] = {'A-', 'O-', '-E'},
-  ['AA-'] = {'A-', '-E', '-U'},
-  ['UU-'] = {'A-', 'O-', '-U'},
-  ['OI-'] = {'O-', '-E', '-U'},
-  ['II-'] = {'A-', 'O-', '-E', '-U'},
   ['-I'] = {'-E', '-U'},
+  ['Ā'] = {'A-', '-E', '-U'},
+  ['Ē'] = {'A-', 'O-', '-E'},
+  ['Ī'] = {'A-', 'O-', '-E', '-U'},
+  ['Ō'] = {'O-', '-E'},
+  ['Ū'] = {'A-', 'O-', '-U'},
+  ['EW'] = {'A-', 'O-', '-U'},
+  ['AW'] = {'A-', '-U'},
+  ['OI'] = {'O-', '-E', '-U'},
+  ['OW'] = {'O-', '-U'},
+  ['EA'] = {'A-', '-E'},
+  ['OA-'] = {'A-', 'O-'},
+  ['OO-'] = {'A-', 'O-'},
 
   ['-TH'] = {'*', '-T'},
   ['-N'] = {'-P', '-B'},

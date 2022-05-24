@@ -2,6 +2,7 @@ local pl = {}
 
 local json = require'json'
 local yaml = require'yaml'
+local inspect = require'inspect'
 
 -- Utility Functions
 
@@ -75,7 +76,18 @@ function pl.Keymap:new(o)
   return o
 end
 
-function pl.Keymap:find(key)
+function pl.Keymap:find_hyphen(init)
+  init = init or 0
+  for i = init, #self do
+    local k = self[i]
+    if k == '-' or self.implicit_hyphens[k] then
+      return i
+    end
+  end
+  error('no hyphen, implicit or otherwise')
+end
+
+function pl.Keymap:find_raw(key)
   for i, k in ipairs(self) do
     if k == key then
       return i
@@ -84,10 +96,20 @@ function pl.Keymap:find(key)
   return nil
 end
 
+function pl.Keymap:find(key)
+  if key == '-' then
+    return self:find_hyphen()
+  else
+    return self:find_raw(key)
+  end
+end
+
 function pl.Keymap:find_fuzzy(key, init)
+  init = init or 1
+  local pattern = '^%-?' .. key .. '%-?$'
   for i = init, #self do
     local k = self[i]
-    if string.find(k, key, 1, true) then
+    if string.match(k, pattern) then
       return i, k
     end
   end
@@ -103,8 +125,8 @@ function pl.Keymap:add_keys(keys)
 end
 
 function pl.Keymap:add_aliases(aliases)
-  -- aliases that are subsets of each other cause problems
-  -- shorter aliases must come first, so they are processed last
+  -- aliases that are subsets of each used to cause problems
+  -- shorter aliases must come first, for aesthetics
   local alias_list = {}
   for alias, _ in pairs(aliases) do
     table.insert(alias_list, alias)
@@ -147,9 +169,6 @@ end
 local function split_iter(parts)
   local i = 1
   return function()
-    if string.match(parts, '^-', i, true) then
-      i = i + 1
-    end
     local bracket_m, alias_m = string.match(parts, '^(%((%w+)%))', i)
     local char_m = string.match(parts, '^' .. utf8.charpattern, i)
     if bracket_m then
@@ -171,6 +190,8 @@ function pl.Keymap:split(part)
     if char == '/' then
       table.insert(res, char)
       last = 0
+    elseif char == '-' then
+      last = self:find_hyphen() - 1
     else
       local i, match = self:find_fuzzy(char, last + 1)
       if i == nil then
@@ -244,7 +265,7 @@ pl.keys:add_keys{
   '§-', '¶-', '#-',
   'S-', 'T-', 'K-', 'P-', 'W-', 'H-', 'R-',
   'A-', 'O-',
-  '+-', '-', '*', '-^',
+  '+-', '*', '-^',
   '-E', '-U',
   '-F', '-R', '-P', '-B', '-L', '-G', '-T', '-S', '-D', '-Z',
 }
@@ -307,10 +328,10 @@ pl.keys:add_aliases{
   ['4-'] = {'#-', 'H-'},
   ['5-'] = {'#-', 'A-'},
   ['0-'] = {'#-', 'O-'},
-  ['6-'] = {'#-', '-F'},
-  ['7-'] = {'#-', '-P'},
-  ['8-'] = {'#-', '-L'},
-  ['9-'] = {'#-', '-T'},
+  ['-6'] = {'#-', '-F'},
+  ['-7'] = {'#-', '-P'},
+  ['-8'] = {'#-', '-L'},
+  ['-9'] = {'#-', '-T'},
 }
 
 pl.keys:add_implicit_hyphens{
@@ -363,7 +384,16 @@ function pl.Dict:write(fname)
 end
 
 function pl.Dict:add(stroke, output)
-  self.entries[pl.keys:normalize(stroke)] = tostring(output)
+  local norm = pl.keys:normalize(stroke)
+  if not self.entries[norm] then
+    self.entries[norm] = tostring(output)
+  else
+    local s = inspect(stroke) .. ' -> ' .. norm .. '\n'
+    local o_o = 'old: ' .. inspect(self.entries[norm])
+    local o_n = 'new: ' .. inspect(output)
+    local o = o_o .. ' ' .. o_n
+    print('warn: duplicate stroke: ' .. s .. o)
+  end
 end
 
 return pl

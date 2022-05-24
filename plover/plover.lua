@@ -5,10 +5,10 @@ local yaml = require'yaml'
 
 -- Utility Functions
 
-local function unique(parts)
+local function unique(stroke)
   local hash = {}
   local res = {}
-  for _,v in ipairs(parts) do
+  for _,v in ipairs(stroke) do
     if not hash[v] then
       table.insert(res, v)
       hash[v] = true
@@ -17,13 +17,13 @@ local function unique(parts)
   return res
 end
 
-local function strip_hyphens(parts)
-  for i,v in ipairs(parts) do
+local function strip_hyphens(stroke)
+  for i,v in ipairs(stroke) do
     if v ~= '-' then
-      parts[i] = string.gsub(v, '-', '')
+      stroke[i] = string.gsub(v, '-', '')
     end
   end
-  return parts
+  return stroke
 end
 
 local function count_non_hyphens(stroke)
@@ -39,11 +39,26 @@ local function sort_non_hyphens_reverse(a, b)
   return sort_non_hyphens(b, a)
 end
 
-local function stringify(parts)
-  for i,v in ipairs(parts) do
-    parts[i] = tostring(v)
+local function partition(stroke)
+  local res = {}
+  local tail = {}
+  table.insert(res, tail)
+  for i, v in ipairs(stroke) do
+    if v == '/' then
+      tail = {}
+      table.insert(res, tail)
+    else
+      table.insert(tail, v)
+    end
   end
-  return parts
+  return res
+end
+
+local function stringify(stroke)
+  for i, v in ipairs(stroke) do
+    stroke[i] = tostring(v)
+  end
+  return stroke
 end
 
 -- Keymaps
@@ -64,6 +79,16 @@ function pl.Keymap:find(key)
   for i, k in ipairs(self) do
     if k == key then
       return i
+    end
+  end
+  return nil
+end
+
+function pl.Keymap:find_fuzzy(key, init)
+  for i = init, #self do
+    local k = self[i]
+    if string.find(k, key, 1, true) then
+      return i, k
     end
   end
   return nil
@@ -122,7 +147,7 @@ end
 local function split_iter(parts)
   local i = 1
   return function()
-    if string.match(parts, '-', i, true) then
+    if string.match(parts, '^-', i, true) then
       i = i + 1
     end
     local bracket_m, alias_m = string.match(parts, '^(%((%w+)%))', i)
@@ -143,18 +168,17 @@ function pl.Keymap:split(part)
   local res = {}
   local last = 0
   for char in split_iter(part) do
-    for i = last + 1, #self do
-      local k = self[i]
-      if string.find(k, char, 1, true) then
-        table.insert(res, k)
+    if char == '/' then
+      table.insert(res, char)
+      last = 0
+    else
+      local i, match = self:find_fuzzy(char, last + 1)
+      if i == nil then
+        error('bad stroke character: ' .. char .. ' in ' .. part)
+      else
+        table.insert(res, match)
         last = i
-        char = nil
-        break
       end
-    end
-
-    if char ~= nil then
-      error('bad stroke character: ' .. char .. ' in ' .. part)
     end
   end
   return res
@@ -164,8 +188,8 @@ function pl.Keymap:dealias(parts)
   local res = {}
   for _,v in ipairs(parts) do
     local lookup = self[v]
-    if type(lookup) == 'string' then
-      -- plain key
+    if v == '/' or type(lookup) == 'string' then
+      -- plain key or split
       table.insert(res, lookup)
     elseif type(lookup) == 'table' then
       -- aliased key
@@ -182,24 +206,34 @@ function pl.Keymap:dealias(parts)
   return res
 end
 
-function pl.Keymap:normalize(parts)
-  local p_type = type(parts)
-  if p_type == 'number' or p_type == 'string' then
-    parts = self:split(tostring(parts))
+function pl.Keymap:sort_keys_f(k1, k2)
+  return function (k1, k2)
+    return self:find(k1) < self:find(k2)
   end
-  if #parts == 0 then
+end
+
+function pl.Keymap:normalize(strokes)
+  local s_type = type(strokes)
+  if s_type == 'number' or s_type == 'string' then
+    strokes = self:split(tostring(strokes))
+  end
+  if #strokes == 0 then
     return ''
   end
-  parts = stringify(parts)
-  parts = self:dealias(parts)
-  parts = unique(parts)
-  if not self:has_implicit_hyphen(parts) then
-    table.insert(parts, '-')
+  strokes = partition(strokes)
+  for i, stroke in ipairs(strokes) do
+    stroke = stringify(stroke)
+    stroke = self:dealias(stroke)
+    stroke = unique(stroke)
+    if not self:has_implicit_hyphen(stroke) then
+      table.insert(stroke, '-')
+    end
+    table.sort(stroke, self:sort_keys_f())
+    stroke = strip_hyphens(stroke)
+    stroke = table.concat(stroke)
+    strokes[i] = stroke
   end
-  local function psort(a, b) return self:find(a) < self:find(b) end
-  table.sort(parts, psort)
-  parts = strip_hyphens(parts)
-  return table.concat(parts)
+  return table.concat(strokes, '/')
 end
 
 -- Main Keymap
@@ -225,11 +259,14 @@ pl.keys:add_aliases{
   ['Y-'] = {'K-', 'W-', 'R-'},
   ['J-'] = {'S-', 'K-', 'W-', 'R-'},
   ['G-'] = {'T-', 'K-', 'P-', 'W-'},
+  ['Q-'] = {'K-', 'W-'}, -- fingerspelling only?
+  ['X-'] = {'K-', 'P-'}, -- fingerspelling only?
   ['V-'] = {'S-', 'R-'},
   ['Z-'] = {'S-', '*'},
   ['SH-'] = {'S-', 'H-'},
   ['TH-'] = {'T-', 'H-'},
   ['CH-'] = {'K-', 'H-'},
+  ['C-'] = {'K-'}, -- shortcut only
 
   ['-I'] = {'-E', '-U'},
   ['Ā'] = {'A-', '-E', '-U'},
@@ -258,6 +295,7 @@ pl.keys:add_aliases{
   ['-K'] = {'-B', '-G'},
   ['-SHUN'] = {'-G', '-S'},
   ['-KSHUN'] = {'-B', '-G', '-S'},
+  ['-X'] = {'-B', '-G', '-S'},
   ['-RV'] = {'-F', '-R', '-B'},
   ['-RCH'] = {'-F', '-R', '-B', '-P'},
   ['-NCH'] = {'-F', '-R', '-B', '-P'},

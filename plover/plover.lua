@@ -71,8 +71,11 @@ function pl.Keymap:new(o)
   local o = o or {}
   setmetatable(o, self)
   o.plain = o.plain or {}
+  o.symbolic = o.symbolic or {}
   o.alias = o.alias or {}
   o.implicit_hyphens = o.implicit_hyphens or {}
+  o['/'] = '/'
+  o.plain['/'] = true
   return o
 end
 
@@ -119,8 +122,30 @@ end
 function pl.Keymap:add_keys(keys)
   for _, key in ipairs(keys) do
     table.insert(self, key)
-    table.insert(self.plain, key)
+    self.plain[key] = true
     self[key] = key
+  end
+end
+
+-- this is a bit of a hack for problems with ordering
+-- plain keys considered 'symbolic' are ignored when
+-- working out where aliases place in the key list
+function pl.Keymap:add_symbolics(syms)
+  for _, sym in ipairs(syms) do
+    self.symbolic[sym] = true
+  end
+end
+
+-- TODO actually use this
+function pl.Keymap:add_feral(ferals)
+  for _, feral in ipairs(ferals) do
+    self.ferals[feral] = true
+  end
+end
+
+function pl.Keymap:add_implicit_hyphens(ihs)
+  for _, ih in ipairs(ihs) do
+    self.implicit_hyphens[ih] = true
   end
 end
 
@@ -131,33 +156,28 @@ function pl.Keymap:add_aliases(aliases)
   for alias, _ in pairs(aliases) do
     table.insert(alias_list, alias)
   end
-  table.sort(alias_list, sort_non_hyphens_reverse)
+  table.sort(alias_list, sort_non_hyphens)
 
   for _, alias in ipairs(alias_list) do
-    local keys = aliases[alias]
+    local a_keys = aliases[alias]
     local pos = 0
-    for _, k in ipairs(keys) do
+    for _, k in ipairs(a_keys) do
       local i = self:find(k)
       if not i then
         error('alias contains keys not in the keymap')
       end
-      if i > pos then
+      if i > pos and not self.symbolic[k] then
         pos = i
       end
     end
 
-    table.insert(self, pos + 1, alias)
-    self[alias] = keys
+    table.insert(self, pos, alias)
+    self[alias] = a_keys
+    self.alias[alias] = true
   end
 end
 
-function pl.Keymap:add_implicit_hyphens(ihs)
-  for _, ih in ipairs(ihs) do
-    self.implicit_hyphens[ih] = true
-  end
-end
-
-function pl.Keymap:has_implicit_hyphen(parts)
+function pl.Keymap:contains_implicit_hyphen(parts)
   for _,v in ipairs(parts) do
     if self.implicit_hyphens[v] then
       return true
@@ -208,13 +228,12 @@ end
 function pl.Keymap:dealias(parts)
   local res = {}
   for _,v in ipairs(parts) do
-    local lookup = self[v]
-    if v == '/' or type(lookup) == 'string' then
+    if self.plain[v] then
       -- plain key or split
-      table.insert(res, lookup)
-    elseif type(lookup) == 'table' then
+      table.insert(res, self[v])
+    elseif self.alias[v] then
       -- aliased key
-      for _,key in ipairs(lookup) do
+      for _,key in ipairs(self[v]) do
         table.insert(res, key)
       end
     else
@@ -246,7 +265,7 @@ function pl.Keymap:normalize(strokes)
     stroke = stringify(stroke)
     stroke = self:dealias(stroke)
     stroke = unique(stroke)
-    if not self:has_implicit_hyphen(stroke) then
+    if not self:contains_implicit_hyphen(stroke) then
       table.insert(stroke, '-')
     end
     table.sort(stroke, self:sort_keys_f())
@@ -268,6 +287,14 @@ pl.keys:add_keys{
   '+-', '*', '-^',
   '-E', '-U',
   '-F', '-R', '-P', '-B', '-L', '-G', '-T', '-S', '-D', '-Z',
+}
+
+pl.keys:add_symbolics{
+  '§-', '¶-', '#-', '+-', '*', '-^',
+}
+
+pl.keys:add_implicit_hyphens{
+  'A-', 'O-', '+-', '*', '-^', '-E', '-U',
 }
 
 pl.keys:add_aliases{
@@ -332,10 +359,6 @@ pl.keys:add_aliases{
   ['-7'] = {'#-', '-P'},
   ['-8'] = {'#-', '-L'},
   ['-9'] = {'#-', '-T'},
-}
-
-pl.keys:add_implicit_hyphens{
-  'A-', 'O-', '+-', '*', '-^', '-E', '-U'
 }
 
 -- Dictionaries

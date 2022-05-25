@@ -203,6 +203,7 @@ local function split_iter(parts)
   end
 end
 
+-- break a string stroke up into its parts
 function pl.Keymap:split(part)
   local res = {}
   local last = 0
@@ -223,6 +224,22 @@ function pl.Keymap:split(part)
     end
   end
   return res
+end
+
+function pl.Keymap:repartition(strokes)
+  local s_type = type(strokes)
+  if s_type == 'number' or s_type == 'string' then
+    return self:split(tostring(strokes))
+  else
+    local res = {}
+    for _, v in ipairs(strokes) do
+      local sp = self:split(tostring(v))
+      for _, spv in ipairs(sp) do
+        table.insert(res, spv)
+      end
+    end
+    return res
+  end
 end
 
 function pl.Keymap:dealias(parts)
@@ -253,10 +270,7 @@ function pl.Keymap:sort_keys_f(k1, k2)
 end
 
 function pl.Keymap:normalize(strokes)
-  local s_type = type(strokes)
-  if s_type == 'number' or s_type == 'string' then
-    strokes = self:split(tostring(strokes))
-  end
+  strokes = self:repartition(strokes)
   if #strokes == 0 then
     return ''
   end
@@ -373,39 +387,6 @@ function pl.Dict:new(o)
   return o
 end
 
-function pl.Dict:read_json(fname)
-  local f <close> = io.open(fname, 'r')
-  if not f then
-    error('no such file:' .. fname)
-  end
-  local entries = json.decode(f:read('a'))
-  local dict = pl.Dict:new{}
-  for k, s in pairs(entries) do
-    dict:add(k, s)
-  end
-  return dict
-end
-
-function pl.Dict:read_yaml(fname)
-  local f <close> = io.open(fname, 'r')
-  if not f then
-    error('no such file:' .. fname)
-  end
-  local entries = yaml.load(f:read('a'))
-  local dict = pl.Dict:new{}
-  for k, s in pairs(entries) do
-    dict:add(k, s)
-  end
-  return dict
-end
-
-function pl.Dict:write(fname)
-  local f <close> = io.open(fname, 'w')
-  local entries = json.encode(self.entries, {sort = true})
-  f:write(entries)
-  f:flush()
-end
-
 function pl.Dict:add(stroke, output)
   local norm = pl.keys:normalize(stroke)
   if not self.entries[norm] then
@@ -417,6 +398,76 @@ function pl.Dict:add(stroke, output)
     local o = o_o .. ' ' .. o_n
     print('warn: duplicate stroke: ' .. s .. o)
   end
+end
+
+function pl.Dict:add_table(tbl, stack)
+  stack = stack or {}
+  local at_top = #stack == 0
+  if not at_top then
+    table.insert(stack, '/')
+  end
+  for stroke, subval in pairs(tbl) do
+    if stroke == '' then
+      -- special case for keyless strokes
+      if at_top then
+        error('blank key at top of table')
+      end
+      table.remove(stack)
+      self:add(stack, subval)
+      table.insert(stack, '/')
+    else
+      table.insert(stack, stroke)
+      if type(subval) == 'table' then
+        -- recurse into the inner table
+        self:add_table(subval, stack)
+      elseif type(subval) == 'string' then
+        -- regular stroke
+        self:add(stack, subval)
+      else
+        local loc = inspect(stack) .. stroke
+        error('unexpected type at: ' .. loc)
+      end
+      table.remove(stack)
+    end
+  end
+  if not at_top then
+    table.remove(stack)
+  end
+end
+
+function pl.Dict:read_yaml(fname)
+  local f <close> = io.open(fname, 'r')
+  if not f then
+    error('no such file:' .. fname)
+  end
+  local top = yaml.load(f:read('a'))
+  if type(top) ~= 'table' then
+    error('yaml document is not a hash')
+  end
+  local dict = pl.Dict:new{}
+  dict:add_table(top)
+  return dict
+end
+
+function pl.Dict:read_json(fname)
+  local f <close> = io.open(fname, 'r')
+  if not f then
+    error('no such file:' .. fname)
+  end
+  local top = json.decode(f:read('a'))
+  if type(top) ~= 'table' then
+    error('json document is not a hash')
+  end
+  local dict = pl.Dict:new{}
+  dict:add_table(top)
+  return dict
+end
+
+function pl.Dict:write(fname)
+  local f <close> = io.open(fname, 'w')
+  local entries = json.encode(self.entries, {sort = true})
+  f:write(entries)
+  f:flush()
 end
 
 return pl

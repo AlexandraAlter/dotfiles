@@ -4,6 +4,13 @@ local json = require'json'
 local yaml = require'yaml'
 local inspect = require'inspect'
 
+-- delimiter for multiple strokes
+local STROKE_SPLIT = '/'
+-- delimiter for breaks between lower-cased aliases
+local STROKE_BREAK = '.'
+-- delimiter for left-right keys
+local STROKE_DASH = '-'
+
 -- Utility Functions
 
 local function unique(stroke)
@@ -18,26 +25,26 @@ local function unique(stroke)
   return res
 end
 
-local function strip_hyphens(stroke)
+local function strip_dashes(stroke)
   for i,v in ipairs(stroke) do
-    if v ~= '-' then
-      stroke[i] = string.gsub(v, '-', '')
+    if v ~= STROKE_DASH then
+      stroke[i] = string.gsub(v, STROKE_DASH, '')
     end
   end
   return stroke
 end
 
-local function count_non_hyphens(stroke)
-  local non_hyphens = string.gsub(stroke, '-', '')
-  return utf8.len(non_hyphens)
+local function count_non_dashes(stroke)
+  local non_dashes = string.gsub(stroke, STROKE_DASH, '')
+  return utf8.len(non_dashes)
 end
 
-local function sort_non_hyphens(a, b)
-  return count_non_hyphens(a) < count_non_hyphens(b)
+local function sort_non_dashes(a, b)
+  return count_non_dashes(a) < count_non_dashes(b)
 end
 
-local function sort_non_hyphens_reverse(a, b)
-  return sort_non_hyphens(b, a)
+local function sort_non_dashes_reverse(a, b)
+  return sort_non_dashes(b, a)
 end
 
 local function partition(stroke)
@@ -45,7 +52,7 @@ local function partition(stroke)
   local tail = {}
   table.insert(res, tail)
   for i, v in ipairs(stroke) do
-    if v == '/' then
+    if v == STROKE_SPLIT then
       tail = {}
       table.insert(res, tail)
     else
@@ -72,22 +79,23 @@ function pl.Keymap:new(o)
   setmetatable(o, self)
   o.plain = o.plain or {}
   o.symbolic = o.symbolic or {}
+  o.macro = o.macro or {}
   o.alias = o.alias or {}
-  o.implicit_hyphens = o.implicit_hyphens or {}
-  o['/'] = '/'
-  o.plain['/'] = true
+  o.implicit_dashes = o.implicit_dashes or {}
+  o[STROKE_SPLIT] = STROKE_SPLIT
+  o.plain[STROKE_SPLIT] = true
   return o
 end
 
-function pl.Keymap:find_hyphen(init)
+function pl.Keymap:find_dash(init)
   init = init or 0
   for i = init, #self do
     local k = self[i]
-    if k == '-' or self.implicit_hyphens[k] then
+    if k == STROKE_DASH or self.implicit_dashes[k] then
       return i
     end
   end
-  error('no hyphen, implicit or otherwise')
+  error('no dash, implicit or otherwise')
 end
 
 function pl.Keymap:find_raw(key)
@@ -100,8 +108,8 @@ function pl.Keymap:find_raw(key)
 end
 
 function pl.Keymap:find(key)
-  if key == '-' then
-    return self:find_hyphen()
+  if key == STROKE_DASH then
+    return self:find_dash()
   else
     return self:find_raw(key)
   end
@@ -143,20 +151,34 @@ function pl.Keymap:add_feral(ferals)
   end
 end
 
-function pl.Keymap:add_implicit_hyphens(ihs)
+function pl.Keymap:add_implicit_dashes(ihs)
   for _, ih in ipairs(ihs) do
-    self.implicit_hyphens[ih] = true
+    self.implicit_dashes[ih] = true
   end
 end
 
 function pl.Keymap:add_aliases(aliases)
+  -- turn table-keyed entries into duplicate entries
+  for k, v in pairs(aliases) do
+    if type(k) == 'table' then
+      for _, sk in ipairs(k) do
+        aliases[sk] = v
+      end
+    end
+  end
+  for k, _ in pairs(aliases) do
+    if type(k) == 'table' then
+      aliases[k] = nil
+    end
+  end
+
   -- aliases that are subsets of each used to cause problems
   -- shorter aliases must come first, for aesthetics
   local alias_list = {}
   for alias, _ in pairs(aliases) do
     table.insert(alias_list, alias)
   end
-  table.sort(alias_list, sort_non_hyphens)
+  table.sort(alias_list, sort_non_dashes)
 
   for _, alias in ipairs(alias_list) do
     local a_keys = aliases[alias]
@@ -177,9 +199,9 @@ function pl.Keymap:add_aliases(aliases)
   end
 end
 
-function pl.Keymap:contains_implicit_hyphen(parts)
+function pl.Keymap:contains_implicit_dash(parts)
   for _,v in ipairs(parts) do
-    if self.implicit_hyphens[v] then
+    if self.implicit_dashes[v] then
       return true
     end
   end
@@ -190,10 +212,14 @@ local function split_iter(parts)
   local i = 1
   return function()
     local bracket_m, alias_m = string.match(parts, '^(%((%w+)%))', i)
+    local lower_m = string.match(parts, '^%l+', i)
     local char_m = string.match(parts, '^' .. utf8.charpattern, i)
     if bracket_m then
       i = i + #bracket_m
       return alias_m
+    elseif lower_m then
+      i = i + #lower_m
+      return string.upper(lower_m)
     elseif char_m then
       i = i + #char_m
       return char_m
@@ -208,11 +234,13 @@ function pl.Keymap:split(part)
   local res = {}
   local last = 0
   for char in split_iter(part) do
-    if char == '/' then
+    if char == STROKE_SPLIT then
       table.insert(res, char)
       last = 0
-    elseif char == '-' then
-      last = self:find_hyphen() - 1
+    elseif char == STROKE_DASH then
+      last = self:find_dash() - 1
+    elseif char == STROKE_BREAK then
+      -- do nothing
     else
       local i, match = self:find_fuzzy(char, last + 1)
       if i == nil then
@@ -279,15 +307,15 @@ function pl.Keymap:normalize(strokes)
     stroke = stringify(stroke)
     stroke = self:dealias(stroke)
     stroke = unique(stroke)
-    if not self:contains_implicit_hyphen(stroke) then
-      table.insert(stroke, '-')
+    if not self:contains_implicit_dash(stroke) then
+      table.insert(stroke, STROKE_DASH)
     end
     table.sort(stroke, self:sort_keys_f())
-    stroke = strip_hyphens(stroke)
+    stroke = strip_dashes(stroke)
     stroke = table.concat(stroke)
     strokes[i] = stroke
   end
-  return table.concat(strokes, '/')
+  return table.concat(strokes, STROKE_SPLIT)
 end
 
 -- Main Keymap
@@ -307,7 +335,7 @@ pl.keys:add_symbolics{
   '§-', '¶-', '#-', '+-', '*', '-^',
 }
 
-pl.keys:add_implicit_hyphens{
+pl.keys:add_implicit_dashes{
   'A-', 'O-', '+-', '*', '-^', '-E', '-U',
 }
 
@@ -335,20 +363,17 @@ pl.keys:add_aliases{
   ['Ē'] = {'A-', 'O-', '-E'},
   ['Ī'] = {'A-', 'O-', '-E', '-U'},
   ['Ō'] = {'O-', '-E'},
-  ['Ū'] = {'A-', 'O-', '-U'},
-  ['EW'] = {'A-', 'O-', '-U'},
+  [{'Ū', 'EW'}] = {'A-', 'O-', '-U'},
   ['AW'] = {'A-', '-U'},
   ['OI'] = {'O-', '-E', '-U'},
   ['OW'] = {'O-', '-U'},
   ['EA'] = {'A-', '-E'},
-  ['OA-'] = {'A-', 'O-'},
-  ['OO-'] = {'A-', 'O-'},
+  [{'OA-', 'OO-'}] = {'A-', 'O-'},
 
   ['-TH'] = {'*', '-T'},
   ['-N'] = {'-P', '-B'},
   ['-NK'] = {'*', '-P', '-B', '-G'},
-  ['-LCH'] = {'-L', '-G'},
-  ['-LJ'] = {'-L', '-G'},
+  [{'-LCH', '-LJ'}] = {'-L', '-G'},
   ['-LK'] = {'*', '-L', '-G'},
   ['-CH'] = {'-F', '-P'},
   ['-M'] = {'-P', '-L'},
@@ -356,11 +381,9 @@ pl.keys:add_aliases{
   ['-SH'] = {'-R', '-B'},
   ['-K'] = {'-B', '-G'},
   ['-SHUN'] = {'-G', '-S'},
-  ['-KSHUN'] = {'-B', '-G', '-S'},
-  ['-X'] = {'-B', '-G', '-S'},
+  [{'-KSHUN', '-X'}] = {'-B', '-G', '-S'},
   ['-RV'] = {'-F', '-R', '-B'},
-  ['-RCH'] = {'-F', '-R', '-B', '-P'},
-  ['-NCH'] = {'-F', '-R', '-B', '-P'},
+  [{'-RCH', '-NCH'}] = {'-F', '-R', '-P', '-B'},
   ['-J'] = {'-P', '-B', '-L', '-G'},
 
   ['1-'] = {'#-', 'S-'},
@@ -404,7 +427,7 @@ function pl.Dict:add_table(tbl, stack)
   stack = stack or {}
   local at_top = #stack == 0
   if not at_top then
-    table.insert(stack, '/')
+    table.insert(stack, STROKE_SPLIT)
   end
   for stroke, subval in pairs(tbl) do
     if stroke == '' then
@@ -414,7 +437,7 @@ function pl.Dict:add_table(tbl, stack)
       end
       table.remove(stack)
       self:add(stack, subval)
-      table.insert(stack, '/')
+      table.insert(stack, STROKE_SPLIT)
     else
       table.insert(stack, stroke)
       if type(subval) == 'table' then

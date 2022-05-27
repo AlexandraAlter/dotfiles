@@ -6,7 +6,7 @@ LUA = lua
 OUT = out
 
 dicts: $(OUT) yaml.so
-	$(LUA) make.lua
+	./gen.lua -o $(OUT)
 	prettier -w --tab-width 0 out
 
 $(OUT):

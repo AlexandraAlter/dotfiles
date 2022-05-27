@@ -1,5 +1,7 @@
 #!/usr/bin/env lua
 -- AlexandraAlter's Plover Dictionaries
+package.path = package.path .. ';./lib/?.lua'
+package.cpath = package.cpath .. ';./lib/?.so'
 
 local pl = require'plover'
 local files = require'files'

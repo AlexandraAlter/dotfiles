@@ -12,6 +12,7 @@ Usage: gen.lua ...
 Generate Plover dictionaries from Lua, JSON, or YAML.
 
   -h, --help          Print help
+  -p, --print         Print the keymap
   -n, --no-defaults   Do not include default dictionaries
   -o, --output        Specify an output folder (defaults to 'out')
 ]]
@@ -58,6 +59,9 @@ while i <= #arg do
   i = i + 1
   if this == '-h' or this == '--help' then
     print(help)
+    os.exit()
+  elseif this == '-p' or this == '--print' then
+    print(inspect(pl.keys))
     os.exit()
   elseif this == '-n' or this == '--no-defaults' then
     use_defaults = false

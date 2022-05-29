@@ -40,11 +40,13 @@ local function count_non_dashes(stroke)
 end
 
 local function sort_non_dashes(a, b)
-  return count_non_dashes(a) < count_non_dashes(b)
-end
-
-local function sort_non_dashes_reverse(a, b)
-  return sort_non_dashes(b, a)
+  local na = count_non_dashes(a)
+  local nb = count_non_dashes(b)
+  if na ~= nb then
+    return na < nb
+  else
+    return a > b
+  end
 end
 
 local function partition(stroke)
@@ -157,18 +159,18 @@ function pl.Keymap:add_implicit_dashes(ihs)
   end
 end
 
-function pl.Keymap:add_aliases(aliases)
-  -- turn table-keyed entries into duplicate entries
-  for k, v in pairs(aliases) do
+-- the table this function accepts can have tables as keys,
+-- to denote multiple aliases mapping to the same stroke.
+function pl.Keymap:add_aliases(multi_aliases)
+  local aliases = {}
+  -- remove multi-alias entries
+  for k, v in pairs(multi_aliases) do
     if type(k) == 'table' then
       for _, sk in ipairs(k) do
         aliases[sk] = v
       end
-    end
-  end
-  for k, _ in pairs(aliases) do
-    if type(k) == 'table' then
-      aliases[k] = nil
+    else
+      aliases[k] = v
     end
   end
 
@@ -180,15 +182,16 @@ function pl.Keymap:add_aliases(aliases)
   end
   table.sort(alias_list, sort_non_dashes)
 
-  for _, alias in ipairs(alias_list) do
+  for i = #alias_list, 1, -1 do
+    local alias = alias_list[i]
     local a_keys = aliases[alias]
-    local pos = 0
+    local pos = #self
     for _, k in ipairs(a_keys) do
       local i = self:find(k)
       if not i then
         error('alias contains keys not in the keymap')
       end
-      if i > pos and not self.symbolic[k] then
+      if i < pos and not self.symbolic[k] then
         pos = i
       end
     end
@@ -349,14 +352,14 @@ pl.keys:add_aliases{
   ['Y-'] = {'K-', 'W-', 'R-'},
   ['J-'] = {'S-', 'K-', 'W-', 'R-'},
   ['G-'] = {'T-', 'K-', 'P-', 'W-'},
-  ['Q-'] = {'K-', 'W-'}, -- fingerspelling only?
-  ['X-'] = {'K-', 'P-'}, -- fingerspelling only?
+  ['Q-'] = {'K-', 'W-'},
   ['V-'] = {'S-', 'R-'},
   ['Z-'] = {'S-', '*'},
+  ['C-'] = {'K-'}, -- shortcut
+  ['X-'] = {'K-', 'P-'}, -- fingerspelling
   ['SH-'] = {'S-', 'H-'},
   ['TH-'] = {'T-', 'H-'},
   ['CH-'] = {'K-', 'H-'},
-  ['C-'] = {'K-'}, -- shortcut only
 
   ['-I'] = {'-E', '-U'},
   ['Ā'] = {'A-', '-E', '-U'},
@@ -370,8 +373,11 @@ pl.keys:add_aliases{
   ['EA'] = {'A-', '-E'},
   [{'OA-', 'OO-'}] = {'A-', 'O-'},
 
+  ['-ING'] = {'-G'},
+  [{'-V', '-FV', '-FS'}] = {'-F'},
   ['-TH'] = {'*', '-T'},
   ['-N'] = {'-P', '-B'},
+  ['-NG'] = {'-P', '-B', '-G'},
   ['-NK'] = {'*', '-P', '-B', '-G'},
   [{'-LCH', '-LJ'}] = {'-L', '-G'},
   ['-LK'] = {'*', '-L', '-G'},
@@ -379,7 +385,7 @@ pl.keys:add_aliases{
   ['-M'] = {'-P', '-L'},
   ['-MP'] = {'*', '-P', '-L'},
   ['-SH'] = {'-R', '-B'},
-  ['-K'] = {'-B', '-G'},
+  [{'-K', '-C'}] = {'-B', '-G'},
   ['-SHUN'] = {'-G', '-S'},
   [{'-KSHUN', '-X'}] = {'-B', '-G', '-S'},
   ['-RV'] = {'-F', '-R', '-B'},
@@ -423,38 +429,48 @@ function pl.Dict:add(stroke, output)
   end
 end
 
+function pl.Dict:add_table_val(val, stack)
+  if type(val) == 'table' then
+    -- recurse into the inner table
+    self:add_table(val, stack)
+  elseif type(val) == 'string' then
+    -- regular stroke
+    self:add(stack, val)
+  else
+    error('unexpected type at: ' .. inspect(stack))
+  end
+end
+
 function pl.Dict:add_table(tbl, stack)
   stack = stack or {}
   local at_top = #stack == 0
-  if not at_top then
-    table.insert(stack, STROKE_SPLIT)
-  end
   for stroke, subval in pairs(tbl) do
-    if stroke == '' then
+    local keyless = stroke == '' or stroke == '-'
+    local merge = string.match(stroke, '^%.%.(.*)')
+    local split = string.match(stroke, '^/(.*)')
+    if at_top and keyless then
+      error('blank key at top of table')
+    elseif not at_top and keyless then
       -- special case for keyless strokes
-      if at_top then
-        error('blank key at top of table')
-      end
-      table.remove(stack)
       self:add(stack, subval)
+    elseif at_top then
+      table.insert(stack, stroke)
+      self:add_table_val(subval, stack)
+      table.remove(stack)
+    elseif merge then
+      table.insert(stack, merge)
+      self:add_table_val(subval, stack)
+      table.remove(stack)
+    elseif split then
       table.insert(stack, STROKE_SPLIT)
+      table.insert(stack, split)
+      self:add_table_val(subval, stack)
+      table.remove(stack)
+      table.remove(stack)
     else
       table.insert(stack, stroke)
-      if type(subval) == 'table' then
-        -- recurse into the inner table
-        self:add_table(subval, stack)
-      elseif type(subval) == 'string' then
-        -- regular stroke
-        self:add(stack, subval)
-      else
-        local loc = inspect(stack) .. stroke
-        error('unexpected type at: ' .. loc)
-      end
-      table.remove(stack)
+      error('invalid stroke at: ' .. inspect(stack))
     end
-  end
-  if not at_top then
-    table.remove(stack)
   end
 end
 
@@ -463,12 +479,14 @@ function pl.Dict:read_yaml(fname)
   if not f then
     error('no such file:' .. fname)
   end
-  local top = yaml.load(f:read('a'))
-  if type(top) ~= 'table' then
-    error('yaml document is not a hash')
-  end
+  local docs = table.pack(yaml.load(f:read('a')))
   local dict = pl.Dict:new{}
-  dict:add_table(top)
+  for _, doc in ipairs(docs) do
+    if type(doc) ~= 'table' then
+      error('yaml document is not a hash')
+    end
+    dict:add_table(doc)
+  end
   return dict
 end
 
@@ -477,12 +495,12 @@ function pl.Dict:read_json(fname)
   if not f then
     error('no such file:' .. fname)
   end
-  local top = json.decode(f:read('a'))
-  if type(top) ~= 'table' then
-    error('json document is not a hash')
+  local file = json.decode(f:read('a'))
+  if type(file) ~= 'table' then
+    error('json file is not a hash')
   end
   local dict = pl.Dict:new{}
-  dict:add_table(top)
+  dict:add_table(file)
   return dict
 end
 

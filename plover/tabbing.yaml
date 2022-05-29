@@ -1,3 +1,5 @@
+# Window movement
+
 TW-FB: '{#Super_L(bracketleft)}'
 TW-LG: '{#Super_L(bracketright)}'
 TW-B: '{#Super_L(grave)}'

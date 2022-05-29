@@ -1,3 +1,4 @@
+-- Programatic long phrases
 local phrases = {}
 
 local pl = require'plover'

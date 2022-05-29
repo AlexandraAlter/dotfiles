@@ -1,3 +1,4 @@
+-- Individual English letters
 local fingerspelling = {}
 
 local pl = require'plover'

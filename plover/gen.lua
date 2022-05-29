@@ -33,19 +33,29 @@ function handlers.yaml(in_f, out_f)
 end
 
 local defaults = {
-  'fingerspelling.lua',
+  -- Plover
+  'control.yaml',
+
+  -- Shortcuts
+  'modifiers.lua',
+  'shortcuts.yaml',
+  'tabbing.yaml',
+  'navigation.yaml',
+
+  -- Generic
   'numbers.lua',
   'symbols.lua',
-  'modifiers.lua',
-  'phrases.lua',
-  'control.yaml',
   'formatting.yaml',
-  'navigation.yaml',
-  'tabbing.yaml',
-  'shortcuts.yaml',
+
+  -- English
+  'fingerspelling.lua',
+  'phrases.lua',
   'punctuation.yaml',
   'misstrokes.yaml',
   'dict.yaml',
+
+  -- Domain-specific
+  'mush.yaml',
 }
 
 local use_defaults = true

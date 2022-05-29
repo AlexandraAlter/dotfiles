@@ -1,3 +1,4 @@
+-- Programatic symbols
 local symbols = {}
 
 local pl = require'plover'

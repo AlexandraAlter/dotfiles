@@ -1,3 +1,5 @@
+# Static modifiers
+
 STRAO*EUBG: '{#Super(shift(x))}'
 STKPWAO*PL: '{#Super_L(Shift_L(equal))}'
 KHR-P: '{#Control_L(Up)}'

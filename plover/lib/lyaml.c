@@ -32,19 +32,19 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
+#include <lauxlib.h>
 
 #include "b64.h"
 
 /* configurable flags */
-static char Dump_Auto_Array = 1;
-static char Dump_Error_on_Unsupported = 0;
-static char Dump_Check_Metatables = 1;
-static char Load_Set_Metatables = 1;
-static char Load_Numeric_Scalars = 1;
-static char Load_Nulls_As_Nil = 0;
+static char DUMP_AUTO_ARRAY = 1;
+static char DUMP_ERROR_ON_UNSUPPORTED = 0;
+static char DUMP_CHECK_METATABLES = 1;
+static char LOAD_SET_METATABLES = 1;
+static char LOAD_NUMERIC_SCALARS = 1;
+static char LOAD_NULLS_AS_NIL = 0;
 
 #define LUAYAML_TAG_PREFIX "tag:yaml.org,2002:"
 
@@ -58,7 +58,7 @@ static char Load_Nulls_As_Nil = 0;
       return; \
    } while(0)
 
-struct lua_yaml_loader {
+typedef struct lua_yaml_loader {
    lua_State *L;
    int anchortable_index;
    int sequencemt_index;
@@ -68,9 +68,9 @@ struct lua_yaml_loader {
    yaml_event_t event;
    char validevent;
    char error;
-};
+} lua_yaml_loader;
 
-struct lua_yaml_dumper {
+typedef struct lua_yaml_dumper {
    lua_State *L;
    int anchortable_index;
    unsigned int anchor_number;
@@ -79,11 +79,11 @@ struct lua_yaml_dumper {
 
    lua_State *outputL;
    luaL_Buffer yamlbuf;
-};
+} lua_yaml_dumper;
 
 static int l_null(lua_State *);
 
-static void generate_error_message(struct lua_yaml_loader *loader) {
+static void generate_error_message(lua_yaml_loader *loader) {
    char buf[256];
    luaL_Buffer b;
 
@@ -113,14 +113,14 @@ static void generate_error_message(struct lua_yaml_loader *loader) {
    luaL_pushresult(&b);
 }
 
-static inline void delete_event(struct lua_yaml_loader *loader) {
+static inline void delete_event(lua_yaml_loader *loader) {
    if (loader->validevent) {
       yaml_event_delete(&loader->event);
       loader->validevent = 0;
    }
 }
 
-static inline int do_parse(struct lua_yaml_loader *loader) {
+static inline int do_parse(lua_yaml_loader *loader) {
    delete_event(loader);
    if (yaml_parser_parse(&loader->parser, &loader->event) != 1) {
       generate_error_message(loader);
@@ -132,9 +132,9 @@ static inline int do_parse(struct lua_yaml_loader *loader) {
    return 1;
 }
 
-static int load_node(struct lua_yaml_loader *loader);
+static int load_node(lua_yaml_loader *loader);
 
-static void handle_anchor(struct lua_yaml_loader *loader) {
+static void handle_anchor(lua_yaml_loader *loader) {
    const char *anchor = (char *)loader->event.data.scalar.anchor;
    if (!anchor)
       return;
@@ -144,7 +144,7 @@ static void handle_anchor(struct lua_yaml_loader *loader) {
    lua_rawset(loader->L, loader->anchortable_index);
 }
 
-static void load_map(struct lua_yaml_loader *loader) {
+static void load_map(lua_yaml_loader *loader) {
    lua_newtable(loader->L);
    if (loader->mapmt_index != 0) {
       lua_pushvalue(loader->L, loader->mapmt_index);
@@ -158,6 +158,20 @@ static void load_map(struct lua_yaml_loader *loader) {
       if (load_node(loader) == 0 || loader->error)
          return;
 
+      /* ensure key isn't already present */
+      lua_pushvalue(loader->L, -1);
+      lua_rawget(loader->L, -3);
+      if (!lua_isnil(loader->L, -1)) {
+         lua_pop(loader->L, 1);
+         char buf[256];
+         const char* key = luaL_tolstring(loader->L, -1, NULL);
+         snprintf(buf, sizeof(buf), "duplicate key: %s", key);
+         lua_pushstring(loader->L, buf);
+         loader->error = 1;
+         return;
+      }
+      lua_pop(loader->L, 1);
+
       /* load value */
       r = load_node(loader);
       if (loader->error)
@@ -168,7 +182,7 @@ static void load_map(struct lua_yaml_loader *loader) {
    }
 }
 
-static void load_sequence(struct lua_yaml_loader *loader) {
+static void load_sequence(lua_yaml_loader *loader) {
    int index = 1;
 
    lua_newtable(loader->L);
@@ -182,7 +196,7 @@ static void load_sequence(struct lua_yaml_loader *loader) {
       lua_rawseti(loader->L, -2, index++);
 }
 
-static void load_scalar(struct lua_yaml_loader *loader) {
+static void load_scalar(lua_yaml_loader *loader) {
    const char *str = (char *)loader->event.data.scalar.value;
    unsigned int length = loader->event.data.scalar.length;
    const char *tag = (char *)loader->event.data.scalar.tag;
@@ -210,7 +224,7 @@ static void load_scalar(struct lua_yaml_loader *loader) {
 
    if (loader->event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE) {
       if (!strcmp(str, "~")) {
-         if (Load_Nulls_As_Nil)
+         if (LOAD_NULLS_AS_NIL)
             lua_pushnil(loader->L);
          else
             l_null(loader->L);
@@ -227,7 +241,7 @@ static void load_scalar(struct lua_yaml_loader *loader) {
    lua_pushlstring(loader->L, str, length);
 
    /* plain scalar and Lua can convert it to a number?  make it so... */
-   if (Load_Numeric_Scalars
+   if (LOAD_NUMERIC_SCALARS
       && loader->event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE
       && lua_isnumber(loader->L, -1)) {
       lua_Number n = lua_tonumber(loader->L, -1);
@@ -238,7 +252,7 @@ static void load_scalar(struct lua_yaml_loader *loader) {
    handle_anchor(loader);
 }
 
-static void load_alias(struct lua_yaml_loader *loader) {
+static void load_alias(lua_yaml_loader *loader) {
    char *anchor = (char *)loader->event.data.alias.anchor;
    lua_pushstring(loader->L, anchor);
    lua_rawget(loader->L, loader->anchortable_index);
@@ -249,7 +263,7 @@ static void load_alias(struct lua_yaml_loader *loader) {
    }
 }
 
-static int load_node(struct lua_yaml_loader *loader) {
+static int load_node(lua_yaml_loader *loader) {
    if (!do_parse(loader))
       return -1;
 
@@ -287,7 +301,7 @@ static int load_node(struct lua_yaml_loader *loader) {
    }
 }
 
-static void load(struct lua_yaml_loader *loader) {
+static void load(lua_yaml_loader *loader) {
    if (!do_parse(loader))
       return;
 
@@ -319,7 +333,7 @@ static void load(struct lua_yaml_loader *loader) {
 }
 
 static int l_load(lua_State *L) {
-   struct lua_yaml_loader loader;
+   lua_yaml_loader loader;
    int top = lua_gettop(L);
 
    luaL_argcheck(L, lua_isstring(L, 1), 1, "must provide a string argument");
@@ -330,7 +344,7 @@ static int l_load(lua_State *L) {
    loader.document_count = 0;
    loader.mapmt_index = loader.sequencemt_index = 0;
 
-   if (Load_Set_Metatables) {
+   if (LOAD_SET_METATABLES) {
       /* create sequence metatable */
       lua_newtable(L);
       lua_pushliteral(L, "_yaml");
@@ -364,7 +378,7 @@ static int l_load(lua_State *L) {
    return loader.document_count;
 }
 
-static int dump_node(struct lua_yaml_dumper *dumper);
+static int dump_node(lua_yaml_dumper *dumper);
 
 static int is_binary_string(const unsigned char *str, size_t len) {
    // this could be optimized to examine an entire word in each loop iteration
@@ -374,7 +388,7 @@ static int is_binary_string(const unsigned char *str, size_t len) {
    return 0;
 }
 
-static int dump_scalar(struct lua_yaml_dumper *dumper) {
+static int dump_scalar(lua_yaml_dumper *dumper) {
    int type = lua_type(dumper->L, -1);
    size_t len;
    const char *str = NULL;
@@ -417,7 +431,7 @@ static int dump_scalar(struct lua_yaml_dumper *dumper) {
    return yaml_emitter_emit(&dumper->emitter, &ev);
 }
 
-static yaml_char_t *get_yaml_anchor(struct lua_yaml_dumper *dumper) {
+static yaml_char_t *get_yaml_anchor(lua_yaml_dumper *dumper) {
    const char *s = "";
    lua_pushvalue(dumper->L, -1);
    lua_rawget(dumper->L, dumper->anchortable_index);
@@ -445,7 +459,7 @@ static yaml_char_t *get_yaml_anchor(struct lua_yaml_dumper *dumper) {
    return (yaml_char_t *)s;
 }
 
-static int dump_table(struct lua_yaml_dumper *dumper) {
+static int dump_table(lua_yaml_dumper *dumper) {
    yaml_event_t ev;
    yaml_char_t *anchor = get_yaml_anchor(dumper);
 
@@ -471,7 +485,7 @@ static int dump_table(struct lua_yaml_dumper *dumper) {
    return 1;
 }
 
-static int dump_array(struct lua_yaml_dumper *dumper) {
+static int dump_array(lua_yaml_dumper *dumper) {
    int i, n = lua_rawlen(dumper->L, -1);
    yaml_event_t ev;
    yaml_char_t *anchor = get_yaml_anchor(dumper);
@@ -516,14 +530,14 @@ static int figure_table_type(lua_State *L) {
    return type;
 }
 
-static int dump_null(struct lua_yaml_dumper *dumper) {
+static int dump_null(lua_yaml_dumper *dumper) {
    yaml_event_t ev;
    yaml_scalar_event_initialize(&ev, NULL, NULL,
       (unsigned char *)"~", 1, 1, 1, YAML_PLAIN_SCALAR_STYLE);
    return yaml_emitter_emit(&dumper->emitter, &ev);
 }
 
-static int dump_node(struct lua_yaml_dumper *dumper) {
+static int dump_node(lua_yaml_dumper *dumper) {
    int type = lua_type(dumper->L, -1);
 
    if (type == LUA_TSTRING || type == LUA_TBOOLEAN || type == LUA_TNUMBER) {
@@ -531,10 +545,10 @@ static int dump_node(struct lua_yaml_dumper *dumper) {
    } else if (type == LUA_TTABLE) {
       int type = LUAYAML_KIND_UNKNOWN;
 
-      if (Dump_Check_Metatables)
+      if (DUMP_CHECK_METATABLES)
          type = figure_table_type(dumper->L);
 
-      if (type == LUAYAML_KIND_UNKNOWN && Dump_Auto_Array &&
+      if (type == LUAYAML_KIND_UNKNOWN && DUMP_AUTO_ARRAY &&
           lua_rawlen(dumper->L, -1) > 0) {
          type = LUAYAML_KIND_SEQUENCE;
       }
@@ -545,7 +559,7 @@ static int dump_node(struct lua_yaml_dumper *dumper) {
    } else if (type == LUA_TFUNCTION && lua_tocfunction(dumper->L, -1) == l_null) {
       return dump_null(dumper);
    } else { /* unsupported Lua type */
-      if (Dump_Error_on_Unsupported) {
+      if (DUMP_ERROR_ON_UNSUPPORTED) {
          char buf[256];
          snprintf(buf, sizeof(buf),
             "cannot dump object of type: %s", lua_typename(dumper->L, type));
@@ -558,7 +572,7 @@ static int dump_node(struct lua_yaml_dumper *dumper) {
    return 0;
 }
 
-static void dump_document(struct lua_yaml_dumper *dumper) {
+static void dump_document(lua_yaml_dumper *dumper) {
    yaml_event_t ev;
 
    yaml_document_start_event_initialize(&ev, NULL, NULL, NULL, 0);
@@ -572,12 +586,12 @@ static void dump_document(struct lua_yaml_dumper *dumper) {
 }
 
 static int append_output(void *arg, unsigned char *buf, long unsigned int len) {
-   struct lua_yaml_dumper *dumper = (struct lua_yaml_dumper *)arg;
+   lua_yaml_dumper *dumper = (lua_yaml_dumper *)arg;
    luaL_addlstring(&dumper->yamlbuf, (char *)buf, len);
    return 1;
 }
 
-static void find_references(struct lua_yaml_dumper *dumper) {
+static void find_references(lua_yaml_dumper *dumper) {
    int newval = -1, type = lua_type(dumper->L, -1);
    if (type != LUA_TTABLE)
       return;
@@ -607,7 +621,7 @@ static void find_references(struct lua_yaml_dumper *dumper) {
 }
 
 static int l_dump(lua_State *L) {
-   struct lua_yaml_dumper dumper;
+   lua_yaml_dumper dumper;
    int i, argcount = lua_gettop(L);
    yaml_event_t ev;
 
@@ -661,12 +675,12 @@ static int handle_config_option(lua_State *L) {
       const char *attr;
       char *val;
    } args[] = {
-      { "dump_auto_array", &Dump_Auto_Array },
-      { "dump_check_metatables", &Dump_Check_Metatables },
-      { "dump_error_on_unsupported", &Dump_Error_on_Unsupported },
-      { "load_set_metatables", &Load_Set_Metatables },
-      { "load_numeric_scalars", &Load_Numeric_Scalars },
-      { "load_nulls_as_nil", &Load_Nulls_As_Nil },
+      { "dump_auto_array", &DUMP_AUTO_ARRAY },
+      { "dump_check_metatables", &DUMP_CHECK_METATABLES },
+      { "dump_error_on_unsupported", &DUMP_ERROR_ON_UNSUPPORTED },
+      { "load_set_metatables", &LOAD_SET_METATABLES },
+      { "load_numeric_scalars", &LOAD_NUMERIC_SCALARS },
+      { "load_nulls_as_nil", &LOAD_NULLS_AS_NIL },
       { NULL, NULL }
    };
 

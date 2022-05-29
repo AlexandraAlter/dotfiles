@@ -15,7 +15,7 @@ $(OUT):
 	mkdir -p $(OUT)
 
 $(LIB)/yaml.so:
-	$(CC) $(LDFLAGS) $(CFLAGS) $(FILES) -o $(LIB)/$@
+	$(CC) $(LDFLAGS) $(CFLAGS) $(FILES) -o $@
 
 clean:
 	$(RM) $(LIB)/yaml.so $(OUT)/*.json

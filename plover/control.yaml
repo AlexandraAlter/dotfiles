@@ -1,3 +1,5 @@
+# Plover control sequences
+
 '#': '{*+}'
 '#*': '{*}'
 PHRAOBG: '{PLOVER:LOOKUP}'

@@ -152,53 +152,144 @@ nmap gA <Plug>(EasyAlign)
 set completeopt=menu,menuone,noinsert,noselect
 
 lua <<EOF
+  local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
+
   local cmp = require('cmp')
   local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
   cmp.setup({
     snippet = {
-      expand = function(args)
-        vim.fn['UltiSnips#Anon'](args.body)
-      end,
+      expand = function(args) vim.fn['UltiSnips#Anon'](args.body) end,
     },
+
     mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable,
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
+      ['<Tab>'] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+          else
+            cmp.complete()
+          end
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
+          else
+            fallback()
+          end
+        end,
+        s = function(fallback)
+          if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
+          else
+            fallback()
+          end
+        end,
       }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<Tab>'] = cmp.mapping(
-        function(fallback)
-          cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+
+      ["<S-Tab>"] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+          else
+            cmp.complete()
+          end
         end,
-        { 'i', 's', 'c' }
-      ),
-      ['<S-Tab>'] = cmp.mapping(
-        function(fallback)
-          cmp_ultisnips_mappings.jump_backwards(fallback)
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+          elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+            return vim.api.nvim_feedkeys( t("<Plug>(ultisnips_jump_backward)"), 'm', true)
+          else
+            fallback()
+          end
         end,
-        { 'i', 's', 'c' }
-      ),
+        s = function(fallback)
+          if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+            return vim.api.nvim_feedkeys( t("<Plug>(ultisnips_jump_backward)"), 'm', true)
+          else
+            fallback()
+          end
+        end,
+      }),
+
+      ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+      ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+
+      ['<C-n>'] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
+          end
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end,
+      }),
+
+      ['<C-p>'] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
+          end
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end,
+      }),
+
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+      ['<C-e>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
+
+      ['<CR>'] = cmp.mapping({
+        i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+          else
+            fallback()
+          end
+        end,
+      }),
+
+      ['<C-y>'] = cmp.config.disable,
     },
+
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'ultisnips' },
     }, {
-      { name = 'buffer' },
+      { name = 'buffer', keyword_length = 3 },
     })
   })
 
   cmp.setup.cmdline('/', {
+    completion = { autocomplete = false },
     sources = {
-      { name = 'buffer' }
+      { name = 'buffer', keyword_pattern = [=[[^[:blank:]].*]=] }
     }
   })
 
   cmp.setup.cmdline(':', {
+    completion = { autocomplete = false },
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
@@ -207,10 +298,17 @@ lua <<EOF
   })
 
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  require('lspconfig')['eslint'].setup {
-    capabilities = capabilities
-  }
+
+  local lsp = require('lspconfig')
+  -- lsp['eslint'].setup { capabilities = capabilities }
+
+  local cmp_enabled = true
+  function CmpToggle()
+    cmp_enabled = not cmp_enabled
+    cmp.setup.buffer { enabled = cmp_enabled }
+  end
 EOF
+
 " " }}}
 
 " " {{{ cmp-buffer
@@ -389,6 +487,7 @@ tnoremap <silent> <F10> <C-\><C-n>:FloatermToggle<CR>
 
 " {{{ toggles
 let g:leader_map.t.s = [':set spell!', 'spelling']
+let g:leader_map.t.c = [':lua CmpToggle\(\)', 'completion']
 " }}}
 
 " {{{ discarded

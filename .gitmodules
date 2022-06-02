@@ -4,126 +4,123 @@
 [submodule "awesome/streetturtle-widgets"]
 	path = awesome/streetturtle-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
-[submodule "nvim/pack/lament/start/fugitive"]
+[submodule "nvim/fugitive"]
 	path = nvim/pack/lament/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "nvim/pack/lament/start/vim-sensible"]
+[submodule "nvim/sensible"]
 	path = nvim/pack/lament/start/sensible
 	url = https://github.com/tpope/vim-sensible.git
-[submodule "nvim/pack/lament/start/vim-characterize"]
+[submodule "nvim/characterize"]
 	path = nvim/pack/lament/start/characterize
 	url = https://github.com/tpope/vim-characterize.git
-[submodule "nvim/pack/lament/start/vim-which-key"]
+[submodule "nvim/which-key"]
 	path = nvim/pack/lament/start/which-key
-	url = https://github.com/liuchengxu/vim-which-key.git
-[submodule "nvim/pack/lament/start/vim-airline"]
+	url = https://github.com/folke/vim-key.nvim.git
+[submodule "nvim/airline"]
 	path = nvim/pack/lament/start/airline
 	url = https://github.com/vim-airline/vim-airline.git
-[submodule "nvim/pack/lament/start/targets.vim"]
+[submodule "nvim/targets"]
 	path = nvim/pack/lament/start/targets
 	url = https://github.com/wellle/targets.vim.git
-[submodule "nvim/pack/lament/start/repeat"]
+[submodule "nvim/repeat"]
 	path = nvim/pack/lament/start/repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "nvim/pack/lament/start/surround"]
+[submodule "nvim/surround"]
 	path = nvim/pack/lament/start/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "nvim/pack/lament/start/commentary"]
+[submodule "nvim/commentary"]
 	path = nvim/pack/lament/start/commentary
 	url = https://github.com/tpope/vim-commentary.git
-[submodule "nvim/pack/lament/start/abolish"]
+[submodule "nvim/abolish"]
 	path = nvim/pack/lament/start/abolish
 	url = https://github.com/tpope/vim-abolish.git
-[submodule "nvim/pack/lament/start/endwise"]
+[submodule "nvim/endwise"]
 	path = nvim/pack/lament/start/endwise
 	url = https://github.com/tpope/vim-endwise.git
-[submodule "nvim/pack/lament/start/speeddating"]
+[submodule "nvim/speeddating"]
 	path = nvim/pack/lament/start/speeddating
 	url = https://github.com/tpope/vim-speeddating.git
-[submodule "nvim/pack/lament/start/unimpaired"]
+[submodule "nvim/unimpaired"]
 	path = nvim/pack/lament/start/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "nvim/pack/lament/start/vinegar"]
+[submodule "nvim/vinegar"]
 	path = nvim/pack/lament/start/vinegar
 	url = https://github.com/tpope/vim-vinegar.git
-[submodule "nvim/pack/lament/start/projectionist"]
+[submodule "nvim/projectionist"]
 	path = nvim/pack/lament/start/projectionist
 	url = https://github.com/tpope/vim-projectionist.git
-[submodule "nvim/pack/lament/start/easy-align"]
+[submodule "nvim/easy-align"]
 	path = nvim/pack/lament/start/easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
-[submodule "nvim/pack/lament/start/sneak"]
+[submodule "nvim/sneak"]
 	path = nvim/pack/lament/start/sneak
 	url = https://github.com/justinmk/vim-sneak.git
-[submodule "nvim/pack/lament/start/lspconfig"]
+[submodule "nvim/lspconfig"]
 	path = nvim/pack/lament/start/lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
-[submodule "nvim/pack/lament/start/cmp"]
+[submodule "nvim/cmp"]
 	path = nvim/pack/lament/start/cmp
 	url = https://github.com/hrsh7th/nvim-cmp.git
-[submodule "nvim/pack/lament/start/cmp-lsp"]
+[submodule "nvim/cmp-lsp"]
 	path = nvim/pack/lament/start/cmp-lsp
 	url = https://github.com/hrsh7th/cmp-nvim-lsp.git
-[submodule "nvim/pack/lament/start/cmp-buffer"]
+[submodule "nvim/cmp-buffer"]
 	path = nvim/pack/lament/start/cmp-buffer
 	url = https://github.com/hrsh7th/cmp-buffer.git
-[submodule "nvim/pack/lament/start/cmp-path"]
+[submodule "nvim/cmp-path"]
 	path = nvim/pack/lament/start/cmp-path
 	url = https://github.com/hrsh7th/cmp-path.git
-[submodule "nvim/pack/lament/start/cmp-cmdline"]
+[submodule "nvim/cmp-cmdline"]
 	path = nvim/pack/lament/start/cmp-cmdline
 	url = https://github.com/hrsh7th/cmp-cmdline.git
-[submodule "nvim/pack/lament/start/cmp-ultisnips"]
+[submodule "nvim/cmp-ultisnips"]
 	path = nvim/pack/lament/start/cmp-ultisnips
 	url = https://github.com/quangnguyen30192/cmp-nvim-ultisnips.git
-[submodule "nvim/pack/lament/start/snippets"]
+[submodule "nvim/snippets"]
 	path = nvim/pack/lament/start/snippets
 	url = https://github.com/honza/vim-snippets.git
-[submodule "nvim/pack/lament/start/enuch"]
+[submodule "nvim/enuch"]
 	path = nvim/pack/lament/start/enuch
 	url = https://github.com/tpope/vim-eunuch.git
-[submodule "nvim/pack/lament/start/tbone"]
+[submodule "nvim/tbone"]
 	path = nvim/pack/lament/start/tbone
 	url = https://github.com/tpope/vim-tbone.git
-[submodule "nvim/pack/lament/start/apathy"]
+[submodule "nvim/apathy"]
 	path = nvim/pack/lament/start/apathy
 	url = https://github.com/tpope/vim-apathy.git
-[submodule "nvim/pack/lament/start/sleuth"]
+[submodule "nvim/sleuth"]
 	path = nvim/pack/lament/start/sleuth
 	url = https://github.com/tpope/vim-sleuth.git
-[submodule "nvim/pack/lament/start/ragtag"]
+[submodule "nvim/ragtag"]
 	path = nvim/pack/lament/start/ragtag
 	url = https://github.com/tpope/vim-ragtag.git
-[submodule "nvim/pack/lament/start/jdaddy"]
+[submodule "nvim/jdaddy"]
 	path = nvim/pack/lament/start/jdaddy
 	url = https://github.com/tpope/vim-jdaddy.git
-[submodule "nvim/pack/lament/start/obsession"]
+[submodule "nvim/obsession"]
 	path = nvim/pack/lament/start/obsession
 	url = https://github.com/tpope/vim-obsession.git
-[submodule "nvim/pack/lament/start/telescope"]
+[submodule "nvim/telescope"]
 	path = nvim/pack/lament/start/telescope
 	url = https://github.com/nvim-telescope/telescope.nvim.git
-[submodule "nvim/pack/lament/start/telescope-fzf-native"]
+[submodule "nvim/telescope-fzf-native"]
 	path = nvim/pack/lament/start/telescope-fzf-native
 	url = https://github.com/nvim-telescope/telescope-fzf-native.nvim.git
-[submodule "nvim/pack/lament/start/plenary"]
+[submodule "nvim/plenary"]
 	path = nvim/pack/lament/start/plenary
 	url = https://github.com/nvim-lua/plenary.nvim.git
-[submodule "nvim/pack/lament/start/web-devicons"]
+[submodule "nvim/web-devicons"]
 	path = nvim/pack/lament/start/web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons.git
-[submodule "nvim/pack/lament/start/floatterm"]
+[submodule "nvim/floatterm"]
 	path = nvim/pack/lament/start/floaterm
 	url = https://github.com/voldikss/vim-floaterm.git
-[submodule "nvim/pack/lament/start/neomake"]
+[submodule "nvim/neomake"]
 	path = nvim/pack/lament/start/neomake
 	url = https://github.com/neomake/neomake.git
-[submodule "nvim/pack/lament/start/ultisnips"]
+[submodule "nvim/ultisnips"]
 	path = nvim/pack/lament/start/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
-[submodule "nvim/pack/lament/start/coffee-script"]
-	path = nvim/pack/lament/start/coffee-script
-	url = https://github.com/kchmck/vim-coffee-script.git
-[submodule "nvim/pack/lament/start/wordmotion"]
+[submodule "nvim/wordmotion"]
 	path = nvim/pack/lament/start/wordmotion
-	url = git@github.com:chaoren/vim-wordmotion.git
+	url = https://github.com/chaoren/vim-wordmotion.git

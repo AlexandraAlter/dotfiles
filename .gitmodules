@@ -15,7 +15,7 @@
 	url = https://github.com/tpope/vim-characterize.git
 [submodule "nvim/which-key"]
 	path = nvim/pack/lament/start/which-key
-	url = https://github.com/folke/vim-key.nvim.git
+	url = https://github.com/folke/which-key.nvim.git
 [submodule "nvim/airline"]
 	path = nvim/pack/lament/start/airline
 	url = https://github.com/vim-airline/vim-airline.git

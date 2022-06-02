@@ -124,3 +124,6 @@
 [submodule "nvim/pack/lament/start/coffee-script"]
 	path = nvim/pack/lament/start/coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "nvim/pack/lament/start/wordmotion"]
+	path = nvim/pack/lament/start/wordmotion
+	url = git@github.com:chaoren/vim-wordmotion.git

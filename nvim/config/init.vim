@@ -27,7 +27,7 @@ highlight PMenu ctermfg=7* ctermbg=0
 " {{{ navigation
 set ignorecase
 set smartcase
-set foldopen=hor,mark,percent,quickfix,search,tag,undo
+set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set foldenable
 
 " " targets (+targets-camels)
@@ -49,9 +49,11 @@ nmap gA <Plug>(EasyAlign)
 " " snippets
 
 " " ultisnips
-"let g:UltiSnipsExpandTrigger=""
-"let g:UltiSnipsJumpForwardTrigger=""
-"let g:UltiSnipsJumpBackwardTrigger=""
+let g:UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
+let g:UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
+let g:UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
+let g:UltiSnipsListSnippets = '<c-x><c-s>'
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " }}}
 
@@ -60,10 +62,6 @@ set completeopt=menu,menuone,noinsert,noselect
 
 " " cmp (+cmp-*)
 lua <<EOF
-  local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-  end
-
   local cmp = require('cmp')
   local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
@@ -73,111 +71,30 @@ lua <<EOF
     },
 
     mapping = {
-      ['<Tab>'] = cmp.mapping({
-        c = function()
-          if cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-          else
-            cmp.complete()
-          end
-        end,
-        i = function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-            vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
-          else
-            fallback()
-          end
-        end,
-        s = function(fallback)
-          if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-            vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
-          else
-            fallback()
-          end
-        end,
-      }),
+      ['<C-Space>'] = cmp.mapping.complete(),
 
-      ["<S-Tab>"] = cmp.mapping({
-        c = function()
-          if cmp.visible() then
-            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-          else
-            cmp.complete()
-          end
-        end,
-        i = function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-          elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-            return vim.api.nvim_feedkeys( t("<Plug>(ultisnips_jump_backward)"), 'm', true)
-          else
-            fallback()
-          end
-        end,
-        s = function(fallback)
-          if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-            return vim.api.nvim_feedkeys( t("<Plug>(ultisnips_jump_backward)"), 'm', true)
-          else
-            fallback()
-          end
-        end,
-      }),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-      ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
-      ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<Down>'] = cmp.mapping.select_next_item(),
+      ['<Up>'] = cmp.mapping.select_prev_item(),
 
-      ['<C-n>'] = cmp.mapping({
-        c = function()
-          if cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-          else
-            vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
-          end
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<Tab>'] = cmp.mapping(
+        function(fallback)
+          cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
         end,
-        i = function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-          else
-            fallback()
-          end
+        { 'i', 's' }
+      ),
+      ['<S-Tab>'] = cmp.mapping(
+        function(fallback)
+          cmp_ultisnips_mappings.jump_backwards(fallback)
         end,
-      }),
-
-      ['<C-p>'] = cmp.mapping({
-        c = function()
-          if cmp.visible() then
-            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-          else
-            vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
-          end
-        end,
-        i = function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-          else
-            fallback()
-          end
-        end,
-      }),
-
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-      ['<C-e>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
-      ['<C-y>'] = cmp.config.disable,
-
-      ['<CR>'] = cmp.mapping({
-        i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
-        c = function(fallback)
-          if cmp.visible() then
-            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-          else
-            fallback()
-          end
-        end,
-      }),
+        { 'i', 's' }
+      ),
+      ['<C-e>'] = cmp.mapping.close(),
     },
 
     sources = cmp.config.sources({
@@ -284,7 +201,8 @@ autocmd FileType markdown setlocal foldlevel=1
 
 " " lspconfig
 lua <<EOF
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
   local lsp = require('lspconfig')
   -- lsp['eslint'].setup { capabilities = capabilities }
 EOF
@@ -324,7 +242,7 @@ lua <<EOF
 
     f = {
       name = '+file',
-      f = { '<Cmd>Telescope files<CR>', 'Telescope' },
+      f = { '<Cmd>Telescope find_files<CR>', 'Telescope' },
       r = { '<Cmd>Telescope oldfiles<CR>', 'Recent' },
       s = { '<Cmd>write<CR>', 'Save' },
       S = { '<Cmd>wall<CR>', 'Save All' },
@@ -360,7 +278,7 @@ lua <<EOF
       name = '+toggle',
       t = { '<Cmd>FloatermToggle<CR>', 'Terminal' },
       s = { '<Cmd>set spell!<CR>', 'Spelling' },
-      c = { '<Cmd>lua CmpToggle<CR>', 'Completion' },
+      c = { '<Cmd>lua CmpToggle()<CR>', 'Completion' },
     },
 
     x = {
@@ -379,6 +297,7 @@ lua <<EOF
     s = {
       name = '+search',
       s = { '<Cmd>Telescope live_grep<CR>', 'Telescope' },
+      c = { '<Cmd>nohlsearch<CR>', 'Clear' },
     },
 
     h = {

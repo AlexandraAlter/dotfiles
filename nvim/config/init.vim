@@ -238,6 +238,9 @@ lua <<EOF
 
     j = {
       name = '+jump',
+      j = { '<Cmd>Telescope marks<CR>', 'Telescope' },
+      d = { '<Cmd>delmarks!<CR>', 'Delete Marks' },
+      D = { '<Cmd>delmarks A-Z0-9<CR>', 'Delete All Marks' },
     },
 
     f = {

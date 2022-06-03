@@ -446,7 +446,7 @@ function pl.Dict:add_table(tbl, stack)
   local at_top = #stack == 0
   for stroke, subval in pairs(tbl) do
     local keyless = stroke == '' or stroke == '-'
-    local merge = string.match(stroke, '^%.%.(.*)$')
+    local merge = string.match(stroke, '^%.%.?(.*)$')
     local split = string.match(stroke, '^/(.*)$')
     if at_top and keyless then
       error('blank key at top of table')

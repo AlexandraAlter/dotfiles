@@ -14,6 +14,11 @@ local extras = {
   ['TH*EURD'] = '1/3',
   ['TPHUPBZ'] = '100',
   ['TWOUPB'] = '{200^}',
+  ['THoi*PB'] = '{^000}',
+  ['HUPB/HUPB'] = '{^00}',
+  ['HUPBZ'] = '{^00}',
+  ['KH-PL'] = '{^:00}',
+  ['KHR-PL'] = '{^:00}',
 }
 
 function numbers.build()

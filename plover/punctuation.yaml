@@ -1,55 +1,133 @@
-# static symbols
+# English/other static symbols
 
--RBGS/oi: '{^/^}'
--RBGS/D-sh: "--"
-A*Eng: '{^>^}'
-A*EngT: '{^>^}'
-AE: "'"
-ea.ng: '{^<^}'
-ea.ngT: '{^<^}'
-H*FPB: '{^-^}'
-H*PB: '{^-^}'
-H-F: '{?}'
-H-PB: '{^-^}'
-HA*EPB: '{^-^}'
-HA*Esh: '#'
-KA*RT: '{^}^{^}'
-KH-FG: '`'
-chR-n: '{^}:{^}'
-KR-GS: '"'
-KR-RT: '{^}^{^}'
-KW-BG: ','
-KWA*LS: '{^=^}'
-P*ERS: '{&%}'
-P*n: '{^}({^}'
-P*nT: '{^}){^}'
-PĪ*P: '{^|^}'
+KW-BG: '{,}'
+# KW-BG: ','
+F-PL: '{.}'
+Poi*P: '{.^}'
+NR-FRPBLT: '{.} '
+W-B: '{^,^}'
 P-P: '{^.^}'
 P-nT: '{^.^}'
 P-T: '{^.^}'
-PHERS: '{^%}'
-PHR*US: '{^+}'
-PR*En: ')'
-PR-D: '{. ^} {^}'
-PREn: '('
-BHR-T: '{^}- {-|}'
-BR*BGT: '{^]}'
-BR-BGT: '['
-BRA*BG: '{^}>'
-BRABG: '<{^}'
-R*UnD: '{^_^}'
-SKHRAPL: '{!}'
-SP-PBD: '&'
-SBHRAEsh: '{^\\^}'
-STA*R: '{^*^}'
-STPH*FPLT: ';'
+PR-D: &l '{. ^} {^}'
+.*RBGS/-P: *l
 STPH-FPLT: ':'
-T*LD: '~'
-TK-LS: '{^^}'
-TK-PL: '$'
-TP-PL: '.'
-TPR*BGT: '}'
-TPR-BGT: '{'
-W-B: '{^,^}'
-YAT: '{^@^}'
+STPH*FPLT: ';'
+KHR*PB: '{:}{^}'
+chR-n: '{^}:{^}'
+
+L-PZ: '. . .'
+KW-BG/J-RBGS: '{^}...{-|}'
+HR-PS: '{^...}'
+SW-BS: '{^...}'
+J-RBGS: '{^...}{ }{-|}'
+-RBGS/J-RBGS: '{^...}{-|}'
+KW-BG/JORBGS: '{...}'
+
+-PBT: &l "{^'}"
+AE: *l
+SKW*T: *l
+SKW*TS: *l
+A*E: &l "{'^}"
+SKW-T: *l
+SKW-TS: *l
+
+KR-GS: '"'
+
+H-PB: &l '{^-^}'
+H*PB: *l
+H*FPB: *l
+HA*EPB: *l
+
+H*B: '-'
+H-PBS: '-{^}'
+H-PBZ: '--{^}'
+BHR-T: '{^}- {-|}'
+HĒ*PB: '{-^}'
+STKĀRB: '{ }-{ }'
+D-sh: &l '--'
+KW-RB: *l
+STK-RB: *l
+D-R: *l
+D-shG: *l
+D-RPB: *l
+-RBGS/D-sh: *l
+KW-BG/D-sh: *l
+-RB/NR-RB/TK-RB: ' -- '
+-RBGS/NR-RB/TK-RB: ' -- '
+T-RB: '{--}'
+TK*RB: '{--}'
+R*UnD: '{^_^}'
+
+KWA*LS: '{^=^}'
+PHR*US: '{^+}'
+
 oi: '{^/^}'
+-RBGS/oi: '{^/^}'
+KWEZ: '?'
+SNR-RB: '{?} '
+H-F: '{?}'
+
+SBHRAEsh: '{^\\^}'
+PĪ*P: '{^|^}'
+
+KH-FG: '`'
+TR-RL: '` {^}'
+TR*RL: '{^}`'
+T*LD: '{^~}'
+# T*LD: '~'
+
+SKHRAPL: '{!}'
+SGHR-FPLT: '{!}'
+KHRAPL/KHRAPL: '!  {{-|}^}'
+YAT: '{^@^}'
+HAEsh: '#{^}'
+HA*Esh: '#'
+NRORB: '$'
+TK-PL: '${^}'
+P*ERS: '{&%}'
+PHERS: '{^%}'
+KR-RT: &l '{^}^{^}'
+KA*RT: *l
+SP-PBD: '&'
+SPHAPBD: '&'
+SPHAPBD/SPHAPBD: '&&'
+STA*R: '{^*^}'
+PWHRET: '*'
+STR*EUFBG: '*'
+STR-BG: '*'
+KEZ/KWEZ: '***'
+KWEZ/KWEZ: '***'
+SKWEZ/KWEZ: '***'
+
+P*n: '{^}({^}'
+P*nT: '{^}){^}'
+PREN: '{(^}'
+PR*EN: '{^)}'
+SN-FPLTS: '{(^}'
+SN*FPLTS: '{^)}'
+BR-BGT: '{[^}'
+BR*BGT: '{^]}'
+BR-BG: '{[}'
+BR*BT: ']'
+BR-BGS: '{]}'
+BR*BGS: '{[}'
+BR-S: '\\{'
+BR*S: '\\}'
+TPR-BGT: '\\{{^}'
+TPR*BGT: '{^}\\}'
+TPR-BGTS: '{'
+TPR*BGTS: '}'
+AEng: '{^<^}'
+A*Eng: '{^>^}'
+AEngT: '{^<^}'
+A*EngT: '{^>^}'
+BRABG: '<{^}'
+BRA*BG: '{^}>'
+
+SGHR-FPLT/SN-FPLD: '{!})'
+SGHR-FPLT/SKW-TS: "{!'}"
+J-RBGS/SN-RB: '... ?'
+HR-PS/-FPLT/SKW-TS: "...{.}{'}"
+HR-PZ/-FPLT/SKW-TS: ". . . {.}{'}"
+

@@ -46,13 +46,13 @@ local defaults = {
   'numbers.lua',
   'symbols.lua',
   'formatting.yaml',
+  'punctuation.yaml',
 
   -- English
-  'fingerspelling.lua',
-  'phrases.lua',
-  'punctuation.yaml',
-  'misstrokes.yaml',
-  'dict.yaml',
+  'fingers_en.lua',
+  'phrases_en.lua',
+  'dict_en.yaml',
+  'misstrokes_en.yaml',
 
   -- Domain-specific
   'mush.yaml',

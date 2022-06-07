@@ -49,10 +49,10 @@ local defaults = {
   'punctuation.yaml',
 
   -- English
-  'fingers_en.lua',
-  'phrases_en.lua',
-  'dict_en.yaml',
-  'misstrokes_en.yaml',
+  'en_fingers.lua',
+  'en_phrases.lua',
+  'en_dict.yaml',
+  'en_misstrokes.yaml',
 
   -- Domain-specific
   'mush.yaml',

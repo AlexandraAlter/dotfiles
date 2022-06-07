@@ -21,6 +21,27 @@ local extras = {
   ['KHR-PL'] = '{^:00}',
 }
 
+-- TPWOUPB: '{200^}'
+-- -FPLT/-9D: '{.}99'
+-- 8/NAF/PWEU/1/1: '8 1/2 x 11'
+-- A*E/0EU6/-S: "'60s"
+-- A*E/0EU7/-S: "'70s"
+-- A*E/50/-S: "'50s"
+-- ĀP/PERS: '75%'
+-- ERL/AE/0EU8: "early '80"
+-- KHREURT: '{:}30'
+-- oiL/PERS: '80%'
+-- P-P/-L: '.8'
+-- MEUD/A*E/0EU6/-S: "mid-'60s"
+-- PHR*US/2: '+2'
+-- SĒ*/ROE/PERS: '0%'
+-- THUZ: '{&000}'
+-- FARBGT/10: 'factor X'
+-- FARBGT/7: 'factor VII'
+-- FARBGT/8: 'factor VIII'
+-- FARBGT/8/A*: 'factor VIIIa'
+-- FARBGT/9: 'factor IX'
+
 function numbers.build()
   local dict = pl.Dict:new{}
 

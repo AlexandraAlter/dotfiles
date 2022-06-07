@@ -11,10 +11,14 @@ P-nT: '{^.^}'
 P-T: '{^.^}'
 PR-D: &l '{. ^} {^}'
 .*RBGS/-P: *l
-STPH-FPLT: ':'
-STPH*FPLT: ';'
-KHR*PB: '{:}{^}'
+KHR*N: '{:}{^}'
 chR-n: '{^}:{^}'
+J*RBGS: '{;}'
+STP-FPLT: '{:}'
+STPH*FPL: '{;}'
+STPH-FPLT: '{:}'
+STPH*FPLT: '{;}'
+-FRPLT: '{:}'
 
 L-PZ: '. . .'
 KW-BG/J-RBGS: '{^}...{-|}'
@@ -24,33 +28,33 @@ J-RBGS: '{^...}{ }{-|}'
 -RBGS/J-RBGS: '{^...}{-|}'
 KW-BG/JORBGS: '{...}'
 
+A*E: &l "{'^}"
+SKW-T: *l
+SKW-TS: *l
 -PBT: &l "{^'}"
 AE: *l
 SKW*T: *l
 SKW*TS: *l
-A*E: &l "{'^}"
-SKW-T: *l
-SKW-TS: *l
 
 KR-GS: '"'
 
-H-PB: &l '{^-^}'
-H*PB: *l
-H*FPB: *l
-HA*EPB: *l
+H-N: &l '{^-^}'
+H*N: *l
+H*FN: *l
+HA*EN: *l
 
 H*B: '-'
-H-PBS: '-{^}'
-H-PBZ: '--{^}'
+H-NS: '-{^}'
+H-NZ: '--{^}'
 BHR-T: '{^}- {-|}'
-HĒ*PB: '{-^}'
+HĒ*N: '{-^}'
 STKĀRB: '{ }-{ }'
 D-sh: &l '--'
 KW-RB: *l
 STK-RB: *l
 D-R: *l
 D-shG: *l
-D-RPB: *l
+D-RN: *l
 -RBGS/D-sh: *l
 KW-BG/D-sh: *l
 -RB/NR-RB/TK-RB: ' -- '
@@ -59,6 +63,9 @@ T-RB: '{--}'
 TK*RB: '{--}'
 R*UnD: '{^_^}'
 
+KW*L: '='
+KW-L: '='
+KWA*LS/KWA*LS: '=='
 KWA*LS: '{^=^}'
 PHR*US: '{^+}'
 
@@ -89,9 +96,9 @@ P*ERS: '{&%}'
 PHERS: '{^%}'
 KR-RT: &l '{^}^{^}'
 KA*RT: *l
-SP-PBD: '&'
-SPHAPBD: '&'
-SPHAPBD/SPHAPBD: '&&'
+SP-ND: '&'
+SPHAND: '&'
+SPHAND/SPHAND: '&&'
 STA*R: '{^*^}'
 PWHRET: '*'
 STR*EUFBG: '*'
@@ -110,8 +117,8 @@ BR-BGT: '{[^}'
 BR*BGT: '{^]}'
 BR-BG: '{[}'
 BR*BT: ']'
-BR-BGS: '{]}'
-BR*BGS: '{[}'
+BR-X: '{]}'
+BR*X: '{[}'
 BR-S: '\\{'
 BR*S: '\\}'
 TPR-BGT: '\\{{^}'
@@ -124,10 +131,16 @@ AEngT: '{^<^}'
 A*EngT: '{^>^}'
 BRABG: '<{^}'
 BRA*BG: '{^}>'
+HR*N: '<'
+HR*N/HR*N: '<<'
+GR*N: '>'
+PHR*N: '>'
 
 SGHR-FPLT/SN-FPLD: '{!})'
 SGHR-FPLT/SKW-TS: "{!'}"
+HR*N/KWA*LS: '<='
+PHRULS: '+='
 J-RBGS/SN-RB: '... ?'
 HR-PS/-FPLT/SKW-TS: "...{.}{'}"
 HR-PZ/-FPLT/SKW-TS: ". . . {.}{'}"
-
+-FPLT/HR-PS: '{.}...{|}'

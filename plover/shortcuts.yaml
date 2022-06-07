@@ -1,51 +1,29 @@
-# Static modifiers
+# Generic shortcuts
 
-TPEFBG: '{#Escape}'
-
-PW*F: '{#BackSpace}'
-PW-FP: '{#BackSpace}'
-PW*FP: '{#Alt_L(BackSpace)}'
-PW*FPL: '{#Super(BackSpace)}'
-TP*EFBG: '{#Super_L(BackSpace)}'
-
-TK*EL: '{#Delete}'
-PW*R: '{#Delete}'
-PW*RB: '{#Option(Delete)}'
-
-SP-B: '{#Space}'
-SP-P: '{#Shift_L(Space)}'
-
-STRAO*EUBG: '{#Super(Shift_L(x))}'
-STKPWAO*PL: '{#Super_L(Shift_L(equal))}'
-K*UT: '{#Super_L(x)}'
-KPW: '{#Super_L(x)}'
+KHR-BG: '{#Control_L(c)}'
 KPWR: '{#Super_L(c)}'
 KPWR*: '{#Super_L(Alt_L(c))}'
-P*FT: '{#Super_L(v)}'
-PWR: '{#Super_L(v)}'
+
 S*F: '{#Super_L(s)}'
 SA*EF: '{#Super_L(Alt_L(s))}'
+
+PW*RBG: '{#Control_L(k)}'
+KHR*BG: '{#Control_L(k)}'
+
+KHR*T: '{#Control_L(w)}'
+
+KHR*F: '{#Control_L(v)}'
+PWR: '{#Super_L(v)}'
+P*FT: '{#Super_L(v)}'
+
+K*UT: '{#Super_L(x)}'
+KPW: '{#Super_L(x)}'
+STRAO*EUBG: '{#Super_L(Shift_L(x))}'
+
 SKWR: '{#Super_L(z)}'
 STKWR: '{#Super_L(Shift_L(z))}'
 TKPH: '{#Super_L(z)}'
 TKPH*: '{#Super_L(Shift_L(z))}'
 
-PW*RBG: '{#Control(k)}'
-KHR*F: '{#Control_L(v)}'
-KHR*BG: '{#Control_L(k)}'
-KHR*T: '{#Control_L(w)}'
-KHR-BG: '{#Control_L(c)}'
-
-1-BGS: '{^}{#F1}{^}'
-2-BGS: '{^}{#F2}{^}'
-3-BGS: '{^}{#F3}{^}'
-4-BGS: '{^}{#F4}{^}'
-5-BGS: '{^}{#F5}{^}'
-1KW-6: '{^}{#F6}{^}'
-1KW-7: '{^}{#F7}{^}'
-1KW-8: '{^}{#F8}{^}'
-1KW-9: '{^}{#F9}{^}'
-10-BGS: '{^}{#F10}{^}'
-1K-BGS: '{^}{#F11}{^}'
-12-BGS: '{^}{#F12}{^}'
+STKPWAO*PL: '{#Super_L(Shift_L(equal))}'
 

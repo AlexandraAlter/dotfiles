@@ -34,9 +34,10 @@ end
 
 local defaults = {
   -- Plover
-  'control.yaml',
+  'plover.yaml',
 
   -- Shortcuts
+  'control.yaml',
   'modifiers.lua',
   'shortcuts.yaml',
   'tabbing.yaml',
@@ -50,8 +51,10 @@ local defaults = {
 
   -- English
   'en_fingers.lua',
-  'en_phrases.lua',
-  'en_dict.yaml',
+  'en_base.yaml',
+  'en_nouns.yaml',
+  'en_phrases.yaml',
+  'en_autophrases.lua',
   'en_misstrokes.yaml',
 
   -- Domain-specific

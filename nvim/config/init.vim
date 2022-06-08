@@ -314,6 +314,64 @@ lua <<EOF
   wk.register({
     ['='] = { 'm`gg=G``', 'reformat' },
   }, { prefix = '<localleader>' })
+
+  wk.register({
+    name = 'window',
+
+    h = 'Go to the left window',
+    l = 'Go to the right window',
+    k = 'Go to the up window',
+    j = 'Go to the down window',
+    t = 'Go to the top window',
+    b = 'Go to the bottom window',
+    w = 'Next window',
+    p = 'Previous window',
+    W = 'Previous window',
+
+    ['-'] = 'Decrease height',
+    ['+'] = 'Increase height',
+    ['<lt>'] = 'Decrease width',
+    ['>'] = 'Increase width',
+    ['='] = 'Equalize windows',
+    ['_'] = 'Set height',
+    ['|'] = 'Set width',
+
+    H = 'Move window left',
+    L = 'Move window right',
+    K = 'Move window up',
+    J = 'Move window down',
+    P = 'Previous window',
+    r = 'Rotate windows downwards',
+    R = 'Rotate windows upwards',
+    x = 'Exchange windows',
+
+    n = 'New window',
+    s = 'Split window',
+    v = 'Split window vertically',
+    T = 'Break out into a new tab',
+    d = 'Jump to definition in a window',
+    i = 'Jump to identifier in a window',
+    f = 'Edit file name in a window',
+    [']'] = 'Jump to tag in a window',
+    ['}'] = 'Jump to tag with a preview',
+    ['^'] = 'Edit alternate file in a window',
+
+    o = 'Keep only this window',
+    c = 'Close window',
+    q = 'Quit window',
+
+    g = {
+      name = 'g',
+      ['C-]'] = ':tjump in a window',
+      [']'] = ':tselect in a window',
+      ['}'] = ':ptjump in a window',
+      f = 'Edit file name in a tab',
+      F = 'Edit file name and line number in a tab',
+      t = 'Next tab',
+      T = 'Previous tab',
+      ['<Tab>'] = 'Last tab',
+    },
+  }, { prefix = '<C-w>' })
 EOF
 " }}}
 

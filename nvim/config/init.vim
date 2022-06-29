@@ -17,7 +17,7 @@ let g:maplocalleader = ','
 " }}}
 
 " {{{ interface
-highlight PMenu ctermfg=7* ctermbg=0
+highlight PMenu ctermfg=Cyan ctermbg=DarkGrey guifg=Cyan guibg=DarkGrey
 
 " " airline
 " " characterize
@@ -29,8 +29,11 @@ set ignorecase
 set smartcase
 set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set foldenable
+let g:markdown_folding=1
 
-" " targets (+targets-camels)
+command! BW :bn|:bd#
+
+" " targets
 " " sneak
 " " wordmotion
 
@@ -141,7 +144,7 @@ endif
 let g:netrw_home=expand(stdpath('data'))
 
 " " files
-command -bar ConfigReload source $MYVIMRC | echo 'Sourced' $MYVIMRC
+command -bar Reload source $MYVIMRC | echo 'Sourced' $MYVIMRC
 command -bar PackUpdate execute vertical topleft new cd stdpath('data') . '/site/pack' | Git submodule update '--remote' '--merge' '--recursive' .
 
 " " telescope (+telescope-fzf-native +web-devicons)
@@ -160,17 +163,8 @@ let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F10>'
+let g:floaterm_keymap_hide   = '<C-z>'
 let g:floaterm_autoclose     = 1
-
-tnoremap <silent> <C-z> <Cmd>FloatermHide<CR>
-nnoremap <silent> <F7> <Cmd>FloatermNew<CR>
-tnoremap <silent> <F7> <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <F8> <Cmd>FloatermPrev<CR>
-tnoremap <silent> <F8> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <F9> <Cmd>FloatermNext<CR>
-tnoremap <silent> <F9> <C-\><C-n>:FloatermNext<CR>
-nnoremap <silent> <F10> <Cmd>FloatermToggle<CR>
-tnoremap <silent> <F10> <C-\><C-n>:FloatermToggle<CR>
 
 " " neomake
 " " tbone
@@ -179,25 +173,22 @@ tnoremap <silent> <F10> <C-\><C-n>:FloatermToggle<CR>
 " }}}
 
 " {{{ formats
-setlocal ts=2 sts=2 sw=2 et makeprg=make
-autocmd FileType * setlocal ts=2 sts=2 sw=2 et
+set ts=2 sts=2 sw=2 et makeprg=make
 
-autocmd FileType c setlocal equalprg=clang-format cino=N-s\ g0
-autocmd FileType cpp setlocal equalprg=clang-format cino=N-s\ g0
 autocmd FileType python setlocal equalprg=yapf
 autocmd FileType javascript setlocal equalprg=prettier\ --stdin-filepath\ %
 autocmd FileType typescript setlocal equalprg=prettier\ --stdin-filepath\ %
 
-let g:markdown_folding=1
 autocmd FileType markdown setlocal foldlevel=1
 
-" " sleuth
-" " enuch
-" " ragtag (xml)
-" " jdaddy (json)
+" " eunuch
 
+" " sleuth
 " " endwise
 " " unimpaired
+
+" " ragtag (xml)
+" " jdaddy (json)
 
 " " lspconfig
 lua <<EOF
@@ -233,7 +224,10 @@ lua <<EOF
 
     q = {
       name = '+quit',
-      q = { '<Cmd>quit<CR>', 'Quit' },
+      q = { '<Cmd>quitall<CR>', 'Quit' },
+      Q = { '<Cmd>quit<CR>', 'Quit This' },
+      w = { '<Cmd>wqall<CR>', 'Write and Quit' },
+      W = { '<Cmd>wq<CR>', 'Write and Quit This' },
     },
 
     j = {
@@ -256,7 +250,7 @@ lua <<EOF
       c = {
         name = '+config',
         e = { '<Cmd>edit $MYVIMRC<CR>', 'Edit' },
-        r = { '<Cmd>ConfigReload<CR>', 'Reload' },
+        r = { '<Cmd>Reload<CR>', 'Reload' },
       },
       F = {
         name = '+sudo',
@@ -275,13 +269,15 @@ lua <<EOF
       n = { '<Cmd>bnext<CR>', 'Next' },
       p = { '<Cmd>bprevious<CR>', 'Previous' },
       d = { '<Cmd>bd<CR>', 'Delete' },
+      D = { '<Cmd>BW<CR>', 'Delete and Next' },
     },
 
     t = {
       name = '+toggle',
-      t = { '<Cmd>FloatermToggle<CR>', 'Terminal' },
-      s = { '<Cmd>set spell!<CR>', 'Spelling' },
+      t = { '<Cmd>FloatermToggle<CR>', 'Term' },
       c = { '<Cmd>lua CmpToggle()<CR>', 'Completion' },
+      s = { '<Cmd>set spell!<CR>', 'Spell' },
+      w = { '<Cmd>set wrap!<CR>', 'Wrap' },
     },
 
     x = {
@@ -372,6 +368,18 @@ lua <<EOF
       ['<Tab>'] = 'Last tab',
     },
   }, { prefix = '<C-w>' })
+
+  wk.register({
+    name = 'z',
+
+    u = {
+      name = 'Undo',
+      w = 'Undo zw',
+      g = 'Undo zg',
+      W = 'Undo zW',
+      G = 'Undo zG',
+    },
+  }, { prefix = 'z' })
 EOF
 " }}}
 

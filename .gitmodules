@@ -79,8 +79,8 @@
 [submodule "nvim/snippets"]
 	path = nvim/pack/lament/start/snippets
 	url = https://github.com/honza/vim-snippets.git
-[submodule "nvim/enuch"]
-	path = nvim/pack/lament/start/enuch
+[submodule "nvim/eunuch"]
+	path = nvim/pack/lament/start/eunuch
 	url = https://github.com/tpope/vim-eunuch.git
 [submodule "nvim/tbone"]
 	path = nvim/pack/lament/start/tbone

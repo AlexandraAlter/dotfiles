@@ -33,8 +33,10 @@ let g:markdown_folding=1
 
 command! BW :bn|:bd#
 
-" " targets
 " " sneak
+nnoremap \ <Plug>Sneak_,
+
+" " targets
 " " wordmotion
 
 " }}}

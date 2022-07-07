@@ -27,3 +27,8 @@ TKPH*: '{#Super_L(Shift_L(z))}'
 
 STKPWAO*PL: '{#Super_L(Shift_L(equal))}'
 
+KPH*K: '{#Super_L(k)}'
+KPH*F: '{#Super_L(v)}'
+KPH*T: '{#Super_L(w)}'
+KPH-C: '{#Super_L(c)}'
+

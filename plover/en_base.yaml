@@ -882,12 +882,12 @@ VĀS/JO: '{vaso^}'
 VĀT/JO: '{vaso^}'
 VAS/JO: '{vaso^}'
 Voi*S: '{vaso^}'
-VĒN/YO: &l '{veno^}'
-VĒN/JO: *l
-VEN/YO: *l
-VEN/JO: *l
-VEN/TRO: &l '{ventro^}'
-VENT/RO: *l
+VĒN/YO: '{veno^}'
+VĒN/JO: '{veno^}'
+VEN/YO: '{veno^}'
+VEN/JO: '{veno^}'
+VEN/TRO: '{ventro^}'
+VENT/RO: '{ventro^}'
 VES/KO: '{vesico^}'
 VEFT/BLO: '{vestibulo^}'
 VĪB/RA: '{vibra^}'
@@ -895,9 +895,9 @@ VEUS/RO: '{viscero^}'
 VEUFC/JO: '{visco^}'
 VEUS/YO: '{visio^}'
 VEUS/JO: '{visuo^}'
-VEURT/YO: &l '{vitreo^}'
-VEURT/RO: *l
-VEURT/JO: *l
+VEURT/YO: '{vitreo^}'
+VEURT/RO: '{vitreo^}'
+VEURT/JO: '{vitreo^}'
 VEL/SRO: '{vulvo^}'
 WA*UR: '{water^}'
 W*EL: '{well-^}'
@@ -908,19 +908,19 @@ XĪL/JO: '{xylo^}'
 YES/TER: '{yester^}'
 YOUR/SEF: '{yourself-^}'
 ZĪG: '{zyg^}'
-ZĪ/GO: &l '{zygo^}'
-SĪG/YO: *l
-SĪG/JO: *l
-SGĪ/GO: *l
-SGĪG/JO: *l
-ZĪG/YO/MAT/K-L: &l '{zygomatico^}'
-SĪ*G/MAT/KO: *l
-SĪG/JO/MAT/K-L: *l
+ZĪ/GO: '{zygo^}'
+SĪG/YO: '{zygo^}'
+SĪG/JO: '{zygo^}'
+SGĪ/GO: '{zygo^}'
+SGĪG/JO: '{zygo^}'
+ZĪG/YO/MAT/K-L: '{zygomatico^}'
+SĪ*G/MAT/KO: '{zygomatico^}'
+SĪG/JO/MAT/K-L: '{zygomatico^}'
 
 --- # suffixes
 .*D: "{^'d}"
-AES: &l "{^'s}"
-AES/ES: *l
+AES: "{^'s}"
+AES/ES: "{^'s}"
 JA/AES: "{^a's}"
 ES/AE: "{^es'}"
 .*G: "{^in'}"
@@ -933,8 +933,8 @@ A/KWĪ*RD: '{^-acquired}'
 JAUL: '{^-all}'
 A/PRO*FD: '{^-approved}'
 JA*S: '{^-ass}'
-SO*ERBTD: &l '{^-associated}'
-SO*ERBT/-D: *l
+SO*ERBTD: '{^-associated}'
+SO*ERBT/-D: '{^-associated}'
 BĀ*FD: '{^-based}'
 BĀ*S: '{^-base}'
 BR*PL: '{^-bathroom}'
@@ -953,10 +953,10 @@ D*EG: '{^-degree}'
 DMENL: '{^-dimensional}'
 DLA*R: '{^-dollar}'
 DAO*R: '{^-door}'
-DO*UN: &l '{^-down}'
-JO*UN: *l
-DO*UNS: &l '{^-downs}'
-JO*UNS: *l
+DO*UN: '{^-down}'
+JO*UN: '{^-down}'
+DO*UNS: '{^-downs}'
+JO*UNS: '{^-downs}'
 .*EJ: '{^-edge}'
 TP*EURBT: '{^-efficient}'
 .*END: '{^-end}'
@@ -1372,8 +1372,8 @@ YOT/MEU: '{^iotomy}'
 YOUS: '{^ious}'
 YO*E: '{^io}'
 EURB: '{^ish}'
-EUFPL: &l '{^ism}'
-.*EUFPL: *l
+EUFPL: '{^ism}'
+.*EUFPL: '{^ism}'
 ST-C: '{^istic}'
 EUFT: '{^ist}'
 NEUFT: '{^ist}'
@@ -1384,9 +1384,9 @@ EUT/YA: '{^ita}'
 ĪT: '{^ite}'
 EUGS: '{^ition}'
 EURBS: '{^itious}'
-ĪTS: &l '{^itis}'
-Ī*TS: *l
-ĪT/EUS: *l
+ĪTS: '{^itis}'
+Ī*TS: '{^itis}'
+ĪT/EUS: '{^itis}'
 TEUFL: '{^itively}'
 Ē/TOE: '{^ito}'
 TŪD: '{^itude}'
@@ -2701,8 +2701,8 @@ A/KA*NT/MĒB: 'acanthamoeba'
 A/KA*NT/MĒB/A*L: 'acanthamoebal'
 A/KA*PL/ROES/A*T: 'acamprosate'
 A/KA/RA/JE: 'acaraje'
-A/KAD/MEU: &l 'academy'
-A/DAD/MEU: *l
+A/KAD/MEU: 'academy'
+A/DAD/MEU: 'academy'
 A/KĀ/SHA: 'acacia'
 A/KAO*UT: 'acuity'
 A/KĒT/EUC: 'acetic'
@@ -4420,10 +4420,10 @@ AB/LEUGS: 'abolition'
 AB/LO/NĒ: 'abalone'
 AB/LOE/NĒ: 'abalone'
 AB/KA/SREUR: 'abacavir'
-AB/KA/DAB/RA: &l 'abracadabra'
-AB/PWRA/KA/DA/PWRA: *l
-AB/PWRA/KA/DAB/RA: *l
-AB/RA/KA/DAB/RA: *l
+AB/KA/DAB/RA: 'abracadabra'
+AB/PWRA/KA/DA/PWRA: 'abracadabra'
+AB/PWRA/KA/DAB/RA: 'abracadabra'
+AB/RA/KA/DAB/RA: 'abracadabra'
 AB/KUS: 'abacus'
 AB/YĒ: 'abbey'
 AB/YEU: 'abby'
@@ -4520,10 +4520,10 @@ AB/STĀND: 'abstained'
 AB/STĀNS: 'abstains'
 AB/STENGS: 'abstention'
 AB/STEU/NENS: 'abstinence'
-AB/STRAKT: &l 'abstract'
-AB/STKRABGT: *l
-AB/STPRABGT: *l
-AB/STRABLGT: *l
+AB/STRAKT: 'abstract'
+AB/STKRABGT: 'abstract'
+AB/STPRABGT: 'abstract'
+AB/STRABLGT: 'abstract'
 AB/SNANT: 'absonant'
 AB/STRA*CS: 'abstraction'
 AB/STRAC/TOR: 'abstractor'
@@ -11380,9 +11380,9 @@ AUT/OE/PĪL/OT: 'autopilot'
 AUT/OE/MAT/KLEU: 'automatically'
 AUT/OE/BAN: 'autobahn'
 AUT/OES: 'autos'
-AUT/OL/GOUS: &l 'autologous'
-AUT/OLG/OUS: *l
-AUT/OL/TKPOUS: *l
+AUT/OL/GOUS: 'autologous'
+AUT/OLG/OUS: 'autologous'
+AUT/OL/TKPOUS: 'autologous'
 AUT/OP/SEU: 'autopsy'
 AUT/ON/MEU: 'autonomy'
 AUT/ON/MOUS: 'autonomous'
@@ -17126,10 +17126,10 @@ INT/GOFPLT/A*L: 'intergovernmental'
 INT/GRAET: 'integrate'
 INT/GRĀ/TOR: 'integrator'
 INT/GRĀGS: 'integration'
-INT/GRĀT/-G: &l 'integrating'
-INT/GRĀGT: *l
-INT/TKPRĀGT: *l
-INT/TYĀT/-G: *l
+INT/GRĀT/-G: 'integrating'
+INT/GRĀGT: 'integrating'
+INT/TKPRĀGT: 'integrating'
+INT/TYĀT/-G: 'integrating'
 INT/GRĀN: 'integrin'
 INT/GRĀS: 'integrase'
 INT/GRĀT: 'integrate'
@@ -24327,8 +24327,8 @@ LOE/JEUFT/KLEU: 'logistically'
 LOE/JEUS/TEU/KAL: 'logistical'
 LOE/JEUS/TEUC: 'logistic'
 LOE/JEUS/TEUC/LEU: 'logistically'
-LOE/GO/-S: &l 'logos'
-LOE/TKPOE/-S: *l
+LOE/GO/-S: 'logos'
+LOE/TKPOE/-S: 'logos'
 LOE/GO/TĪP: 'logotype'
 LOE/GOE: 'logo'
 LOE/GOE/TĪP: 'logotype'

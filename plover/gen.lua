@@ -52,10 +52,11 @@ local defaults = {
   -- English
   'en_fingers.lua',
   'en_base.yaml',
-  'en_nouns.yaml',
+  'en_proper.yaml',
   'en_phrases.yaml',
   'en_autophrases.lua',
   'en_misstrokes.yaml',
+  'en_misc.yaml',
 
   -- Domain-specific
   'mush.yaml',

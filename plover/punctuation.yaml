@@ -62,6 +62,8 @@ KW-BG/D-sh: *l
 T-RB: '{--}'
 TK*RB: '{--}'
 R*UnD: '{^_^}'
+N-RB: '–'
+PH-RB: '—'
 
 KW*L: '='
 KW-L: '='
@@ -136,6 +138,8 @@ HR*N/HR*N: '<<'
 GR*N: '>'
 PHR*N: '>'
 
+TKW-D: '÷'
+
 SGHR-FPLT/SN-FPLD: '{!})'
 SGHR-FPLT/SKW-TS: "{!'}"
 HR*N/KWA*LS: '<='
@@ -144,3 +148,4 @@ J-RBGS/SN-RB: '... ?'
 HR-PS/-FPLT/SKW-TS: "...{.}{'}"
 HR-PZ/-FPLT/SKW-TS: ". . . {.}{'}"
 -FPLT/HR-PS: '{.}...{|}'
+

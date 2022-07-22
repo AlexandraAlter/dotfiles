@@ -1,18 +1,11 @@
 # Generic shortcuts
 
-KHR-BG: '{#Control_L(c)}'
 KPWR: '{#Super_L(c)}'
 KPWR*: '{#Super_L(Alt_L(c))}'
 
 S*F: '{#Super_L(s)}'
 SA*EF: '{#Super_L(Alt_L(s))}'
 
-PW*RBG: '{#Control_L(k)}'
-KHR*BG: '{#Control_L(k)}'
-
-KHR*T: '{#Control_L(w)}'
-
-KHR*F: '{#Control_L(v)}'
 PWR: '{#Super_L(v)}'
 P*FT: '{#Super_L(v)}'
 
@@ -31,4 +24,16 @@ KPH*K: '{#Super_L(k)}'
 KPH*F: '{#Super_L(v)}'
 KPH*T: '{#Super_L(w)}'
 KPH-C: '{#Super_L(c)}'
+
+KL-C: '{#Control_L(c)}'
+KL*K: '{#Control_L(k)}'
+B*RBG: '{#Control_L(k)}'
+KL*F: '{#Control_L(v)}'
+KL*T: '{#Control_L(w)}'
+
+TPW-R: '{#Alt_L(Left)}'
+TA*BT: '{#Alt_L(Tab(Tab))}'
+PW*FP: '{#BackSpace}'
+
+FEFC: '{#Escape}'
 

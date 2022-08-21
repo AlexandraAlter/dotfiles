@@ -3,6 +3,7 @@
 " {{{ general
 set nocompatible
 set mouse=a
+set mousemodel=extend
 set spelllang=en_us,cjk
 set spellsuggest=best,9
 

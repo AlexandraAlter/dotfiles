@@ -97,7 +97,7 @@ exposure = "y"
 popup = "f1" # custom
 
 # blending
-blend_next = "A-S-plus"
+blend_next = "A-S-equal"
 blend_prev = "A-S-minus"
 
 blend_behind = "A-S-q"

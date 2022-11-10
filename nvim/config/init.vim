@@ -32,7 +32,7 @@ set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set foldenable
 let g:markdown_folding=1
 
-command! BW :bn|:bd#
+command! BW :bp|:bd#
 
 " " sneak
 nnoremap \ <Plug>Sneak_,

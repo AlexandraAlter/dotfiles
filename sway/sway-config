@@ -124,23 +124,23 @@ bindsym $mod+Shift+p move scratchpad
 
 # Resizing containers:
 mode "resize" {
-	bindsym $up resize shrink height $resize_by
-	bindsym $down resize grow height $resize_by
+	bindsym $up resize grow height $resize_by
+	bindsym $down resize shrink height $resize_by
 	bindsym $left resize shrink width $resize_by
 	bindsym $right resize grow width $resize_by
 
-	bindsym Shift+$up resize shrink height $resize_by_fast
-	bindsym Shift+$down resize grow height $resize_by_fast
+	bindsym Shift+$up resize grow height $resize_by_fast
+	bindsym Shift+$down resize shrink height $resize_by_fast
 	bindsym Shift+$left resize shrink width $resize_by_fast
 	bindsym Shift+$right resize grow width $resize_by_fast
 
-	bindsym Up resize shrink height $resize_by
-	bindsym Down resize grow height $resize_by
+	bindsym Up resize grow height $resize_by
+	bindsym Down resize shrink height $resize_by
 	bindsym Left resize shrink width $resize_by
 	bindsym Right resize grow width $resize_by
 
-	bindsym Shift+Up resize shrink height $resize_by_fast
-	bindsym Shift+Down resize grow height $resize_by_fast
+	bindsym Shift+Up resize grow height $resize_by_fast
+	bindsym Shift+Down resize shrink height $resize_by_fast
 	bindsym Shift+Left resize shrink width $resize_by_fast
 	bindsym Shift+Right resize grow width $resize_by_fast
 

@@ -5,7 +5,7 @@
  * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
  *
  * =========================================================================== */
- 
+
 /* -----------------------------------------------------------------------------
  * Keyframes
  * -------------------------------------------------------------------------- */
@@ -39,6 +39,7 @@ nord15 #b48ead
 
 /* Reset all styles */
 * {
+	all: unset;
 	color: #eceff4;
 	border: 0;
 	border-radius: 0;
@@ -57,13 +58,13 @@ window#waybar {
 	padding: 2px 0px;
 	border-bottom: 2px;
 	color: #eceff4;
-	border-color: #d8dee9;
+	border-color: #81a1c1;
 	border-style: solid;
 	margin-top: 0px;
 }
 
 #workspaces button.focused {
-	border-color: #81a1c1;
+	border-color: #d8dee9;
 }
 
 #mode {
@@ -74,6 +75,10 @@ window#waybar {
 #network, #bluetooth, #pulseaudio, #mode, #tray, #window, #custom-power {
 	border-bottom: 2px;
 	border-style: solid;
+}
+
+label, button {
+	color: inherit;
 }
 
 /* -----------------------------------------------------------------------------

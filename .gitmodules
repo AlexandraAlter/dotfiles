@@ -124,12 +124,12 @@
 [submodule "nvim/wordmotion"]
 	path = nvim/pack/lament/start/wordmotion
 	url = https://github.com/chaoren/vim-wordmotion.git
-[submodule "di-dictionaries"]
-	path = plover/di
-	url = https://github.com/didoesdigital/steno-dictionaries.git
 [submodule "nvim/fzf"]
 	path = nvim/pack/lament/start/fzf
 	url = https://github.com/junegunn/fzf.git
 [submodule "nvim/godot"]
 	path = nvim/pack/lament/start/godot
 	url = https://github.com/habamax/vim-godot.git
+[submodule "di-dictionaries"]
+	path = plover/di
+	url = https://github.com/didoesdigital/steno-dictionaries.git

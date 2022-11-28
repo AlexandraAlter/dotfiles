@@ -47,19 +47,31 @@ PYGMENTIZE_STYLE=${PYGMENTIZE_STYLE:-autumn}
 OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
 OPENSCAD_COLORSCHEME=${RNGR_OPENSCAD_COLORSCHEME:-Tomorrow Night}
 
+abort_if_oversize() {
+    local size=$1
+    local byte_size=$(echo $size | numfmt --from=iec)
+    if [[ `du -b "${FILE_PATH}" | cut -f1` -gt "${byte_size}" ]]; then
+        echo '----- file too large -----'
+        exit 0
+    fi
+}
+
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
         ## Archive
         a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
         rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
+            abort_if_oversize 500M
             atool --list -- "${FILE_PATH}" && exit 5
             bsdtar --list --file "${FILE_PATH}" && exit 5
             exit 1;;
         rar)
+            abort_if_oversize 500M
             ## Avoid password prompt by providing empty password
             unrar lt -p- -- "${FILE_PATH}" && exit 5
             exit 1;;
         7z)
+            abort_if_oversize 500M
             ## Avoid password prompt by providing empty password
             7z l -p -- "${FILE_PATH}" && exit 5
             exit 1;;
@@ -105,6 +117,7 @@ handle_extension() {
 
         ## JSON
         json)
+            abort_if_oversize 50M
             jq --color-output . "${FILE_PATH}" && exit 5
             python -m json.tool -- "${FILE_PATH}" && exit 5
             ;;
@@ -140,6 +153,7 @@ handle_image() {
 
         ## Image
         image/*)
+            abort_if_oversize 10M
             local orientation
             orientation="$( identify -format '%[EXIF:Orientation]\n' -- "${FILE_PATH}" )"
             ## If orientation data is present and the image actually

@@ -133,3 +133,6 @@
 [submodule "di-dictionaries"]
 	path = plover/di
 	url = https://github.com/didoesdigital/steno-dictionaries.git
+[submodule "nvim/harpoon"]
+	path = nvim/pack/lament/start/harpoon
+	url = https://github.com/ThePrimeagen/harpoon.git

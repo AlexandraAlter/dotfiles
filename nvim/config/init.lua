@@ -188,43 +188,6 @@ vim.opt.shiftwidth = 2
 vim.opt.et = true
 vim.opt.makeprg = 'make'
 
-local augroup_fts = vim.api.nvim_create_augroup('fts', {clear = true})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'python',
-  group = augroup_fts,
-  callback = function()
-    vim.bo.equalprg = yapf
-  end
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'javascript,typescript',
-  group = augroup_fts,
-  callback = function()
-    vim.bo.equalprg = 'prettier\\ --stdin-filepath\\ %'
-  end
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  group = augroup_fts,
-  callback = function()
-    vim.wo.foldlevel = 1
-  end
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'gdscript',
-  group = augroup_fts,
-  callback = function()
-    vim.keymap.set('n', '<localleader>l', ':GodotRunLast<CR>')
-    vim.keymap.set('n', '<localleader>r', ':GodotRun')
-    vim.keymap.set('n', '<localleader>c', ':GodotRunCurrent<CR>')
-    vim.keymap.set('n', '<localleader>,', ':GodotRunFZF<CR>')
-  end
-})
-
 -- -- eunuch
 
 -- -- sleuth

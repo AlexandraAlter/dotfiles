@@ -127,9 +127,9 @@
 [submodule "di-dictionaries"]
 	path = plover/di
 	url = https://github.com/didoesdigital/steno-dictionaries.git
-[submodule "fzf"]
+[submodule "nvim/fzf"]
 	path = nvim/pack/lament/start/fzf
 	url = https://github.com/junegunn/fzf.git
-[submodule "godot"]
+[submodule "nvim/godot"]
 	path = nvim/pack/lament/start/godot
 	url = https://github.com/habamax/vim-godot.git

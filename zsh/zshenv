@@ -13,13 +13,10 @@ export VISUAL="/usr/bin/nvim"
 export GPG_TTY=$(tty)
 unset SSH_AGENT_PID
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-alias gpgtty="gpg-connect-agent updatestartuptty /bye >/dev/null"
-gpgtty
 
-export RANGER_LOAD_DEFAULT_RC=FALSE.
+export RANGER_LOAD_DEFAULT_RC=FALSE
 
 export TASKRC=~/dotfiles/task/taskrc
 export TASKDATA=~/documents/task
-export TASKDATA_M=~/documents/mtask/data
 export TIMEWARRIORDB=~/documents/time
 

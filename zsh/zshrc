@@ -113,6 +113,12 @@ zmodload zsh/net/tcp
 # }}}
 
 # {{{ aliases
+alias ls='ls --color=auto'
+
+alias gpgtty="gpg-connect-agent updatestartuptty /bye >/dev/null"
+
+alias gmux="tmux -L game -f ~/.tmux.conf -f ~/dotfiles/tmux/nofn.conf new -A -s game"
+
 # # {{{ oh-my-zsh common
 alias l='ls -lFh'
 alias la='ls -lAFh'
@@ -186,10 +192,6 @@ alias -s tar="tar tf"
 alias -s tar.gz="echo "
 alias -s ace="unace l"
 # # }}}
-
-alias mtask="task rc.data.location=${TASKDATA_M}"
-
-alias gmux="tmux -L game -f ~/.tmux.conf -f ~/dotfiles/tmux/nofn.conf new -A -s game"
 # }}}
 
 # {{{ services
@@ -197,3 +199,6 @@ alias gmux="tmux -L game -f ~/.tmux.conf -f ~/dotfiles/tmux/nofn.conf new -A -s 
 # # }}}
 # }}}
 
+# {{{ finalization
+gpgtty
+# }}}

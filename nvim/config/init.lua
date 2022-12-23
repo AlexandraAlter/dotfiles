@@ -208,6 +208,14 @@ local lspconfig = require('lspconfig')
 -- {{{ which-key
 local wk = require('which-key')
 
+wk.setup({
+  plugins = {
+    spelling = {
+      enabled = true,
+    }
+  }
+})
+
 wk.register({
   a = {
     name = '+app',

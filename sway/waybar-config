@@ -1,118 +1,121 @@
 {
-	"layer": "bottom",
-	"position": "top",
-	"height": 20,
-	"modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
-	"modules-right": ["cpu", "memory", "temperature", "tray", "network", "bluetooth", "pulseaudio", "backlight", "idle_inhibitor", "battery", "clock"],
+  "layer": "bottom",
+  "position": "top",
+  "height": 20,
+  "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
+  "modules-right": ["cpu", "memory", "temperature", "tray", "network", "bluetooth", "pulseaudio", "backlight", "idle_inhibitor", "battery", "clock"],
 
-	"sway/workspaces": {
-		"disable-scroll": true,
-		"all-outputs": true,
-		"format": "{icon}",
-		"format-icons": {
-			"3": "3",
-			"4": "4",
-			"5": "5",
-			"6": "6",
-			"7": "7",
-			"8": "8",
-			"9": "9",
-			"10": "10",
-		},
-	},
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{icon}",
+    "format-icons": {
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10",
+    },
+  },
 
-	"sway/mode": {
-		"format": "<span style=\"italic\">{}</span>",
-	},
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>",
+  },
 
-	"sway/window": {
-		"format": "{}",
-	},
+  "sway/window": {
+    "format": "{}",
+  },
 
-	"idle_inhibitor": {
-		"format": "{icon}",
-		"format-icons": {
-			"activated": "",
-			"deactivated": ""
-		},
-	},
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    },
+  },
 
-	"tray": {
-		"icon-size": 14,
-		"spacing": 5,
-	},
+  "tray": {
+    "icon-size": 14,
+    "spacing": 5,
+  },
 
-	"clock": {
-		"tooltip-format": "{:%A %B %d %Y | %H:%M}",
-		"format": " {:%a %d %b  %H:%M}",
-		"format-alt": " {:%d/%m/%Y  %H:%M:%S}",
-		//"timezones": [ "Kolkata" ],
-		//"max-length": 200,
-		"interval": 1,
-	},
+  "clock": {
+    "tooltip-format": "{:%A %B %d %Y | %H:%M}",
+    "format": " {:%a %d %b  %H:%M}",
+    "format-alt": " {:%d/%m/%Y  %H:%M:%S}",
+    //"timezones": [ "Kolkata" ],
+    //"max-length": 200,
+    "interval": 1,
+  },
 
-	"cpu": {
-		"format": "﬙ {usage: >3}%",
-		"on-click": "alacritty -e htop",
-	},
+  "cpu": {
+    "format": "﬙ {usage: >3}%",
+    "on-click": "alacritty -e htop",
+    "interval": 3,
+  },
 
-	"memory": {
-		"format": " {: >3}%",
-		"on-click": "alacritty -e htop",
-	},
+  "memory": {
+    "format": " {: >3}%",
+    "on-click": "alacritty -e htop",
+    "interval": 3,
+  },
 
-	"temperature": {
-		"critical-threshold": 80,
-		"format-critical": " {temperatureC}°C",
-		"format": " {temperatureC}°C",
-	},
+  "temperature": {
+    "critical-threshold": 80,
+    "format-critical": " {temperatureC}°C",
+    "format": " {temperatureC}°C",
+    "interval": 3,
+  },
 
-	"backlight": {
-		"format": "{icon} {percent: >3}%",
-		"format-icons": ["", ""],
-		"on-scroll-down": "light -U 5",
-		"on-scroll-up": "light -A 5",
-	},
+  "backlight": {
+    "format": "{icon} {percent: >3}%",
+    "format-icons": ["", ""],
+    "on-scroll-down": "light -U 5",
+    "on-scroll-up": "light -A 5",
+  },
 
-	"battery": {
-		"states": {
-			// "good": 95,
-			"warning": 30,
-			"critical": 15,
-		},
-		"format": "{icon} {capacity: >3}%",
-		"format-icons": ["", "", "", "", ""],
-	},
+  "battery": {
+    "states": {
+      // "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity: >3}%",
+    "format-icons": ["", "", "", "", ""],
+  },
 
-	"network": {
-		"format": "⚠ Disabled",
-		"format-wifi": " {essid}",
-		"format-ethernet": " {ifname}: {ipaddr}/{cidr}",
-		"format-disconnected": "⚠ Disconnected",
-	},
+  "network": {
+    "format": "⚠ Disabled",
+    "format-wifi": " {essid}",
+    "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+    "format-disconnected": "⚠ Disconnected",
+  },
 
-	"bluetooth": {
-		"format": " {status}",
-		"format-connected": " {num_connections}",
-		"tooltip-format": "{controller_alias}\t{controller_address}",
-		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
-	},
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+  },
 
-	"pulseaudio": {
-		"scroll-step": 5,
-		"format": "{icon} {volume: >3}%",
-		"format-bluetooth": "{icon} {volume: >3}%",
-		"format-muted":" muted",
-		"format-icons": {
-			"headphones": "",
-			"handsfree": "",
-			"headset": "",
-			"phone": "",
-			"portable": "",
-			"car": "",
-			"default": ["", ""],
-		},
-		"on-click": "pavucontrol",
-	},
+  "pulseaudio": {
+    "scroll-step": 5,
+    "format": "{icon} {volume: >3}%",
+    "format-bluetooth": "{icon} {volume: >3}%",
+    "format-muted":" muted",
+    "format-icons": {
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", ""],
+    },
+    "on-click": "pavucontrol",
+  },
 }

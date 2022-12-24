@@ -51,8 +51,7 @@ vim.keymap.set('n', '\\', '<Plug>Sneak_,')
 
 -- {{{ editing
 -- -- easy-align
-vim.keymap.set('x', 'gA', '<Plug>EasyAlign')
-vim.keymap.set('n', 'gA', '<Plug>EasyAlign')
+vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 
 -- -- repeat
 -- -- surround

@@ -1,13 +1,13 @@
 # Spacing and capitalization
 
-K+BG: '{}'
+K+K: '{}'
 TPHR*URB: '{}'
 
 S+: '{^^}'
 +S: '{^ ^}'
 P+R: '{^} {^}'
-TK-LS: '{^^}'
-TK*LS: '{^^}'
+D-LS: '{^^}'
+D*LS: '{^^}'
 S-P: '{^ ^}'
 S-PS: '{^ ^}'
 SP*S: '{^ ^}'
@@ -19,7 +19,6 @@ R+: "{^~|\n^}"
 R-R: "{^~|\n^}"
 R*R: '{#Return}{^}'
 SKW-BGS: '{#Return}{^}'
-SKWRAEURBGS: "{^\n\n^}{-|}"
 SKWRAURBGS: "{^\n\n^}{-|}"
 
 +P: '{<}'
@@ -36,10 +35,10 @@ KPA*EZ: '{*<}'
 KPA*EUZ: '{^}{*<}'
 
 +L: '{>}'
-HRO*ER: '{>}'
+LO*ER: '{>}'
 
 +LD: '{*>}'
-HRO*ERD: '{*>}'
+LO*ERD: '{*>}'
 
 S+D: '{*!}'
 TK*FPS: '{*!}'
@@ -50,48 +49,48 @@ TK-FPS: '{*!}'
 A*FPS: '{*?}'
 AFPS: '{*?}'
 
-+BG: '{ }{-|}'
-+*BG: '{^}{-|}'
++K: '{ }{-|}'
++*K: '{^}{-|}'
 KPA: '{ }{-|}'
 KPA*: '{^}{-|}'
 
-+BGD: '{*-|}'
-+BGZ: '{*-|}'
++KD: '{*-|}'
++KZ: '{*-|}'
 KA*PD: '{*-|}'
 KPA*D: '{*-|}'
 KPA*Z: '{*-|}'
 
-PH+BG: '{MODE:CAPS}'
+M+K: '{MODE:CAPS}'
 KA*PS: '{MODE:CAPS}'
 KA*PZ: '{MODE:CAPS}'
 
-PH+L: '{MODE:LOWER}'
-HRO*ERZ: '{MODE:LOWER}'
+M+L: '{MODE:LOWER}'
+LO*ERZ: '{MODE:LOWER}'
 
-PH+PL: '{MODE:CAMEL}'
-K-BGS: '{MODE:CAMEL}'
+M+M: '{MODE:CAMEL}'
+K*KS: '{MODE:CAMEL}'
 
-PH+T: '{MODE:TITLE}'
-TAO*EULT: '{MODE:TITLE}'
+M+T: '{MODE:TITLE}'
+TĪ*LT: '{MODE:TITLE}'
 
-PH+Z: '{MODE:SNAKE}'
-STPHA*EUBG: '{MODE:SNAKE}'
+M+Z: '{MODE:SNAKE}'
+SNĀ*K: '{MODE:SNAKE}'
 
-PH+D: '{MODE:LOWER} {MODE:SET_SPACE:-}'
-SPAO*EUPBL: '{MODE:LOWER} {MODE:SET_SPACE:-}'
+M+D: '{MODE:LOWER} {MODE:SET_SPACE:-}'
+SPĪ*NL: '{MODE:LOWER} {MODE:SET_SPACE:-}'
 
-PH+LS: '{MODE:SET_SPACE:, }'
-KPHA*PLD: '{MODE:SET_SPACE:, }'
+M+LS: '{MODE:SET_SPACE:, }'
+CMA*MD: '{MODE:SET_SPACE:, }'
 
-PH+PB: '{MODE:SET_SPACE:}'
-TPHO*EFP: '{MODE:SET_SPACE:}'
+M+N: '{MODE:SET_SPACE:}'
+NŌ*ch: '{MODE:SET_SPACE:}'
 
-PH+R: '{MODE:RESET}'
+M+R: '{MODE:RESET}'
 R*EFT: '{MODE:RESET}'
 
-PH+RS: '{MODE:RESET_SPACE}'
+M+RS: '{MODE:RESET_SPACE}'
 R*EFTS: '{MODE:RESET_SPACE}'
 
-PH+RZ: '{MODE:RESET_CASE}'
+M+RZ: '{MODE:RESET_CASE}'
 R*EFDZ: '{MODE:RESET_CASE}'
 

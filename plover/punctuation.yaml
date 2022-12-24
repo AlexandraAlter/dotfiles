@@ -29,12 +29,12 @@ J-RBGS: '{^...}{ }{-|}'
 KW-BG/JORBGS: '{...}'
 
 A*E: &l "{'^}"
-SKW-T: *l
-SKW-TS: *l
+SQ-T: *l
+SQ-TS: *l
 -PBT: &l "{^'}"
 AE: *l
-SKW*T: *l
-SKW*TS: *l
+SQ*T: *l
+SQ*TS: *l
 
 KR-GS: '"'
 
@@ -50,13 +50,13 @@ BHR-T: '{^}- {-|}'
 HĒ*N: '{-^}'
 STKĀRB: '{ }-{ }'
 D-sh: &l '--'
-KW-RB: *l
+Q-RB: *l
 STK-RB: *l
 D-R: *l
 D-shG: *l
 D-RN: *l
 -RBGS/D-sh: *l
-KW-BG/D-sh: *l
+Q-BG/D-sh: *l
 -RB/NR-RB/TK-RB: ' -- '
 -RBGS/NR-RB/TK-RB: ' -- '
 T-RB: '{--}'
@@ -65,15 +65,15 @@ R*UnD: '{^_^}'
 N-RB: '–'
 PH-RB: '—'
 
-KW*L: '='
-KW-L: '='
-KWA*LS/KWA*LS: '=='
-KWA*LS: '{^=^}'
+Q*L: '='
+Q-L: '='
+QA*LS/QA*LS: '=='
+QA*LS: '{^=^}'
 PHR*US: '{^+}'
 
 oi: '{^/^}'
 -RBGS/oi: '{^/^}'
-KWEZ: '?'
+QEZ: '?'
 SNR-RB: '{?} '
 H-F: '{?}'
 
@@ -87,13 +87,13 @@ T*LD: '{^~}'
 # T*LD: '~'
 
 SKHRAPL: '{!}'
-SGHR-FPLT: '{!}'
-KHRAPL/KHRAPL: '!  {{-|}^}'
+STKPWHR-FPLT: '{!}'
+KLAM/KLAM: '!  {{-|}^}'
 YAT: '{^@^}'
 HAEsh: '#{^}'
 HA*Esh: '#'
-NRORB: '$'
-TK-PL: '${^}'
+FLOsh: '$'
+D-M: '${^}'
 P*ERS: '{&%}'
 PHERS: '{^%}'
 KR-RT: &l '{^}^{^}'
@@ -102,12 +102,12 @@ SP-ND: '&'
 SPHAND: '&'
 SPHAND/SPHAND: '&&'
 STA*R: '{^*^}'
-PWHRET: '*'
-STR*EUFBG: '*'
-STR-BG: '*'
-KEZ/KWEZ: '***'
-KWEZ/KWEZ: '***'
-SKWEZ/KWEZ: '***'
+BLET: '*'
+STR*IŚK: '*'
+STR-K: '*'
+QEZ/QEZ: '***'
+KEZ/QEZ: '***'
+SQEZ/QEZ: '***'
 
 P*n: '{^}({^}'
 P*nT: '{^}){^}'
@@ -115,37 +115,39 @@ PREN: '{(^}'
 PR*EN: '{^)}'
 SN-FPLTS: '{(^}'
 SN*FPLTS: '{^)}'
-BR-BGT: '{[^}'
-BR*BGT: '{^]}'
-BR-BG: '{[}'
+BR-KT: '{[^}'
+BR*KT: '{^]}'
+BR-K: '{[}'
+BR*K: '{]}'
+BR-BT: '['
 BR*BT: ']'
 BR-X: '{]}'
 BR*X: '{[}'
 BR-S: '\\{'
 BR*S: '\\}'
-TPR-BGT: '\\{{^}'
-TPR*BGT: '{^}\\}'
-TPR-BGTS: '{'
-TPR*BGTS: '}'
+FR-KT: '\\{{^}'
+FR*KT: '{^}\\}'
+FR-KTS: '{'
+FR*KTS: '}'
 AEng: '{^<^}'
 A*Eng: '{^>^}'
 AEngT: '{^<^}'
 A*EngT: '{^>^}'
-BRABG: '<{^}'
-BRA*BG: '{^}>'
+BRAK: '<{^}'
+BRA*K: '{^}>'
 HR*N: '<'
 HR*N/HR*N: '<<'
 GR*N: '>'
 PHR*N: '>'
 
-TKW-D: '÷'
+TQ-D: '÷'
 
 SGHR-FPLT/SN-FPLD: '{!})'
-SGHR-FPLT/SKW-TS: "{!'}"
-HR*N/KWA*LS: '<='
+SGHR-FPLT/SQ-TS: "{!'}"
+HR*N/QA*LS: '<='
 PHRULS: '+='
 J-RBGS/SN-RB: '... ?'
-HR-PS/-FPLT/SKW-TS: "...{.}{'}"
-HR-PZ/-FPLT/SKW-TS: ". . . {.}{'}"
+HR-PS/-FPLT/SQ-TS: "...{.}{'}"
+HR-PZ/-FPLT/SQ-TS: ". . . {.}{'}"
 -FPLT/HR-PS: '{.}...{|}'
 

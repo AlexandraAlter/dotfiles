@@ -1,6 +1,6 @@
 # Sources
 
-- Plover official dictionaries
+- Plover official dictionaries from https://github.com/openstenoproject/plover
 - Di's dictionaries from https://github.com/didoesdigital/steno-dictionaries
 - Emily's Modifiers from https://github.com/EPLHREU/emily-modifiers
 - Emily's Symbols from https://github.com/EPLHREU/emily-symbols

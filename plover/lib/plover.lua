@@ -167,10 +167,12 @@ function pl.Keymap:add_aliases(multi_aliases)
   for k, v in pairs(multi_aliases) do
     if type(k) == 'table' then
       for _, sk in ipairs(k) do
-        aliases[sk] = v
+        local key = string.upper(sk)
+        aliases[key] = v
       end
     else
-      aliases[k] = v
+      local key = string.upper(k)
+      aliases[key] = v
     end
   end
 
@@ -219,7 +221,7 @@ local function split_iter(parts)
     local char_m = string.match(parts, '^' .. utf8.charpattern, i)
     if bracket_m then
       i = i + #bracket_m
-      return alias_m
+      return string.upper(alias_m)
     elseif lower_m then
       i = i + #lower_m
       return string.upper(lower_m)
@@ -325,6 +327,12 @@ end
 
 pl.keys = pl.Keymap:new{}
 
+-- layout (planck):
+-- § # # # # # # # # # # §
+-- ¶ S T P H * * F P L T D
+-- ¶ S K W R * * R B G S Z
+--   # + A O     E U ^ #
+
 pl.keys:add_keys{
   '§-', '¶-', '#-',
   'S-', 'T-', 'K-', 'P-', 'W-', 'H-', 'R-',
@@ -342,55 +350,73 @@ pl.keys:add_implicit_dashes{
   'A-', 'O-', '+-', '*', '-^', '-E', '-U',
 }
 
+-- columns are stylized as c1-c5, left to right
+-- rows are stylized as r1-r2, top to bottom
+-- blocks of four keys are stylized as b1-b4, left to right
 pl.keys:add_aliases{
-  ['D-'] = {'T-', 'K-'},
-  ['B-'] = {'P-', 'W-'},
-  ['L-'] = {'H-', 'R-'},
-  ['F-'] = {'T-', 'P-'},
-  ['M-'] = {'P-', 'H-'},
-  ['N-'] = {'T-', 'P-', 'H-'},
-  ['Y-'] = {'K-', 'W-', 'R-'},
-  ['J-'] = {'S-', 'K-', 'W-', 'R-'},
-  ['G-'] = {'T-', 'K-', 'P-', 'W-'},
-  ['Q-'] = {'K-', 'W-'},
-  ['V-'] = {'S-', 'R-'},
-  ['Z-'] = {'S-', '*'},
-  ['C-'] = {'K-'}, -- shortcut
-  ['X-'] = {'K-', 'P-'}, -- fingerspelling
-  ['SH-'] = {'S-', 'H-'},
-  ['TH-'] = {'T-', 'H-'},
-  ['CH-'] = {'K-', 'H-'},
+  ['D-']          = {'T-', 'K-'},
+  ['B-']          = {'P-', 'W-'},
+  ['L-']          = {'H-', 'R-'},
+  ['F-']          = {'T-', 'P-'},
+  ['M-']          = {'P-', 'H-'},
+  ['N-']          = {'T-', 'P-', 'H-'},
+  ['Y-']          = {'K-', 'W-', 'R-'},
+  ['R1-']         = {'S-', 'T-', 'P-', 'H-'},
+  [{'J-', 'R2-'}] = {'S-', 'K-', 'W-', 'R-'},
+  [{'G-', 'B1-'}] = {'T-', 'K-', 'P-', 'W-'},
+  ['B2-']         = {'P-', 'W-', 'H-', 'R-'},
+  ['Q-']          = {'K-', 'W-'},
+  ['V-']          = {'S-', 'R-'},
+  ['Z-']          = {'S-', '*'},
+  ['C-']          = {'K-'}, -- shortcut
+  ['X-']          = {'K-', 'P-'}, -- fingerspelling
+  ['SH-']         = {'S-', 'H-'},
+  ['TH-']         = {'T-', 'H-'},
+  ['CH-']         = {'K-', 'H-'},
 
-  ['-I'] = {'-E', '-U'},
-  ['Ā'] = {'A-', '-E', '-U'},
-  ['Ē'] = {'A-', 'O-', '-E'},
-  ['Ī'] = {'A-', 'O-', '-E', '-U'},
-  ['Ō'] = {'O-', '-E'},
-  [{'Ū', 'EW'}] = {'A-', 'O-', '-U'},
-  ['AW'] = {'A-', '-U'},
-  ['OI'] = {'O-', '-E', '-U'},
-  ['OW'] = {'O-', '-U'},
-  ['EA'] = {'A-', '-E'},
+  ['-I']           = {'-E', '-U'},
+  ['Ā']            = {'A-', '-E', '-U'},
+  ['Ē']            = {'A-', 'O-', '-E'},
+  ['Ī']            = {'A-', 'O-', '-E', '-U'},
+  ['Ō']            = {'O-', '-E'},
+  [{'Ū', 'EW'}]    = {'A-', 'O-', '-U'},
+  ['AW']           = {'A-', '-U'},
+  ['OI']           = {'O-', '-E', '-U'},
+  ['OW']           = {'O-', '-U'},
+  ['EA']           = {'A-', '-E'},
   [{'OA-', 'OO-'}] = {'A-', 'O-'},
 
-  ['-ING'] = {'-G'},
-  [{'-V', '-Ś'}] = {'-F'},
-  ['-TH'] = {'*', '-T'},
-  ['-N'] = {'-P', '-B'},
-  ['-NG'] = {'-P', '-B', '-G'},
-  ['-NK'] = {'*', '-P', '-B', '-G'},
-  [{'-LCH', '-LJ'}] = {'-L', '-G'},
-  ['-LK'] = {'*', '-L', '-G'},
-  ['-CH'] = {'-F', '-P'},
-  ['-M'] = {'-P', '-L'},
-  ['-MP'] = {'*', '-P', '-L'},
-  ['-SH'] = {'-R', '-B'},
-  [{'-K', '-C'}] = {'-B', '-G'},
-  ['-SHUN'] = {'-G', '-S'},
-  [{'-KSHUN', '-X'}] = {'-B', '-G', '-S'},
-  ['-RV'] = {'-F', '-R', '-B'},
-  [{'-RCH', '-NCH'}] = {'-F', '-R', '-P', '-B'},
-  ['-J'] = {'-P', '-B', '-L', '-G'},
+  ['-ING']        = {'-G'},
+  [{'-V', '-Ś'}]  = {'-F'},
+  ['-C1']         = {'-F', '-R'},
+  ['-TH']         = {'*', '-T'},
+  [{'-N', '-C2'}] = {'-P', '-B'},
+  ['-NG']         = {'-P', '-B', '-G'},
+  ['-NK']         = {'*', '-P', '-B', '-G'},
+  [{
+    '-LCH', '-LJ', '-C3'
+  }]              = {'-L', '-G'},
+  ['-LK']         = {'*', '-L', '-G'},
+  ['-C4']         = {'-T', '-S'},
+  ['-C5']         = {'-D', '-Z'},
+  ['-CH']         = {'-F', '-P'},
+  ['-M']          = {'-P', '-L'},
+  ['-MP']         = {'*', '-P', '-L'},
+  ['-SH']         = {'-R', '-B'},
+  [{'-K', '-C'}]  = {'-B', '-G'},
+  ['-SHUN']       = {'-G', '-S'},
+  [{
+    '-KSHUN', '-X'
+  }]              = {'-B', '-G', '-S'},
+  ['-RV']         = {'-F', '-R', '-B'},
+  [{
+    '-RCH', '-NCH', '-B1'
+  }]              = {'-F', '-R', '-P', '-B'},
+  [{'-J', '-B2'}] = {'-P', '-B', '-L', '-G'},
+  ['-B3']         = {'-L', '-G', '-T', '-S'},
+  ['-B4']         = {'-T', '-S', '-D', '-Z'},
+  ['-R1']         = {'-F', '-P', '-L', '-T', '-D'},
+  ['-R2']         = {'-R', '-B', '-G', '-S', '-Z'},
 
   ['1-'] = {'#-', 'S-'},
   ['2-'] = {'#-', 'T-'},

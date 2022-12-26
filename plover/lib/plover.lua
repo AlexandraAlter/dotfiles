@@ -213,18 +213,33 @@ function pl.Keymap:contains_implicit_dash(parts)
   return false
 end
 
+local function match_symbolic(parts, i)
+  local row = string.match(parts, '^┅%d', i)
+  local long_row = string.match(parts, '^━%d', i)
+  local col = string.match(parts, '^┇%d', i)
+  local block = string.match(parts, '^■%d', i)
+
+  return row or long_row or col or block
+end
+
+local split_charpattern = '^' .. utf8.charpattern
+
 local function split_iter(parts)
   local i = 1
   return function()
     local bracket_m, alias_m = string.match(parts, '^(%((%w+)%))', i)
     local lower_m = string.match(parts, '^%l+', i)
-    local char_m = string.match(parts, '^' .. utf8.charpattern, i)
+    local symbolic_m = match_symbolic(parts, i)
+    local char_m = string.match(parts, split_charpattern, i)
     if bracket_m then
       i = i + #bracket_m
       return string.upper(alias_m)
     elseif lower_m then
       i = i + #lower_m
       return string.upper(lower_m)
+    elseif symbolic_m then
+      i = i + #symbolic_m
+      return symbolic_m
     elseif char_m then
       i = i + #char_m
       return char_m
@@ -350,11 +365,11 @@ pl.keys:add_implicit_dashes{
   'A-', 'O-', '+-', '*', '-^', '-E', '-U',
 }
 
--- columns are stylized as c1-c5, left to right
--- rows are stylized as r1-r2, top to bottom
--- rows only have four keys, extra keys are in r1a and r2a
--- blocks of four keys are stylized as b1-b4, left to right
--- due to the numerals being invalid as lowecase aliases, they must be bracketed
+-- columns are stylized as ┇1 to ┇5, left to right
+-- rows are stylized as ┅1 to ┅2, top to bottom
+-- long rows that contain five keys use ━1 to ━2
+-- blocks of four keys are stylized as ■1 to ■4, left to right
+-- They use a special symbolic alias
 pl.keys:add_aliases{
   ['D-']  = {'T-', 'K-'},
   ['B-']  = {'P-', 'W-'},
@@ -416,34 +431,33 @@ pl.keys:add_aliases{
   ['-8'] = {'#-', '-L'},
   ['-9'] = {'#-', '-T'},
 
-  ['R1-'] = {'S-', 'T-', 'P-', 'H-'},
-  ['R2-'] = {'S-', 'K-', 'W-', 'R-'},
-  ['-R1'] = {'-F', '-P', '-L', '-T'},
-  ['-R2'] = {'-R', '-B', '-G', '-S'},
-  ['-R1A'] = {'-F', '-P', '-L', '-T', '-D'},
-  ['-R2A'] = {'-R', '-B', '-G', '-S', '-Z'},
+  ['┅1-'] = {'S-', 'T-', 'P-', 'H-'},
+  ['┅2-'] = {'S-', 'K-', 'W-', 'R-'},
+  ['-┅1'] = {'-F', '-P', '-L', '-T'},
+  ['-┅2'] = {'-R', '-B', '-G', '-S'},
+  ['-━1'] = {'-F', '-P', '-L', '-T', '-D'},
+  ['-━2'] = {'-R', '-B', '-G', '-S', '-Z'},
 
-  ['C1-'] = {'S-'},
-  ['C2-'] = {'T-', 'K-'},
-  ['C3-'] = {'P-', 'W-'},
-  ['C4-'] = {'H-', 'R-'},
-  ['-C1'] = {'-F', '-R'},
-  ['-C2'] = {'-P', '-B'},
-  ['-C3'] = {'-L', '-G'},
-  ['-C3'] = {'-L', '-G'},
-  ['-C4'] = {'-T', '-S'},
-  ['-C5'] = {'-D', '-Z'},
+  ['┇1-'] = {'S-'},
+  ['┇2-'] = {'T-', 'K-'},
+  ['┇3-'] = {'P-', 'W-'},
+  ['┇4-'] = {'H-', 'R-'},
+  ['-┇1'] = {'-F', '-R'},
+  ['-┇2'] = {'-P', '-B'},
+  ['-┇3'] = {'-L', '-G'},
+  ['-┇4'] = {'-T', '-S'},
+  ['-┇5'] = {'-D', '-Z'},
 
-  ['B1-'] = {'T-', 'K-', 'P-', 'W-'},
-  ['B2-'] = {'P-', 'W-', 'H-', 'R-'},
-  ['-B1'] = {'-F', '-R', '-P', '-B'},
-  ['-B2'] = {'-P', '-B', '-L', '-G'},
-  ['-B3'] = {'-L', '-G', '-T', '-S'},
-  ['-B4'] = {'-T', '-S', '-D', '-Z'},
+  ['■1-'] = {'T-', 'K-', 'P-', 'W-'},
+  ['■2-'] = {'P-', 'W-', 'H-', 'R-'},
+  ['-■1'] = {'-F', '-R', '-P', '-B'},
+  ['-■2'] = {'-P', '-B', '-L', '-G'},
+  ['-■3'] = {'-L', '-G', '-T', '-S'},
+  ['-■4'] = {'-T', '-S', '-D', '-Z'},
 
-  ['ALL-'] = {
+  ['∀-'] = {
     'S-', 'T-', 'K-', 'P-', 'W-', 'H-', 'R-'},
-  ['-ALL'] = {
+  ['-∀'] = {
     '-F', '-R', '-P', '-B', '-L',
     '-G', '-T', '-S', '-D', '-Z'},
 }

@@ -40,7 +40,6 @@ local defaults = {
   'control.yaml',
   'modifiers.lua',
   'shortcuts.yaml',
-  'tabbing.yaml',
   'navigation.yaml',
 
   -- Generic

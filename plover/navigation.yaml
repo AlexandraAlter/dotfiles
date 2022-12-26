@@ -54,3 +54,17 @@ SR-RS: '{#Control_L(End)}{^}'
 TA*B: '{#Tab}{^}'
 TA*BT: '{#Alt_L(Tab Tab)}{^}'
 
+# Window movement
+
+TW-G: '{#Super_L(Tab)}'
+TW*G: '{#Super_L(Tab Tab)}'
+TW-R: '{#Super_L(Shift_L(Tab))}'
+
+TW-B: '{#Super_L(grave)}'
+TW-P: '{#Super_L(Shift_L(grave))}'
+
+TW-FB: '{#Super_L(bracketleft)}'
+TW-LG: '{#Super_L(bracketright)}'
+TW-F: '{#Super_L(Shift_L(bracketleft))}'
+TW-L: '{#Super_L(Shift_L(bracketright))}'
+

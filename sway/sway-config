@@ -7,6 +7,7 @@ set $right l
 set $term kitty
 set $exec_menu bemenu-run | xargs swaymsg exec --
 set $app_menu j4-dmenu-desktop --dmenu='bemenu -i' --term='$kitty'
+set $lock pkill -SIGUSR1 swayidle
 set $laptop <eDP-1>
 set $audio Master
 set $grimshot /usr/share/sway/scripts/grimshot
@@ -63,6 +64,7 @@ bindsym $mod+Shift+r reload
 set $exit_warning 'Do you really want to exit sway?'
 set $exit_cmd swaynag -t warning -m $exit_warning -B 'Yes, exit sway' 'swaymsg exit'
 bindsym $mod+Shift+Escape exec $exit_cmd
+bindsym $mod+Ctrl+l exec $lock
 
 # Navigation:
 bindsym $mod+Comma focus parent

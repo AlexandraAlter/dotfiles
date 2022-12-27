@@ -5,7 +5,8 @@ set $down j
 set $up k
 set $right l
 set $term kitty
-set $menu bemenu-run | xargs swaymsg exec --
+set $exec_menu bemenu-run | xargs swaymsg exec --
+set $app_menu j4-dmenu-desktop --dmenu='bemenu -i' --term='$kitty'
 set $laptop <eDP-1>
 set $audio Master
 set $grimshot /usr/share/sway/scripts/grimshot
@@ -54,7 +55,8 @@ input type:touchpad {
 # Basics:
 floating_modifier $mod normal
 bindsym $mod+Return exec $term
-bindsym $mod+u exec $menu
+bindsym $mod+u exec $app_menu
+bindsym $mod+Shift+u exec $exec_menu
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c kill
 bindsym $mod+Shift+r reload

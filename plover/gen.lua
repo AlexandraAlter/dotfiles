@@ -1,7 +1,15 @@
 #!/usr/bin/env lua
 -- AlexandraAlter's Plover Dictionaries
-package.path = package.path .. ';./lib/?.lua'
-package.cpath = package.cpath .. ';./lib/?.so'
+
+function script_path()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*/)") or './'
+end
+
+local path = script_path()
+
+package.path = package.path .. ';' .. path .. 'lib/?.lua'
+package.cpath = package.cpath .. ';' .. path .. 'lib/?.so'
 
 local pl = require'plover'
 local files = require'files'

@@ -22,7 +22,6 @@
 - out/plover.json
 - out/control.json
 - out/shortcuts.json
-- out/tabbing.json
 - out/modifiers.json
 - out/navigation.json
 - out/formatting.json
@@ -30,13 +29,13 @@
 - out/symbols.json
 - out/numbers.json
 
-- out/en\_misstrokes.json
 - out/en\_fingers.json
 - out/en\_base.json
 - out/en\_proper.json
 - out/en\_phrases.json
 - out/en\_autophrases.json
 - out/en\_misc.json
+- out/en\_misstrokes.json
 
 - out/mush.json
 

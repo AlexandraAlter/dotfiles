@@ -369,7 +369,7 @@ wk.register({
 
   g = {
     name = 'g',
-    ['C-]'] = ':tjump in a window',
+    ['<C-]>'] = ':tjump in a window',
     [']'] = ':tselect in a window',
     ['}'] = ':ptjump in a window',
     f = 'Edit file name in a tab',

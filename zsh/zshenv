@@ -20,3 +20,5 @@ export TASKRC=~/dotfiles/task/taskrc
 export TASKDATA=~/documents/task
 export TIMEWARRIORDB=~/documents/time
 
+export QT_QPA_PLATFORMTHEME=qt5ct
+

@@ -219,7 +219,7 @@ bindsym Alt+Shift+Control+print exec $grimshot save output
 
 # Status Bar:
 bar {
-	swaybar_command waybar
+  swaybar_command waybar
 }
 
 ### Startup Programs:

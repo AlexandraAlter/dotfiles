@@ -2,7 +2,7 @@
   "layer": "bottom",
   "position": "top",
   "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
-  "modules-right": ["cpu", "memory", "temperature", "tray", "network", "pulseaudio", "idle_inhibitor", "clock"],
+  "modules-right": ["cpu", "memory", "temperature", "tray", "network", "bluetooth", "pulseaudio", "backlight", "idle_inhibitor", "battery", "clock"],
 
   "sway/workspaces": {
     "disable-scroll": true,
@@ -69,11 +69,36 @@
     "interval": 3,
   },
 
+  "backlight": {
+    "format": "{icon} {percent: >3}%",
+    "format-icons": ["", ""],
+    "on-scroll-down": "light -U 5",
+    "on-scroll-up": "light -A 5",
+  },
+
+  "battery": {
+    "states": {
+      // "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity: >3}%",
+    "format-icons": ["", "", "", "", ""],
+  },
+
   "network": {
     "format": "⚠ Disabled",
     "format-wifi": " {essid}",
     "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
     "format-disconnected": "⚠ Disconnected",
+  },
+
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
   },
 
   "pulseaudio": {

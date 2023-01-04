@@ -4,43 +4,45 @@ local numbers = {}
 local pl = require'plover'
 
 local extras = {
-  ['THOEUB'] = '{^,000}',
+  -- unknown
+  ['NUNZ'] = '100',
+  ['TWowN'] = '{200^}',
+  ['TPWowN'] = '{200^}',
+  ['THUZ'] = '{&000}',
+  -- suffixes
+  ['THoi*N'] = '{^000}',
+  ['HUN/HUN'] = '{^00}',
+  ['HUNZ'] = '{^00}',
+  ['KH-M'] = '{^:00}',
+  ['KHR-M'] = '{^:00}',
+  ['KHREURT'] = '{^:30}',
   ['THOUZ'] = '{^000}',
+  ['THOEUB'] = '{^,000}',
   ['THO*UZ'] = '{,^000}',
-  ['K-PL'] = 'km',
-  ['K*PL'] = '{^km}',
+  -- decimals
+  ['-FPLT/-9D'] = '{.}99',
+  ['P-P/-L'] = '.8',
+  -- fractions
   ['HA*F'] = '1/2',
   ['TPHA*F'] = '1/2',
-  ['TH*EURD'] = '1/3',
-  ['TPHUPBZ'] = '100',
-  ['TWOUPB'] = '{200^}',
-  ['THoi*PB'] = '{^000}',
-  ['HUPB/HUPB'] = '{^00}',
-  ['HUPBZ'] = '{^00}',
-  ['KH-PL'] = '{^:00}',
-  ['KHR-PL'] = '{^:00}',
+  ['TH*IRD'] = '1/3',
+  -- percentages
+  ['ĀP/PERS'] = '80%',
+  ['SĒ*/ROE/PERS'] = '0%',
+  -- unknown
+  ['PL*US/2'] = '+2',
+  -- time periods
+  ['A*E/50/-S'] = "'50s",
+  ['A*E/0EU6/-S'] = "'60s",
+  ['MID/A*E/0EU6/-S'] = "mid '60",
+  ['A*E/0EU7/-S'] = "'70s",
+  ['A*E/0EU8/-S'] = "'80s",
+  ['ERL/AE/0EU8'] = "early '80",
+  ['A*E/0EU9/-S'] = "'90s",
+  -- units
+  ['K-PL'] = 'km',
+  ['K*PL'] = '{^km}',
 }
-
--- TPWOUPB: '{200^}'
--- -FPLT/-9D: '{.}99'
--- 8/NAF/PWEU/1/1: '8 1/2 x 11'
--- A*E/0EU6/-S: "'60s"
--- A*E/0EU7/-S: "'70s"
--- A*E/50/-S: "'50s"
--- ĀP/PERS: '75%'
--- ERL/AE/0EU8: "early '80"
--- KHREURT: '{:}30'
--- oiL/PERS: '80%'
--- P-P/-L: '.8'
--- MEUD/A*E/0EU6/-S: "mid-'60s"
--- PHR*US/2: '+2'
--- SĒ*/ROE/PERS: '0%'
--- THUZ: '{&000}'
--- FARBGT/10: 'factor X'
--- FARBGT/7: 'factor VII'
--- FARBGT/8: 'factor VIII'
--- FARBGT/8/A*: 'factor VIIIa'
--- FARBGT/9: 'factor IX'
 
 function numbers.build()
   local dict = pl.Dict:new{}

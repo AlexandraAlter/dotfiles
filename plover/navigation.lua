@@ -2,6 +2,7 @@
 local navigation = {}
 
 local pl = require'plover'
+local maths = require'maths'
 
 local pfx = '¶-Z'
 
@@ -22,22 +23,6 @@ local navs = {
   ['-BG']  = 'return',
 }
 
-local factors = {8, 4, 2, 1}
-local function defactor(num, lookup)
-  local res = {}
-  local i = num
-  for _,f in ipairs(factors) do
-    if f <= i then
-      table.insert(res, lookup[f])
-      i = i - f
-    end
-  end
-  if i ~= 0 then
-    error('could not factor number: ' .. num)
-  end
-  return res
-end
-
 -- abuse the factoring code to make modifier masks
 local modifier_keys = {
   [1] = 'W-',
@@ -54,12 +39,28 @@ local modifier_outputs = {
 
 local mods = {}
 for i = 0, (4 ^ 2) - 1 do
-  local keys = defactor(i, modifier_keys)
-  local outputs = defactor(i, modifier_outputs)
+  local keys = maths.defactor(i, modifier_keys)
+  local outputs = maths.defactor(i, modifier_outputs)
   local starts = '{#' .. table.concat(outputs)
   local ends = string.rep(')', #outputs) .. '}{^}'
   mods[pl.keys:normalize(keys)] = {starts, ends}
 end
+
+local extras = {
+  ['FEŚC'] = '{#Escape}',
+
+  ['B*F'] = '{#BackSpace}',
+  ['B-ch'] = '{#BackSpace}',
+  ['B*ch'] = '{#Alt_L(BackSpace)}',
+  ['B*chL'] = '{#Super_L(BackSpace)}',
+
+  ['D*EL'] = '{#Delete}',
+  ['B*R'] = '{#Delete}',
+  ['B*sh'] = '{#Option(Delete)}',
+
+  ['SP-B'] = '{#Space}',
+  ['SP-P'] = '{#Shift_L(Space)}',
+}
 
 function navigation.build()
   local dict = pl.Dict:new{}
@@ -69,6 +70,30 @@ function navigation.build()
       local out = mod[1] .. nav .. mod[2]
       dict:add({pfx, mk, nk}, out)
     end
+  end
+
+  -- functions via §#
+  for i = 1, 12 do
+    if i == 11 then
+      dict:add({'§#-', '1K'}, '{^}{#F11}{^}')
+    else
+      dict:add({'§#-', i}, '{^}{#F' .. i .. '}{^}')
+    end
+  end
+
+  -- functions via -KS or KW-
+  for i = 1, 12 do
+    if (i > 5 and i < 10) then
+      dict:add({'#1KW', i}, '{^}{#F' .. i .. '}{^}')
+    elseif i == 11 then
+      dict:add({'#-KS', '1K'}, '{^}{#F11}{^}')
+    else
+      dict:add({'#-KS', i}, '{^}{#F' .. i .. '}{^}')
+    end
+  end
+
+  for stroke, output in pairs(extras) do
+    dict:add(stroke, output)
   end
 
   return dict

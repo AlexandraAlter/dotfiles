@@ -44,14 +44,11 @@ local defaults = {
   -- Plover
   'plover.yaml',
 
-  -- Shortcuts
-  'control.yaml',
-  'modifiers.lua',
-
   -- Generic
   'navigation.lua',
   'numbers.lua',
   'symbols.lua',
+  'modifiers.lua',
   'formatting.yaml',
   'punctuation.yaml',
 

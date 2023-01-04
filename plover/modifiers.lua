@@ -2,6 +2,7 @@
 local modifiers = {}
 
 local pl = require'plover'
+local maths = require'maths'
 
 local pfx = '¶-D'
 local num_pfx = '¶#-D'
@@ -58,22 +59,6 @@ local variants = {
   ['AO'] = 4,
 }
 
-local factors = {8, 4, 2, 1}
-local function defactor(num, lookup)
-  local res = {}
-  local i = num
-  for _,f in ipairs(factors) do
-    if f <= i then
-      table.insert(res, lookup[f])
-      i = i - f
-    end
-  end
-  if i ~= 0 then
-    error('could not factor number: ' .. num)
-  end
-  return res
-end
-
 local number_keys = {
   [1] = 'R-',
   [2] = 'W-',
@@ -83,13 +68,13 @@ local number_keys = {
 
 local numbers = {}
 for i = 0, 9 do
-  local keys = defactor(i, number_keys)
+  local keys = maths.defactor(i, number_keys)
   numbers[pl.keys:normalize(keys)] = i
 end
 
 local functions = {}
 for i = 1, 12 do
-  local keys = defactor(i, number_keys)
+  local keys = maths.defactor(i, number_keys)
   functions[pl.keys:normalize(keys)] = 'F' .. i
 end
 
@@ -109,8 +94,8 @@ local modifier_outputs = {
 
 local mods = {}
 for i = 0, (4 ^ 2) - 1 do
-  local keys = defactor(i, modifier_keys)
-  local outputs = defactor(i, modifier_outputs)
+  local keys = maths.defactor(i, modifier_keys)
+  local outputs = maths.defactor(i, modifier_outputs)
   local starts = '{#' .. table.concat(outputs)
   local ends = string.rep(')', #outputs) .. '}'
   mods[pl.keys:normalize(keys)] = {starts, ends}

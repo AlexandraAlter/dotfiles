@@ -369,7 +369,7 @@ pl.keys:add_implicit_dashes{
 -- rows are stylized as ┅1 to ┅2, top to bottom
 -- long rows that contain five keys use ━1 to ━2
 -- blocks of four keys are stylized as ■1 to ■4, left to right
--- They use a special symbolic alias
+-- they all use a special symbolic alias
 pl.keys:add_aliases{
   ['D-']  = {'T-', 'K-'},
   ['B-']  = {'P-', 'W-'},

@@ -12,12 +12,12 @@ local overrides = {
 }
 
 function fingers_en.build_one(dict, stroke, char)
-    local upper = string.format('{&%s}', char)
-    local lower = '{>}' .. string.lower(upper)
-    local dashed = string.format('{^-%s}', char)
-    dict:add({stroke, '*P'}, upper)
-    dict:add({stroke, '*'}, lower)
-    dict:add({stroke, '-RBGZ'}, dashed)
+  local upper = string.format('{&%s}', char)
+  local lower = '{>}' .. string.lower(upper)
+  local dashed = string.format('{^-%s}', char)
+  dict:add({stroke, '*P'}, upper)
+  dict:add({stroke, '*'}, lower)
+  dict:add({stroke, '-RBGZ'}, dashed)
 end
 
 function fingers_en.build()
@@ -30,7 +30,7 @@ function fingers_en.build()
   end
 
   for char, override in pairs(overrides) do
-    fingers_en.build_one(dict, overrides[char], char)
+    fingers_en.build_one(dict, override, char)
   end
 
   return dict

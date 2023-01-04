@@ -3,38 +3,16 @@ local modifiers = {}
 
 local pl = require'plover'
 
-local pfx = '¶'
-local num_pfx = pfx .. 'AO'
-local fun_pfx = pfx .. 'FAO'
-local sym_pfx = pfx .. '*'
+local pfx = '¶-D'
+local num_pfx = '¶#-D'
+local fun_pfx = '¶#*-D'
+local sym_pfx = '¶*-D'
 
-local alphabet = {
-  ['A'] = 'a',
-  ['PW'] = 'b',
-  ['KR'] = 'c',
-  ['TK'] = 'd',
-  ['E'] = 'e',
-  ['TP'] = 'f',
-  ['TKPW'] = 'g',
-  ['H'] = 'h',
-  ['EU'] = 'i',
-  ['SKWR'] = 'j',
-  ['K'] = 'k',
-  ['HR'] = 'l',
-  ['PH'] = 'm',
-  ['TPH'] = 'n',
-  ['O'] = 'o',
-  ['P'] = 'p',
-  ['KW'] = 'q',
-  ['R'] = 'r',
-  ['S'] = 's',
-  ['T'] = 't',
-  ['U'] = 'u',
-  ['SR'] = 'v',
-  ['W'] = 'w',
-  ['KP'] = 'x',
-  ['KWR'] = 'y',
-  ['STKPW'] = 'z',
+local alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+local overrides = {
+  ['C'] = 'CR',
+  ['Z'] = 'STKPW',
 }
 
 -- same as emily-symbols format, but modified for use on the left hand
@@ -142,9 +120,16 @@ function modifiers.build()
   local dict = pl.Dict:new{}
 
   for mk,mod in pairs(mods) do
-    for ak,alpha in pairs(alphabet) do
-      local out = mod[1] .. alpha .. mod[2]
-      dict:add({pfx, mk, ak}, out)
+    for char in string.gmatch(alpha, '.') do
+      if not overrides[char] then
+        local out = mod[1] .. string.lower(char) .. mod[2]
+        dict:add({pfx, mk, char}, out)
+      end
+    end
+
+    for char, override in pairs(overrides) do
+      local out = mod[1] .. string.lower(char) .. mod[2]
+      dict:add({pfx, mk, override}, out)
     end
 
     for sk,sym in pairs(symbols) do

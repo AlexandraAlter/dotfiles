@@ -3,7 +3,7 @@ local symbols = {}
 
 local pl = require'plover'
 
-local pfx = '¶#'
+local pfx = '¶S'
 
 local syms = {
   -- more computer function-y symbols

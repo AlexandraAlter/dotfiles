@@ -47,10 +47,9 @@ local defaults = {
   -- Shortcuts
   'control.yaml',
   'modifiers.lua',
-  'shortcuts.yaml',
-  'navigation.yaml',
 
   -- Generic
+  'navigation.lua',
   'numbers.lua',
   'symbols.lua',
   'formatting.yaml',

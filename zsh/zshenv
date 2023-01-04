@@ -5,6 +5,14 @@ if [ -d "~/.cargo" ]; then
   path=(~/.cargo/bin $path)
 fi
 
+if [ -d "/usr/share/sway/scripts/" ]; then
+  path=(/usr/share/sway/scripts $path)
+fi
+
+if [ -d "/usr/lib/pentablet/" ]; then
+  path=(/usr/lib/pentablet $path)
+fi
+
 export PATH
 
 export EDITOR="/usr/bin/nvim"

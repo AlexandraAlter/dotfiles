@@ -67,6 +67,7 @@ local defaults = {
 
   -- Domain-specific
   'mush.yaml',
+  'markdown.yaml',
 }
 
 local use_defaults = true

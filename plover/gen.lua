@@ -45,20 +45,20 @@ local defaults = {
   'plover.yaml',
 
   -- Generic
-  'navigation.lua',
-  'numbers.lua',
-  'symbols.lua',
   'modifiers.lua',
+  'navigation.lua',
   'formatting.yaml',
-  'punctuation.yaml',
+  'symbols.lua',
+  'numbers.lua',
 
   -- English
+  'en_misstrokes.yaml',
   'en_fingers.lua',
+  'en_punctuation.yaml',
   'en_base.yaml',
   'en_proper.yaml',
   'en_phrases.yaml',
   'en_autophrases.lua',
-  'en_misstrokes.yaml',
   'en_misc.yaml',
 
   -- Domain-specific

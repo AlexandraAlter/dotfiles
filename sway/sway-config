@@ -226,8 +226,8 @@ bar {
   swaybar_command waybar
 }
 
-### Startup Programs:
-# exec dex --autostart
+# Startup Programs:
+exec dex --autostart
 
 include /etc/sway/config.d/*
 

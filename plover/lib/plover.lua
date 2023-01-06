@@ -71,6 +71,14 @@ local function stringify(stroke)
   return stroke
 end
 
+local function patternify_key(key)
+  if key == '^' then
+    return '^%-?%' .. key .. '%-?$'
+  else
+    return '^%-?' .. key .. '%-?$'
+  end
+end
+
 -- Keymaps
 
 pl.Keymap = {}
@@ -119,7 +127,7 @@ end
 
 function pl.Keymap:find_fuzzy(key, init)
   init = init or 1
-  local pattern = '^%-?' .. key .. '%-?$'
+  local pattern = patternify_key(key)
   for i = init, #self do
     local k = self[i]
     if string.match(k, pattern) then
@@ -147,9 +155,9 @@ function pl.Keymap:add_symbolics(syms)
 end
 
 -- TODO actually use this
-function pl.Keymap:add_feral(ferals)
+function pl.Keymap:add_ferals(ferals)
   for _, feral in ipairs(ferals) do
-    self.ferals[feral] = true
+    self.feral[feral] = true
   end
 end
 

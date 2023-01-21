@@ -1,5 +1,17 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
+# {{{ directories
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_to_home
+# }}}
+
+# {{{ input/output
+setopt no_clobber
+setopt dvorak
+setopt interactive_comments
+# }}}
+
 # {{{ completions
 autoload -Uz compinit
 
@@ -47,6 +59,12 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
 # # {{{ keybindings
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+bindkey '^Q' push-input
+# # }}}
+
+# # {{{ terminfo keybindings
 typeset -g -A key
 
 key[Home]="${terminfo[khome]}"

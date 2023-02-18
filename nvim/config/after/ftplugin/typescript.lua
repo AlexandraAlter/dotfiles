@@ -1,1 +1,1 @@
-vim.bo.equalprg = 'prettier\\ --stdin-filepath\\ %'
+vim.bo.equalprg = 'prettier --parser typescript'

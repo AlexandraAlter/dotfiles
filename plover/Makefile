@@ -9,7 +9,7 @@ FILES = lib/*.c
 
 dicts: $(OUT) $(LIB)/yaml.so
 	./gen.lua -o $(OUT)
-	prettier -w --tab-width 0 out
+	prettier -w --tab-width 0 $(OUT)
 
 $(OUT):
 	mkdir -p $(OUT)

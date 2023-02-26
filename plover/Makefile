@@ -21,3 +21,4 @@ clean:
 	$(RM) $(LIB)/yaml.so $(OUT)/*.json
 
 .PHONY: dicts clean
+

@@ -31,8 +31,8 @@
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-      "activated": "",
-      "deactivated": ""
+      "activated": " ",
+      "deactivated": " "
     },
   },
 
@@ -43,21 +43,21 @@
 
   "clock": {
     "tooltip-format": "{:%A %B %d %Y | %H:%M}",
-    "format": " {:%a %d %b  %H:%M}",
-    "format-alt": " {:%d/%m/%Y  %H:%M:%S}",
+    "format": "  {:%a %d %b  %H:%M}",
+    "format-alt": "  {:%d/%m/%Y  %H:%M:%S}",
     //"timezones": [ "Kolkata" ],
     //"max-length": 200,
     "interval": 1,
   },
 
   "cpu": {
-    "format": "﬙ {usage: >3}%",
+    "format": " {usage: >3}%",
     "on-click": "alacritty -e htop",
     "interval": 3,
   },
 
   "memory": {
-    "format": " {: >3}%",
+    "format": "󰘚 {: >3}%",
     "on-click": "alacritty -e htop",
     "interval": 3,
   },
@@ -83,12 +83,12 @@
       "critical": 15,
     },
     "format": "{icon} {capacity: >3}%",
-    "format-icons": ["", "", "", "", ""],
+    "format-icons": [" ", " ", " ", " ", " "],
   },
 
   "network": {
     "format": "⚠ Disabled",
-    "format-wifi": " {essid}",
+    "format-wifi": "  {essid}",
     "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
     "format-disconnected": "⚠ Disconnected",
   },

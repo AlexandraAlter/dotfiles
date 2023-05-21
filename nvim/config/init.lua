@@ -1,6 +1,7 @@
 -- lua:fileencoding=utf-8:foldmethod=marker
 
 local data = vim.fn.expand(vim.fn.stdpath('data'))
+local state = vim.fn.expand(vim.fn.stdpath('state'))
 
 -- {{{ general
 vim.opt.compatible = false
@@ -8,6 +9,7 @@ vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
 vim.opt.spelllang = 'en_us,cjk'
 vim.opt.spellsuggest = 'best,9'
+vim.opt.spellfile = data .. '/site/spell/en.utf-8.add'
 
 vim.opt.timeoutlen = 500
 
@@ -145,8 +147,8 @@ vim.opt.swapfile = true
 vim.opt.undofile = true
 vim.opt.backup = true
 vim.opt.backupdir:remove('.')
-if not vim.fn.isdirectory(data .. '/backup') then
-  vim.fn.mkdir(data .. '/backup')
+if not vim.fn.isdirectory(state .. '/backup') then
+  vim.fn.mkdir(state .. '/backup')
 end
 vim.g.netrw_home = data
 

@@ -11,6 +11,8 @@ vim.opt.spelllang = 'en_us,cjk'
 vim.opt.spellsuggest = 'best,9'
 vim.opt.spellfile = data .. '/site/spell/en.utf-8.add'
 
+vim.cmd('command! SpellUpdate execute "mkspell!" &spellfile')
+
 vim.opt.timeoutlen = 500
 
 vim.g.mapleader = ' '
@@ -169,8 +171,8 @@ telescope.load_extension('fzf')
 -- {{{ integration
 
 -- -- floaterm
-vim.g.floaterm_keymap_new    = '<F6>'
 vim.g.floaterm_keymap_toggle = '<F5>'
+vim.g.floaterm_keymap_new    = '<F6>'
 vim.g.floaterm_keymap_prev   = '<F7>'
 vim.g.floaterm_keymap_next   = '<F8>'
 vim.g.floaterm_keymap_hide   = '<C-z>'

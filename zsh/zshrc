@@ -134,6 +134,7 @@ zmodload zsh/net/tcp
 alias ls='ls --color=auto'
 
 alias gpgtty="gpg-connect-agent updatestartuptty /bye >/dev/null"
+alias gpgreload="gpg-connect-agent reloadagent /bye >/dev/null"
 
 alias gmux="tmux -L game -f ~/.tmux.conf -f ~/dotfiles/tmux/nofn.conf new -A -s game"
 

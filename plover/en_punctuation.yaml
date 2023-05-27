@@ -1,153 +1,155 @@
-# English punctuation
+# Punctuation
 
-KW-BG: '{,}'
-# KW-BG: ','
-F-PL: '{.}'
+TP-PL: '{.}' # learnplover
+P-P: '{^.^}' # learnplover
 Poi*P: '{.^}'
-NR-FRPBLT: '{.} '
-W-B: '{^,^}'
-P-P: '{^.^}'
-P-nT: '{^.^}'
-P-T: '{^.^}'
-PR-D: &l '{. ^} {^}'
-.*┅2/-P: *l
-KHR*N: '{:}{^}'
-chR-n: '{^}:{^}'
-J*┅2: '{;}'
-STP-┅1: '{:}'
-STPH*FPL: '{;}'
-STPH-┅1: '{:}'
-STPH*┅1: '{;}'
--FRPLT: '{:}'
 
-L-PZ: '. . .'
-KW-BG/J-┅2: '{^}...{-|}'
-HR-PS: '{^...}'
+┅2-┅2: '{^...}{-|}' # learnplover
 SW-BS: '{^...}'
-J-┅2: '{^...}{ }{-|}'
--┅2/J-┅2: '{^...}{-|}'
-KW-BG/JO┅2: '{...}'
+HR-PS: '{^...}'
 
-A*E: &l "{'^}"
-SQ-T: *l
-SQ-TS: *l
--PBT: &l "{^'}"
-AE: *l
-SQ*T: *l
-SQ*TS: *l
+KW-BG: '{,}' # learnplover
+-┅1: '{,}'
+W-B: '{^,^}' # learnplover
+.*┅2: '{^,^}'
 
-KR-GS: '"'
+┅2*┅2: '{;}' # learnplover
+┅1*┅1: '{;}' # learnplover
 
-H-N: &l '{^-^}'
-H*N: *l
-H*FN: *l
-HA*EN: *l
+┅1-┅1: '{:}' # learnplover
+Kl-n: '{^:^}' # learnplover
 
-H*B: '-'
-H-NS: '-{^}'
-H-NZ: '--{^}'
-BHR-T: '{^}- {-|}'
+H-F: &l '{?}' # learnplover
+KW-PL: *l
+┅1-: *l
+qEZ: '?'
+q*En: '{&?}'
+
+SKlAm: &l '{!}' # learnplover
+TP-BG: *l
+∀-┅1: *l
+
+H-n: &l '{^-^}' # learnplover
+HA*En: *l
+H*n: '-'
+SdĀsh: '-'
+d-sh: '--' # learnplover
+PH-sh: '—'
+TPH-sh: '–'
+
+H-nS: '{-^}'
 HĒ*N: '{-^}'
-STKĀRB: '{ }-{ }'
-D-sh: &l '--'
-Q-RB: *l
-STK-RB: *l
-D-R: *l
-D-shG: *l
-D-RN: *l
--┅2/D-sh: *l
-Q-BG/D-sh: *l
--RB/NR-RB/TK-RB: ' -- '
--┅2/NR-RB/TK-RB: ' -- '
-T-RB: '{--}'
-TK*RB: '{--}'
-R*UnD: '{^_^}'
-N-RB: '–'
-PH-RB: '—'
+H-nZ: '{--^}'
+PWHR-T: '{^-}{-|}'
 
-Q*L: '='
-Q-L: '='
-QA*LS/QA*LS: '=='
-QA*LS: '{^=^}'
-PHR*US: '{^+}'
+# Quoting
 
-oi: '{^/^}'
--┅2/oi: '{^/^}'
-QEZ: '?'
-SNR-RB: '{?} '
-H-F: '{?}'
+A*E: "{~|'^}" # learnplover
+AE: "{^~|'}" # learnplover
+Sq-T: &l "{'^}"
+Sq-TS: *l
+Sq*T: &l "{^'}"
+Sq*TS: *l
 
-SBHRAEsh: '{^\\^}'
-PĪ*P: '{^|^}'
+KR-GS: '{^~|"}' # learnplover
+KW-GS: '{~|"^}' # learnplover
+KR*GS: '{^"}' # learnplover
 
-KH-FG: '`'
-TR-RL: '` {^}'
-TR*RL: '{^}`'
-T*LD: '{^~}'
-# T*LD: '~'
+TR-RL: '{~|`^}'
+TR*RL: '{^~|`}'
+KH-FG: '`' # learnplover
 
-SKHRAPL: '{!}'
-STKPWHR-┅1: '{!}'
-KLAM/KLAM: '!  {{-|}^}'
-YAT: '{^@^}'
-HAEsh: '#{^}'
-HA*Esh: '#'
-FLOsh: '$'
-D-M: '${^}'
-P*ERS: '{&%}'
-PHERS: '{^%}'
-KR-RT: &l '{^}^{^}'
-KA*RT: *l
-SP-ND: '&'
-SPHAND: '&'
-SPHAND/SPHAND: '&&'
-STA*R: '{^*^}'
-BLET: '*'
-STR*IŚK: '*'
-STR-K: '*'
-QEZ/QEZ: &l '***'
-KEZ/QEZ: *l
-SQEZ/QEZ: *l
+# Brackets
 
+PREn: '{~|(^}' # learnplover
+PR*En: '{^~|)}' # learnplover
 P*n: '{^}({^}'
 P*nT: '{^}){^}'
-PREN: '{(^}'
-PR*EN: '{^)}'
 SN-┅1S: '{(^}'
 SN*┅1S: '{^)}'
-BR-KT: '{[^}'
-BR*KT: '{^]}'
-BR-K: '{[}'
-BR*K: '{]}'
-BR-BT: '['
-BR*BT: ']'
-BR-X: '{]}'
-BR*X: '{[}'
-BR-S: '\\{'
-BR*S: '\\}'
-FR-KT: '\\{{^}'
-FR*KT: '{^}\\}'
+
+bR-kT: '{[^}' # learnplover
+bR*kT: '{^]}' # learnplover
+bR-KT: '{[^}'
+bR*KT: '{^]}'
+bR-K: '{[}'
+bR*K: '{]}'
+bR-BT: '['
+bR*BT: ']'
+bR-X: '{]}'
+bR*X: '{[}'
+
+TPR-kT: '\{{^}' # learnplover
+TPR*kT: '{^}\}' # learnplover
+bR-S: '\\{'
+bR*S: '\\}'
 FR-KTS: '{'
 FR*KTS: '}'
-AEng: '{^<^}'
-A*Eng: '{^>^}'
-AEngT: '{^<^}'
-A*EngT: '{^>^}'
-BRAK: '<{^}'
-BRA*K: '{^}>'
-HR*N: '<'
-HR*N/HR*N: '<<'
+
+AEngT: &l '{^<^}' # learnplover
+AEng: *l
+A*EngT: &l '{^>^}' # learnplover
+A*Eng: *l
+BRAK: '{<^}'
+BRA*K: '{^>}'
+HR*n: '<'
+HR*n/HR*n: '<<'
 GR*N: '>'
 PHR*N: '>'
 
-TQ-D: '÷'
+# Symbols
 
-∀-┅1/SN-FPLD: '{!})'
-∀-┅1/SQ-TS: "{!'}"
+YAT: '{^@^}' # learnplover
+
+HAEsh: '#{^}' # learnplover
+HA*Esh: '#'
+
+D-M: '${^}' # learnplover
+FLOsh: '$'
+
+PHERS: '{^%}' # learnplover
+P*ERS: '{&%}'
+
+KR-RT: &l '{^}^{^}' # learnplover
+KA*RT: *l
+T*LD: '{^~}' # learnplover
+
+SP-nD: '&' # learnplover
+SPHAnD: '&'
+SPHAnD/SPHAnD: '&&'
+SKP*: '{&&}'
+
+STA*R: '{^*^}' # learnplover
+BLET: '*'
+STR*IŚk: '*'
+STR-K: '*'
+
+R*UnD: '{^_^}' # learnplover
+
+qA*LS: '{^=^}' # learnplover
+qA*LS/qA*LS: '=='
+q*L: '='
+q-L: '='
+
+Pl*US: '{^+}' # learnplover
+Pl*SZ: '{&++}'
+
+oi: '{^/^}' # learnplover
+
+Sb.l.ea.sh: '{^\\^}' # learnplover
+
+PĪ*P: '{^|^}' # learnplover
+
+# Unicode
+
+TQ-D: '÷'
+KPR-T: '©'
+
+# Mixed
+
 HR*N/QA*LS: '<='
 PHRULS: '+='
-J-┅2/SN-RB: '... ?'
-HR-PS/-┅1/SQ-TS: "...{.}{'}"
-HR-PZ/-┅1/SQ-TS: ". . . {.}{'}"
--┅1/HR-PS: '{.}...{|}'
+KW-RBGTS: ',"'
+TPHAULS: '!='
+TPHAULZ: '!=='
 

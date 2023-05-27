@@ -1,6 +1,7 @@
 # Punctuation
 
-TP-PL: '{.}' # learnplover
+TP-PL: &l '{.}' # learnplover
+-┅1: *l
 P-P: '{^.^}' # learnplover
 Poi*P: '{.^}'
 
@@ -9,7 +10,7 @@ SW-BS: '{^...}'
 HR-PS: '{^...}'
 
 KW-BG: '{,}' # learnplover
--┅1: '{,}'
+-┅2: '{,}'
 W-B: '{^,^}' # learnplover
 .*┅2: '{^,^}'
 

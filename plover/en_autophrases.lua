@@ -1,4 +1,4 @@
--- English programatic long phrases
+-- English Programatic Long Phrases
 local phrases = {}
 
 local pl = require'plover'
@@ -15,7 +15,7 @@ local subjects = {
   ['TWH'] = 'they ',
   ['TWR'] = 'we ',
   ['KPWH'] = 'it ',
-  ['STKPWHR'] = '',
+  ['∀'] = '',
 }
 
 local adverbs = {

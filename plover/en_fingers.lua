@@ -1,4 +1,4 @@
--- Individual English letters
+-- Individual English Letters
 local fingers_en = {}
 
 local pl = require'plover'

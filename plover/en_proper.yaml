@@ -1,4 +1,4 @@
-# English proper nouns
+# English Proper Nouns
 
 --- # proper noun prefixes
 AFR/ROE: '{Afro-^}'
@@ -13,8 +13,8 @@ LIS: '{Lys-^}'
 M-C: '{Mc^}{-|}'
 Noi*: '{Neo-^}'
 O*E: "{O'^}"
-O*E/O*E: "{O'^}"
-OE/OE: "{O'^}"
+O*E/O*E: "{O'^}" # mis
+OE/OE: "{O'^}" # mis
 OC/JU: '{Ocu^}'
 PA*N: '{Pan-^}'
 
@@ -43,7 +43,7 @@ WORLD/WAR/*I: 'World War I'
 WORLD/WAR/*IP: 'World War I'
 WORLD/WAR/1: 'World War I'
 WORLD/WAR/1-R: 'World War I'
-WORLD/WAR/WUPB: 'World War I'
+WORLD/WAR/WUn: 'World War I'
 WORLD/WAR/*I/*I: 'World War II'
 WORLD/WAR/*IP/*IP: 'World War II'
 WORLD/WAR/2: 'World War II'
@@ -205,7 +205,7 @@ KR*P/*UP/N*P/Y*P: 'CUNY'
 KR-FP: 'CVP'
 KRoiP: 'CYP'
 KR*P/MA*BGS: 'Cmax'
-KR*P/M*IPB: 'Cmin'
+KR*P/M*In: 'Cmin'
 KOE/KW*P/10: 'CoQ10'
 KOE/KW*P/TEPB: 'CoQ10'
 KOEBG/10: 'CoQ10'
@@ -3336,6 +3336,8 @@ KA/MUS: 'Camus'
 KAN/YA: 'Cana'
 KAN/A*PB: 'Canaan'
 KA/NA/TKA: 'Canada'
+H-PB/KAPB/TKA: '-Canada'
+H-PB/KA/NĀD/YAPB: '{-}Canadian'
 KAN/TKA: 'Canada'
 KAND/TKA: 'Canada'
 KA/NĀD/YAPB: 'Canadian'

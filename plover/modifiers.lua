@@ -1,4 +1,4 @@
--- Programatic modifiers
+-- Programatic Modifiers
 local modifiers = {}
 
 local pl = require'plover'

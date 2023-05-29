@@ -1,4 +1,4 @@
--- Programatic navigation
+-- Programatic Navigation
 local navigation = {}
 
 local pl = require'plover'

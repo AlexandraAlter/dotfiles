@@ -1,0 +1,26 @@
+# English Numerical
+
+## Fractions
+
+HA*F: '1/2'
+TPHA*F: '1/2'
+TH*IRD: '1/3'
+
+## Unknown
+
+PL*US/2: '+2'
+
+## Time Periods
+
+A*E/50/-S: "'50s"
+A*E/0EU6/-S: "'60s"
+MID/A*E/0EU6/-S: "mid '60"
+A*E/0EU7/-S: "'70s"
+A*E/0EU8/-S: "'80s"
+ERL/AE/0EU8: "early '80"
+A*E/0EU9/-S: "'90s"
+
+## Units
+
+K-PL: 'km'
+K*PL: '{^km}'

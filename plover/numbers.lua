@@ -1,13 +1,13 @@
--- Numbers, times, mathematics, units, etc
+-- Programatic Numbers/Times/Etc
 local numbers = {}
 
 local pl = require'plover'
 
 local extras = {
   -- unknown
-  ['NUNZ'] = '100',
-  ['TWowN'] = '{200^}',
-  ['TPWowN'] = '{200^}',
+  ['TPHUnZ'] = '100',
+  ['TWow.n'] = '{200^}',
+  ['TPWow.n'] = '{200^}',
   ['THUZ'] = '{&000}',
   -- suffixes
   ['THoi*N'] = '{^000}',
@@ -19,29 +19,6 @@ local extras = {
   ['THOUZ'] = '{^000}',
   ['THOEUB'] = '{^,000}',
   ['THO*UZ'] = '{,^000}',
-  -- decimals
-  ['-FPLT/-9D'] = '{.}99',
-  ['P-P/-L'] = '.8',
-  -- fractions
-  ['HA*F'] = '1/2',
-  ['TPHA*F'] = '1/2',
-  ['TH*IRD'] = '1/3',
-  -- percentages
-  ['ĀP/PERS'] = '80%',
-  ['SĒ*/ROE/PERS'] = '0%',
-  -- unknown
-  ['PL*US/2'] = '+2',
-  -- time periods
-  ['A*E/50/-S'] = "'50s",
-  ['A*E/0EU6/-S'] = "'60s",
-  ['MID/A*E/0EU6/-S'] = "mid '60",
-  ['A*E/0EU7/-S'] = "'70s",
-  ['A*E/0EU8/-S'] = "'80s",
-  ['ERL/AE/0EU8'] = "early '80",
-  ['A*E/0EU9/-S'] = "'90s",
-  -- units
-  ['K-PL'] = 'km',
-  ['K*PL'] = '{^km}',
 }
 
 function numbers.build()

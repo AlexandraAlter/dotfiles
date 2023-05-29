@@ -52,13 +52,13 @@ local defaults = {
   'numbers.lua',
 
   -- English
-  'en_misstrokes.yaml',
   'en_fingers.lua',
   'en_punctuation.yaml',
   'en_base.yaml',
   'en_proper.yaml',
   'en_phrases.yaml',
   'en_autophrases.lua',
+  'en_numerical.yaml',
   'en_misc.yaml',
 
   -- Domain-specific

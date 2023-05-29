@@ -31,13 +31,13 @@
 
 ## English
 
-- `out/en\_misstrokes.json`
 - `out/en\_fingers.json`
 - `out/en\_punctuation.json`
 - `out/en\_base.json`
 - `out/en\_proper.json`
 - `out/en\_phrases.json`
 - `out/en\_autophrases.json`
+- `out/en\_numerical.json`
 - `out/en\_misc.json`
 
 ## Domain-Specific

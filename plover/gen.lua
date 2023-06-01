@@ -53,6 +53,7 @@ local defaults = {
 
   -- English
   'en_fingers.lua',
+  'en_briefs.lua',
   'en_punctuation.yaml',
   'en_base.yaml',
   'en_proper.yaml',

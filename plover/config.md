@@ -32,6 +32,7 @@
 ## English
 
 - `out/en\_fingers.json`
+- `out/en\_briefs.json`
 - `out/en\_punctuation.json`
 - `out/en\_base.json`
 - `out/en\_proper.json`

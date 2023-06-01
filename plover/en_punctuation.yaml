@@ -71,8 +71,6 @@ SN*┅1S: '{^)}'
 
 bR-kT: '{[^}' # learnplover
 bR*kT: '{^]}' # learnplover
-bR-KT: '{[^}'
-bR*KT: '{^]}'
 bR-K: '{[}'
 bR*K: '{]}'
 bR-BT: '['

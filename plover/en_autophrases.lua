@@ -1,4 +1,5 @@
 -- English Programatic Long Phrases
+-- Based on Jade's Phrasing from https://github.com/Jade-GG/plover_phrasing
 local phrases = {}
 
 local pl = require'plover'
@@ -112,8 +113,8 @@ local verbs = {
   ['-PL'] = 'may',
   ['-PLT'] = 'might',
   ['-R'] = 'are', -- special case this one
-  ['-RT'] = 'are not', -- also special case this
-  ['-*RT'] = "aren't", -- and this one
+  ['-RT'] = 'are not', -- and this
+  ['-*RT'] = "aren't", -- and this
   ['-RB'] = 'shall',
   ['-RBD'] = 'should',
   ['-RL'] = 'recall',
@@ -175,6 +176,7 @@ local verbs = {
   [''] = '',
 }
 
+-- replace 'are' with the correct verb for the subject
 local verb_are_replacement = {
   ['he '] = 'is',
   ['she '] = 'is',
@@ -192,7 +194,7 @@ function phrases.build()
   for vk,verb in pairs(verbs) do
     for sk,subject in pairs(subjects) do
       for ak,adverb in pairs(adverbs) do
-        if verb == 'are ' or verb == 'are not' or verb == "aren't " then
+        if string.match(verb, '^are') then
           local rep = verb_are_replacement[subject]
           local v_rep = string.gsub(verb, 'are', rep)
           dict:add({sk, ak, vk}, subject .. adverb .. v_rep)

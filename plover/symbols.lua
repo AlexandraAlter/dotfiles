@@ -1,4 +1,5 @@
 -- Programatic Symbols
+-- Based on Emily's Symbols from https://github.com/EPLHREU/emily-symbols
 local symbols = {}
 
 local pl = require'plover'
@@ -12,7 +13,7 @@ local syms = {
   ['-FRPBG'] = {'{#Page_Up}', '{#Home}', '{#End}', '{#Page_Down}'},
   ['-FRBG']  = {'{#AudioPlay}', '{#AudioPrev}', '{#AudioNext}', '{#AudioStop}'},
   ['-FRB']   = {'{#AudioMute}', '{#AudioLowerVolume}', '{#AudioRaiseVolume}', '{#Eject}'},
-  ['']      = {'', '{*!}', '{*?}', '{#Space}'},
+  ['']       = {'', '{*!}', '{*?}', '{#Space}'},
   ['-FL']    = {'{*-|}', '{*<}', '{<}', '{*>}'},
 
   -- typable symbols

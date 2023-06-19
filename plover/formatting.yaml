@@ -15,15 +15,10 @@ S-PS: '{^ ^}' # mis
 SP*S: '{^ ^}' # mis
 S*PS: '{^ ^}' # mis
 
-## Backspace
-W-FP: '{#BackSpace}'
-
 ## Newline
 R+: "{^~|\n^}"
++R: "{^~|\n^}"
 R-R: "{^~|\n^}" # main
-+R: '{#Return}{^}'
-R*R: '{#Return}{^}' # main
-SKW-BGS: '{#Return}{^}' # main
 R+R: "{^\n\n^}{-|}"
 ┅2A-U┅2: "{^\n\n^}{-|}" # main
 ┅2AE-U┅2: "{^\n\n^}{-|}" # main

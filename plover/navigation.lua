@@ -6,6 +6,43 @@ local maths = require'maths'
 
 local pfx = '¶-Z'
 
+local extras = {
+  ['FEŚC'] = '{#Escape}',
+
+  ['b-ch'] = '{#BackSpace}',
+  ['b*ch'] = '{#BackSpace}',
+  ['W*FP'] = '{#BackSpace}',
+
+  ['d*EL'] = '{#Delete}',
+
+  ['TA*B'] = '{#Tab}{^}',
+  ['TA*BT'] = '{#Alt_L(Tab Tab)}',
+
+  ['R*R'] = '{#Return}{^}',
+  ['SKW-BGS'] = '{#Return}{^}',
+
+  ['STPH-R'] = '{#Left}{^}',
+  ['STPH-P'] = '{#Up}{^}',
+  ['STPH-B'] = '{#Down}{^}',
+  ['STPH-G'] = '{#Right}{^}',
+  ['STPH-RB'] = '{#Control_L(Left)}{^}',
+  ['STPH-BG'] = '{#Control_L(Right)}{^}',
+  ['TPW-R'] = '{#Alt_L(Left)}',
+  ['TPW-G'] = '{#Alt_L(Right)}',
+  ['SH-FT'] = '{#Control_L(Home)}{^}',
+  ['SR-RS'] = '{#Control_L(End)}{^}',
+
+  ['KHR*F'] = '{#Control_L(v)}',
+  ['KHR*BG'] = '{#Control_L(k)}',
+  ['KHR*T'] = '{#Control_L(w)}',
+  ['KHR-BG'] = '{#Control_L(c)}',
+
+  ['KPH*F'] = '{#Super_L(v)}',
+  ['KPH*BG'] = '{#Super_L(k)}',
+  ['KPH*T'] = '{#Super_L(w)}',
+  ['KPH-BG'] = '{#Super_L(c)}',
+}
+
 local navs = {
   ['-R']  = 'left',
   ['-P']  = 'up',
@@ -45,22 +82,6 @@ for i = 0, (4 ^ 2) - 1 do
   local ends = string.rep(')', #outputs) .. '}{^}'
   mods[pl.keys:normalize(keys)] = {starts, ends}
 end
-
-local extras = {
-  ['FEŚC'] = '{#Escape}',
-
-  ['B*F'] = '{#BackSpace}',
-  ['B-ch'] = '{#BackSpace}',
-  ['B*ch'] = '{#Alt_L(BackSpace)}',
-  ['B*chL'] = '{#Super_L(BackSpace)}',
-
-  ['D*EL'] = '{#Delete}',
-  ['B*R'] = '{#Delete}',
-  ['B*sh'] = '{#Option(Delete)}',
-
-  ['SP-B'] = '{#Space}',
-  ['SP-P'] = '{#Shift_L(Space)}',
-}
 
 function navigation.build()
   local dict = pl.Dict:new{}

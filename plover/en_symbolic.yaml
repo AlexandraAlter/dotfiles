@@ -1,0 +1,253 @@
+# Symbols and Punctuation
+# lp: learnplover
+
+## Periods
+
+TP-PL: "{.}" #main #lp
+TPH-PL: "{.}" #mis
+TP-F: "{.}" #mis
+TP-FPL: "{.}" #mis
+TP-P: "{.}" #mis
+TP-PLT: "{.}" #mis
+TP-L: "{.}" #mis
+TP-LT: "{.}" #mis
+TH-PL: "{.}" #mis
+T-PL: "{.}" #mis
+PR*RD: "{.}" #mis
+P-FP: "{.}" #mis
+P-PL: "{.}" #mis
+TPHR-FRPBLT: "{.}" #mis
+P-FP/PHOEUFP: "{.}" #mis
+TP-PL/PHOEUFP: "{.}" #mis
+-FPLT: "{.}" #main
+-FPLTD: "{.}" #mis
+-FPT: "{.}" #mis
+-P: "{.}" #mis
+-PL: "{.}" #mis
+-PLT: "{.}" #mis
+-PT: "{.}" #mis
+.*FPLT: "{.}" #mis
+-FRP: "{.}" #mis
+-FRLT: "{.}" #mis
+-FP: "{.}" #mis
+-FPL: "{.}" #mis
+-FP/PHR-RB: "{.}" #mis
+-FP/PHOEUFP: "{.}" #mis
+-FP/-RB: "{.}" #mis
+-FPLT/-FPLT: "{.}" #mis
+PR-D: "." #?
+P-P: "{^.^}" #main #lp
+P-PBT: "{^.^}" #mis
+P-T: "{^.^}" #mis
+PO*EUP: "{.^}" #main
+
+## Elipsises
+
+SKWR-RBGS: "{^...}{-|}" #main #lp
+KW-BG/SKWRORBGS: "{^...}{-|}" #mis
+KW-BG/SKWR-RBGS: "{^...}{-|}" #mis
+-RBGS/SKWR-RBGS: "{^...}{-|}" #mis
+-FPLT/HR-PS: "{.}...{-|}" #?
+SW-BS: "{^...}" #?
+HR-PS: "{^...}" #?
+HR-PZ: ". . ." #?
+
+## Commas
+
+KW-BG: "{,}" #main #lp
+KWR-BG: "{,}" #mis
+KWR-BGS: "{,}" #mis
+KW-B: "{,}" #mis
+W-BG: "{,}" #mis
+-RBGS: "{,}" #main
+-RB: "{,}" #mis
+-RBG: "{,}" #mis
+-RBS: "{,}" #mis
+-RGS: "{,}" #mis
+-BGS: "{,}" #mis
+-FRBGS: "{,}" #mis
+TP-PL/KW-BG: "{,}" #mis
+TP-PL/-RBGS: "{,}" #mis
+W-B: "{^,^}" #main #lp
+.*RBGS: "{^,^}" #main
+
+## Semicolons
+
+STPH*FPLT: "{;}" #main #lp
+SKWR*RBGS: "{;}" #main #lp
+STPH*FPL: "{;}" #mis
+SP-PT: "{;}" #?
+TH-FL: "{^;^}" #?
+
+## Colons
+
+STPH-FPLT: "{:}" #main #lp
+STP-FPLT: "{:}" #mis
+-FRPLT: "{:}" #mis
+KHR-PB: "{^:^}" #main #lp
+KHR*PB: ":{^}" #?
+
+## Dashes
+
+H-PB: "{^-^}" #main #lp
+H-B: "{^-^}" #mis
+HA*EPB: "{^-^}" #?
+H*FPB: "{^-^}" #?
+HAO*EPB: "{-^}" #?
+H-PBS: "{-^}" #?
+PWHR-T: "{^-}{-|}" #?
+STKAEURB: "-" #?
+H*PB: "-" #?
+H*B: "-" #?
+TK-RB: "--" #main #lp
+STK-RB: "--" #?
+TK*RB: "--" #?
+TK-R: "--" #?
+TK-RPB: "--" #?
+TK-RBG: "--" #?
+KW-RB: "--" #?
+K-RB: "--" #?
+KW-BG/TK-RB: "--" #mis
+-RBGS/TK-RB: "--" #mis
+H-PBZ: "{--^}" #?
+R*UPBD: "{^_^}" #main #lp
+RUPBD: "{^_^}" #mis
+TPH-RB: "–" #main
+PH-RB: "—" #main
+
+## Question Marks
+
+H-F: "{?}" #main #lp
+H*F: "{?}" #mis
+H-FPB: "{?}" #mis
+KW-PL: "{?}" #main
+STPH: "{?}" #main
+STP: "{?}" #mis
+STKPH: "{?}" #mis
+STPHA: "{?}" #mis
+STPH*: "{?}" #mis
+STH/PHOEUFP: "{?}" #mis
+TP-PL/STPH-RB: "{?}" #mis
+KWEZ: "?" #main
+KW*EPB: "{&?}" #main
+
+## Exclamation Marks
+
+SKHRAPL: "{!}" #main #lp
+SKHAPL: "{!}" #mis
+SKPHRAPL: "{!}" #mis
+TP-BG: "{!}" #main
+STKPWHR-FPLT: "{!}" #main
+STKPWHR-FPLT/SKW-TS: "{!'}" #?
+STKPWHR-FPLT/STPH-FPLD: "{!})" #?
+
+## Quotes
+
+AE: "{^~|'}" #main #lp
+A*E: "{~|'^}" #main #lp
+SKW-T: "{'^}" #main
+SKW*T: "{^'}" #main
+SKW-TS: "{'^}" #main
+SKW*TS: "{^'}" #main
+-PBT: "{^'}" #?
+KR-GS: "{^~|\"}" #main #lp
+KW-GS: "{~|\"^}" #main #lp
+KR*GS: "{^\"}" #main #lp
+KW-RBGTS: ",\"" #?
+KH-FG: "`" #main #lp
+TR-RL: "{~|`^}" #main
+TR*RL: "{^~|`}" #main
+TP-PL/KH-FG: "{.} {`}{-|}" #?
+
+## Brackets
+
+PREPB: "{~|(^}" #main #lp
+PR*EPB: "{^~|)}" #main #lp
+P*PB: "{^}({^}" #main
+P*PBT: "{^}){^}" #main
+PR*EPBT: "{^})" #mis
+STPH-FPLTS: "{(^}"
+STPH*FPLTS: "{^)}"
+PR*EPBS: "{^}()"
+PR-PBSZ: "{^}(s)"
+PWR-BGT: "{[^}" #main #lp
+PWR*BGT: "{^]}" #main #lp
+PWR-BG: "{^[^}"
+PWR-BGS: "{^]^}"
+PWR*BGS: "{^[^}"
+PWR-BT: "["
+PWR*BT: "]"
+TPR-BGT: "\\{{^}" #main #lp
+TPR*BGT: "{^}\\}" #main #lp
+PWR-S: "\\{"
+PWR*S: "\\}"
+AEPBGT: "{^<^}" #main #lp
+A*EPBGT: "{^>^}" #main #lp
+AEPBG: "{^<^}"
+A*EPBG: "{^>^}"
+PWRABG: "<{^}"
+PWRA*BG: "{^}>"
+HR*PB: "<"
+PHR*PB: ">"
+HR*PB/HR*PB: "<<"
+TKPWR*PB: ">"
+
+## Slashes
+
+OEU: "{^/^}" #main #lp
+-RBGS/OEU: "{^/^}" #mis
+SPWHRAERB: "{^\\^}" #main #lp
+PAO*EUP: "{^|^}" #main #lp
+
+## Currency
+
+TK-PL: "${^}" #main #lp
+TPHRORB: "$"
+P-PBDZ: "£{^}" #main
+
+## Symbols
+
+T*LD: "{^~}" #main #lp
+KWRAT: "{^@^}" #main #lp
+HAERB: "#{^}" #main #lp
+HA*ERB: "#" #main
+PHERS: "{^%}" #main #lp
+P*ERS: "{&%}" #main
+KR-RT: "{^}^{^}" #main #lp
+KA*RT: "{^}^{^}"
+SP-PBD: "&" #main #lp
+SPHAPBD: "&"
+A*PBD: "&"
+SKP*: "{&&}"
+SPHAPBD/SPHAPBD: "&&"
+STA*R: "{^*^}" #main #lp
+STR*EUFBG: "*"
+STR-BG: "*"
+PWHRET: "*"
+KEZ/KWEZ: "***"
+KWEZ/KWEZ: "***"
+SKWEZ/KWEZ: "***"
+KWA*LS: "{^=^}" #main #lp
+KWA*LS/KWA*LS: "==" #main
+KW-L: "="
+KW*L: "="
+KW-LS: "=="
+PHR*US: "{^+}" #main #lp
+PHR*SZ: "{&++}"
+TKPWRAO*E: "{&°}"
+TR*PL: "{^™}"
+KPR-T: "©"
+SKWA*EURD: "{^²}"
+KAO*UBD: "{&³}"
+TKW-D: "÷"
+
+## Mixed
+
+TPHAULS: "!="
+TPHAULZ: "!=="
+HR*PB/KWA*LS: "<="
+PHRULS: "+="
+TPR-RPL: "{.}{^\n^}{-|}"
+SPERS: "{^%} is"
+AEU/PHR*US: "a +"
+

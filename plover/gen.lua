@@ -52,19 +52,17 @@ local defaults = {
   'numbers.lua',
 
   -- English
-  'en_fingers.lua',
-  'en_briefs.lua',
-  'en_punctuation.yaml',
-  'en_base.yaml',
-  'en_proper.yaml',
-  'en_phrases.yaml',
+  'en_main.yaml',
+  'en_symbolic.lua',
+  'en_numerical.lua',
   'en_autophrases.lua',
-  'en_numerical.yaml',
-  'en_misc.yaml',
+  'en_fingers.lua',
 
   -- Domain-specific
-  'mush.yaml',
-  'markdown.yaml',
+  'en_court.yaml',
+  'en_computing.yaml',
+  'en_mush.yaml',
+  'en_markdown.yaml',
 }
 
 local use_defaults = true

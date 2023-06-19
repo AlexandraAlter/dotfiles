@@ -1,96 +1,111 @@
 # Spacing and Capitalization
 
-K+K: &l '{}'
-TPHR*URB: *l
+## Cancel formatting
+K+K: '{}'
 
-S+: &l '{^^}'
-TK-LS: *l
-TK*LS: *l # mis
-+S: &l '{^ ^}'
-S-P: *l
-S-PS: *l # mis
-SP*S: *l # mis
-S*PS: *l # mis
-P+R: &l '{^} {^}'
-P-R: *l
+## Suppress Space
+S+: '{^^}'
+d-LS: '{^^}' # main
+d*LS: '{^^}' # mis
 
-R+: &l "{^~|\n^}"
-R-R: *l
-+R: &l '{#Return}{^}'
-R*R: *l
-SKW-BGS: *l
-┅2-┅2: "{^\n\n^}{-|}"
+## Manual Space
++S: '{^ ^}'
+S-P: '{^ ^}' # main
+S-PS: '{^ ^}' # mis
+SP*S: '{^ ^}' # mis
+S*PS: '{^ ^}' # mis
 
-+P: &l '{<}'
-.*URP: *l
-KPA*E: *l
-KPA*L: *l
-S+P: &l '{^}{<}'
-KPA*I: *l
+## Backspace
+W-FP: '{#BackSpace}'
 
-+PD: &l '{*<}'
-.*UPD: *l
-KPA*EZ: *l
-S+PD: &l '{^}{*<}'
-KPA*IZ: *l
+## Newline
+R+: "{^~|\n^}"
+R-R: "{^~|\n^}" # main
++R: '{#Return}{^}'
+R*R: '{#Return}{^}' # main
+SKW-BGS: '{#Return}{^}' # main
+R+R: "{^\n\n^}{-|}"
+┅2A-U┅2: "{^\n\n^}{-|}" # main
+┅2AE-U┅2: "{^\n\n^}{-|}" # main
 
-+L: &l '{>}'
-LO*ER: *l
+## Capitalize Next Word
++K: '{}{-|}'
+KPA: '{}{-|}' # main
++*K: '{^}{-|}'
+KPA*: '{^}{-|}' # main
 
-+LD: &l '{*>}'
-LO*ERD: *l
+## Capitalize Last Word
++KD: '{*-|}'
++KZ: '{*-|}'
+KA*PD: '{*-|}' # main
+KPAD: '{*-|}'
 
-S+D: &l '{*!}'
-TK*FPS: *l
-TK-FPS: *l
+## Uppercase Next Word
++P: '{<}'
+KPA*L: '{<}' # main
 
-+DZ: &l '{*?}'
-+SD: *l
-AFPS: *l
-A*FPS: *l
+## Uppercase Last Word
++PD: '{*<}'
+'*UPD': '{*<}' # main
 
-+K: &l '{ }{-|}'
-KPA: *l
-+*K: &l '{^}{-|}'
-KPA*: *l
+## Lowercase Next Word
++L: '{>}'
+lO*ER: '{>}' # main
 
-+KD: &l '{*-|}'
-+KZ: *l
-KA*PD: *l
-KPA*D: *l
-KPA*Z: *l
+## Lowercase Last Word
++LD: '{*>}'
+lO*ERD: '{*>}'
 
-M+K: &l '{MODE:CAPS}'
-KA*PS: *l
-KA*PZ: *l
+## Repeat Last Stroke
+'#': '{*+}'
 
-M+L: &l '{MODE:LOWER}'
-LO*ERZ: *l
+## Toggle Asterisk
+'#*': '{*}'
 
-M+M: &l '{MODE:CAMEL}'
-K*KS: *l
+## Retroactively Add Space
++DZ: '{*?}'
++SD: '{*?}'
+AśPS: '{*?}' # main
+A*śPS: '{*?}'
 
-M+T: &l '{MODE:TITLE}'
-TĪ*LT: *l
+## Retroactively Delete Space
+S+D: '{*!}'
+d-śPS: '{*!}' # main
+d*śPS: '{*!}'
 
-M+Z: &l '{MODE:SNAKE}'
-SNĀ*K: *l
+## Modes
 
-M+D: &l '{MODE:LOWER} {MODE:SET_SPACE:-}'
-SPĪ*NL: *l
+m+K: '{MODE:CAPS}'
+KA*PS: '{MODE:CAPS}'
+KA*PZ: '{MODE:CAPS}'
 
-M+LS: &l '{MODE:SET_SPACE:, }'
-CMA*MD: *l
+m+L: '{MODE:LOWER}'
+lO*ERZ: '{MODE:LOWER}'
 
-M+N: &l '{MODE:SET_SPACE:}'
-NŌ*ch: *l
+m+m: '{MODE:CAMEL}'
+K*kS: '{MODE:CAMEL}'
 
-M+R: &l '{MODE:RESET}'
-R*EFT: *l
+m+T: '{MODE:TITLE}'
+TĪ*LT: '{MODE:TITLE}'
 
-M+RS: &l '{MODE:RESET_SPACE}'
-R*EFTS: *l
+m+Z: '{MODE:SNAKE}'
+SnĀ*K: '{MODE:SNAKE}'
 
-M+RZ: &l '{MODE:RESET_CASE}'
-R*EFDZ: *l
+m+D: '{MODE:LOWER} {MODE:SET_SPACE:-}'
+SPĪ*nL: '{MODE:LOWER} {MODE:SET_SPACE:-}'
+
+m+LS: '{MODE:SET_SPACE:, }'
+c.mA*mD: '{MODE:SET_SPACE:, }'
+
+m+N: '{MODE:SET_SPACE:}'
+nŌ*ch: '{MODE:SET_SPACE:}'
+
+m+R: '{MODE:RESET}'
+R*EFT: '{MODE:RESET}'
+
+m+RS: '{MODE:RESET_SPACE}'
+R*EFTS: '{MODE:RESET_SPACE}'
+
+m+RZ: '{MODE:RESET_CASE}'
+R*EFDZ: '{MODE:RESET_CASE}'
 

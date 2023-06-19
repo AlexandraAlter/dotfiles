@@ -1,0 +1,38 @@
+# Computing
+
+## Prefixes
+
+A/HREF: "<a href=\"{^}"
+EUPBG/SR-S: "<img src=\"{^}"
+HAOEPT: "{>}http://{^}"
+HAO*EPTS: "{>}https://{^}"
+HAOEPT/-S: "{>}https://{^}"
+HAOEPTS: "{>}https://{^}"
+W-FPLT: "{>}www.{^}"
+
+## Suffixes
+
+P-P/O*RG: "{^.^ org}"
+P-P/KROPL: "{^.^}com"
+P-P/SKWR-S: "{^.^}js"
+P-P/ORG: "{^.^}org"
+KRA*EU: "{^.ca}"
+KRO*PL: "{^.com}"
+KROPL: "{^.com}"
+P-P/O*EU: "{^.io}"
+P-P/PHEUL: "{^.mil}"
+TPH*ET: "{^.net}"
+TKORG: "{^.org}"
+
+## Commands
+
+KR-P: "{>}cp"
+HROL: "{>}lol"
+HR*S: "{>}ls"
+SH-S: "{>}ssh"
+PH*F: "{>}{^mv}"
+
+## Code
+
+PWR: "<br>"
+

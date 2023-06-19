@@ -1,26 +1,48 @@
 # English Numerical
 
-## Fractions
+HA*F: "1/2"
+TPHA*F: "1/2"
+'130EU': "1/3"
+TH*EURD: "1/3"
+'230EU': "2/3"
+'140EU': "1/4"
+KWA*RT: "1/4"
+'340EU': "3/4"
+'10EU8': "1/8"
+'30EU8': "3/8"
+'50EU8': "5/8"
 
-HA*F: '1/2'
-TPHA*F: '1/2'
-TH*IRD: '1/3'
+TPEUF/PERS: "5%"
+'5/-P/4': "5.4"
+'0RZ': "{^0rz}"
 
-## Unknown
+'2-S': "2s"
 
-PL*US/2: '+2'
+'3*RD': "3rd"
+'4*9': "4th"
 
-## Time Periods
+'1/TPW-S': "1 tablespoon"
+'3/T-BS': "3 tablespoon"
+'3/T-BS/-S': "3 tablespoons"
+'4/T-BS/-S': "4 tablespoons"
+
+PAO/TKEG: "350 degree"
+'3-6/0/TKEG/-S': "360 degrees"
 
 A*E/50/-S: "'50s"
+A*E/OEUF: "'60"
 A*E/0EU6/-S: "'60s"
-MID/A*E/0EU6/-S: "mid '60"
 A*E/0EU7/-S: "'70s"
-A*E/0EU8/-S: "'80s"
-ERL/AE/0EU8: "early '80"
-A*E/0EU9/-S: "'90s"
 
-## Units
+PHR*US/2: "+2"
+'2/KP*/4': "2 x 4"
+'3/KP*/-6': "3 x 6"
+-8/TPHAF/PWEU/1/1: "8 1/2 x 11"
 
-K-PL: 'km'
-K*PL: '{^km}'
+A/TKPWRAEUPBS: "5 grains"
+-8/PW*EUT: "8-bit"
+'1-8/WHAOEL/*ER': "18-wheeler"
+TWOUPB/-9/TKHRAR/-S: "2009 dollars"
+-8/5/KREPBT/-S: "85 cents"
+'10/PERS/APBLG': "10 percentage"
+'12/TPH/1': "12-in-1"

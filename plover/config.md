@@ -31,18 +31,16 @@
 
 ## English
 
-- `out/en\_fingers.json`
-- `out/en\_briefs.json`
-- `out/en\_punctuation.json`
-- `out/en\_base.json`
-- `out/en\_proper.json`
-- `out/en\_phrases.json`
-- `out/en\_autophrases.json`
+- `out/en\_main.json`
+- `out/en\_symbolic.json`
 - `out/en\_numerical.json`
-- `out/en\_misc.json`
+- `out/en\_autophrases.json`
+- `out/en\_fingers.json`
 
 ## Domain-Specific
 
-- `out/mush.json`
-- `out/markdown.json`
+- `out/en\_computing.json`
+- `out/en\_court.json`
+- `out/en\_mush.json`
+- `out/en\_markdown.json`
 

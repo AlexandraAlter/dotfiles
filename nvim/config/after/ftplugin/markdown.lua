@@ -20,6 +20,25 @@ end
 
 -- }}}
 
+-- {{{ Surround
+
+vim.b.surround_98 = '**\r**' -- b: bold
+vim.b.surround_66 = '__\r__' -- B: bold alternative
+vim.b.surround_105 = '*\r*' -- i: italic
+vim.b.surround_73 = '_\r_' -- I: italic alternative
+vim.b.surround_101 = '***\r***' -- e: bold+italic
+vim.b.surround_69 = '___\r___' -- E: bold+italic alternative
+vim.b.surround_99 = '`\r`' -- c: code
+vim.b.surround_67 = '``\r``' -- C: code alternative
+vim.b.surround_102 = '```\r```' -- f: fenced code block
+vim.b.surround_70 = '~~~\r~~~' -- F: fenced code block alternative
+vim.b.surround_115 = '~~\r~~' -- s: strikethrough
+vim.b.surround_104 = '==\r==' -- h: highlight (uncommon)
+vim.b.surround_117 = '~\r~' -- u: subscript (uncommon)
+vim.b.surround_85 = '^\r^' -- U: superscript (uncommon)
+
+-- }}}
+
 -- {{{ Mappings
 
 vim.cmd [=[

@@ -4,10 +4,11 @@ local data = vim.fn.expand(vim.fn.stdpath('data'))
 local state = vim.fn.expand(vim.fn.stdpath('state'))
 
 -- {{{ general
+vim.opt.encoding = 'utf-8'
 vim.opt.compatible = false
 vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
-vim.opt.spelllang = 'en_us,cjk'
+vim.opt.spelllang = 'en_gb,cjk'
 vim.opt.spellsuggest = 'best,9'
 vim.opt.spellfile = data .. '/site/spell/en.utf-8.add'
 
@@ -24,14 +25,14 @@ vim.g.maplocalleader = ','
 -- }}}
 
 -- {{{ interface
-vim.api.nvim_set_hl(0, 'PMenu', {
-  fg='Cyan', bg='DarkGrey', ctermfg='Cyan', ctermbg='DarkGrey'
-})
+vim.cmd.colorscheme('industry')
 if vim.fn.exists('g:neovide') then
   vim.opt.guifont = 'Fira Code,Fira Code Nerd:h14'
 end
 
 -- -- airline
+vim.g.airline_detect_spell = 0
+
 -- -- characterize
 
 -- }}}
@@ -57,8 +58,8 @@ vim.keymap.set('n', '\\', '<Plug>Sneak_,')
 -- -- easy-align
 vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 
--- -- repeat
 -- -- surround
+-- -- repeat
 -- -- commentary
 -- -- abolish
 -- -- speeddating
@@ -98,16 +99,16 @@ cmp.setup({
 
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping(
-    function(fallback)
-      cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-    end,
-    { 'i', 's' }
+      function(fallback)
+        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+      end,
+      { 'i', 's' }
     ),
     ['<S-Tab>'] = cmp.mapping(
-    function(fallback)
-      cmp_ultisnips_mappings.jump_backwards(fallback)
-    end,
-    { 'i', 's' }
+      function(fallback)
+        cmp_ultisnips_mappings.jump_backwards(fallback)
+      end,
+      { 'i', 's' }
     ),
     ['<C-e>'] = cmp.mapping.close(),
   },
@@ -279,6 +280,14 @@ wk.register({
     b = { '<Cmd>Telescope buffers<CR>', 'Telescope' },
     ['1'] = { '<Cmd>b1<CR>', 'Buffer 1' },
     ['2'] = { '<Cmd>b2<CR>', 'Buffer 2' },
+    ['3'] = { '<Cmd>b3<CR>', 'Buffer 3' },
+    ['4'] = { '<Cmd>b4<CR>', 'Buffer 4' },
+    ['5'] = { '<Cmd>b5<CR>', 'Buffer 5' },
+    ['6'] = { '<Cmd>b6<CR>', 'Buffer 6' },
+    ['7'] = { '<Cmd>b7<CR>', 'Buffer 7' },
+    ['8'] = { '<Cmd>b8<CR>', 'Buffer 8' },
+    ['9'] = { '<Cmd>b9<CR>', 'Buffer 9' },
+    ['0'] = { '<Cmd>b10<CR>', 'Buffer 10' },
     f = { '<Cmd>bfirst<CR>', 'First' },
     l = { '<Cmd>blast<CR>', 'Last' },
     n = { '<Cmd>bnext<CR>', 'Next' },
@@ -303,14 +312,21 @@ wk.register({
     name = '+number',
   },
 
+  r = {
+    name = '+run',
+    m = { '<Cmd>make<CR>', 'Make' },
+  },
+
   g = {
     name = '+git',
     g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
+    f = { '<Cmd>Telescope git_files<CR>', 'Files' },
   },
 
   s = {
     name = '+search',
     s = { '<Cmd>Telescope live_grep<CR>', 'Telescope' },
+    S = { '<Cmd>Telescope grep_string<CR>', 'Telescope' },
     c = { '<Cmd>nohlsearch<CR>', 'Clear' },
   },
 

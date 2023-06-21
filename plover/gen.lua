@@ -21,7 +21,7 @@ Generate Plover dictionaries from Lua, JSON, or YAML.
 
   -h, --help          Print help
   -p, --print         Print the keymap
-  -n, --no-defaults   Do not include default dictionaries
+  -d, --defaults      Generate default dictionaries
   -o, --output        Specify an output folder (defaults to 'out')
 ]]
 
@@ -65,7 +65,7 @@ local defaults = {
   'en_markdown.yaml',
 }
 
-local use_defaults = true
+local use_defaults = false
 local output_folder = nil
 local dicts = {}
 
@@ -80,8 +80,8 @@ while i <= #arg do
   elseif this == '-p' or this == '--print' then
     print(inspect(pl.keys))
     os.exit()
-  elseif this == '-n' or this == '--no-defaults' then
-    use_defaults = false
+  elseif this == '-d' or this == '--defaults' then
+    use_defaults = true
   elseif this == '-o' or this == '--output' then
     output_folder = nextthis
     i = i + 1

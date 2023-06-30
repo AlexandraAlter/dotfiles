@@ -53,8 +53,8 @@ local defaults = {
 
   -- English
   'en_main.yaml',
-  'en_symbolic.lua',
-  'en_numerical.lua',
+  'en_symbolic.yaml',
+  'en_numerical.yaml',
   'en_autophrases.lua',
   'en_fingers.lua',
 

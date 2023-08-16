@@ -97,6 +97,7 @@
 [submodule "nvim/telescope"]
 	path = nvim/pack/lament/start/telescope
 	url = https://github.com/nvim-telescope/telescope.nvim.git
+	branch = 0.1.x
 [submodule "nvim/telescope-fzf-native"]
 	path = nvim/pack/lament/start/telescope-fzf-native
 	url = https://github.com/nvim-telescope/telescope-fzf-native.nvim.git
@@ -127,3 +128,18 @@
 [submodule "plover/di-dictionaries"]
 	path = plover/di
 	url = https://github.com/didoesdigital/steno-dictionaries.git
+[submodule "nvim/aurora"]
+	path = nvim/pack/lament/start/aurora
+	url = https://github.com/ray-x/aurora.git
+[submodule "nvim/leap"]
+	path = nvim/pack/lament/start/leap
+	url = https://github.com/ggandor/leap.nvim.git
+[submodule "nvim/lualine"]
+	path = nvim/pack/lament/start/lualine
+	url = https://github.com/nvim-lualine/lualine.nvim.git
+[submodule "nvim/neorg"]
+	path = nvim/pack/lament/start/neorg
+	url = https://github.com/nvim-neorg/neorg.git
+[submodule "nvim/treesitter"]
+	path = nvim/pack/lament/start/treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git

@@ -4,9 +4,6 @@
 [submodule "awesome/streetturtle-widgets"]
 	path = awesome/streetturtle-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
-[submodule "di-dictionaries"]
-	path = plover/di
-	url = https://github.com/didoesdigital/steno-dictionaries.git
 [submodule "nvim/fugitive"]
 	path = nvim/pack/lament/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -127,3 +124,6 @@
 [submodule "nvim/harpoon"]
 	path = nvim/pack/lament/start/harpoon
 	url = https://github.com/ThePrimeagen/harpoon.git
+[submodule "plover/di-dictionaries"]
+	path = plover/di
+	url = https://github.com/didoesdigital/steno-dictionaries.git

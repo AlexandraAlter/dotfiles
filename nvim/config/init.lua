@@ -1,4 +1,9 @@
--- lua:fileencoding=utf-8:foldmethod=marker
+-- vim:fileencoding=utf-8:foldmethod=marker
+
+-- TODO: evaluate leap and decide whether to revert to sneak
+-- TODO: evaluate harpoon and decide whether it's needed
+-- TODO: fill out which-key with more bindings
+-- TODO: evaluate norg against markdown
 
 local data = vim.fn.expand(vim.fn.stdpath('data'))
 local state = vim.fn.expand(vim.fn.stdpath('state'))
@@ -8,6 +13,7 @@ vim.opt.encoding = 'utf-8'
 vim.opt.compatible = false
 vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
+vim.opt.spell = false
 vim.opt.spelllang = 'en_gb,cjk'
 vim.opt.spellsuggest = 'best,9'
 vim.opt.spellfile = data .. '/site/spell/en.utf-8.add'
@@ -17,23 +23,41 @@ vim.cmd('command! SpellUpdate execute "mkspell!" &spellfile')
 vim.opt.timeoutlen = 500
 
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<BS>', false, false, true)
 
 -- -- sensible
+-- sensible default settings
+
 -- -- obsession
+-- better session storage
+--
 
 -- }}}
 
 -- {{{ interface
-vim.cmd.colorscheme('industry')
 if vim.fn.exists('g:neovide') then
   vim.opt.guifont = 'Fira Code,Fira Code Nerd:h14'
 end
+vim.opt.termguicolors = true
 
--- -- airline
-vim.g.airline_detect_spell = 0
+-- -- aurora
+vim.g.aurora_italic = 1
+vim.g.aurora_transparent = 1
+vim.g.aurora_bold = 1
+vim.g.aurora_darker = 0
+if not pcall(vim.cmd.colorscheme, 'aurora') then
+  vim.cmd.colorscheme('industry')
+end
+
+-- -- lualine
+require('lualine').setup {
+  options = {
+    theme = 'auto',
+  }
+}
 
 -- -- characterize
+-- maps `ga`, adds `:Obsess`
 
 -- }}}
 
@@ -46,36 +70,64 @@ vim.g.markdown_folding = 1
 
 vim.cmd('command! BW :bn|:bd#')
 
--- -- sneak
-vim.keymap.set('n', '\\', '<Plug>Sneak_,')
+-- -- leap
+-- maps `s`, `S`, and `gs`
+-- while seeking, `<Space>` and `<Tab>` select a group
+require('leap').add_default_mappings()
+
+-- -- harpoon (+plenary)
+-- jump between marks/files/terminals
+local harpoon_mark = require('harpoon.mark')
+local harpoon_ui = require('harpoon.ui')
 
 -- -- targets
+-- adds text objects for bracket pairs, quotes, separators, arguments, any block, any quote
+-- capitalised versions alter whitespace rules
+-- versions with `n` or `l` target next/last instance
+-- all rules use `a`, `i`, `A`, `I`, `?n`, `?l`
+
 -- -- wordmotion
+-- alters `w`, `b`, `e`, etc
 
 -- }}}
 
 -- {{{ editing
+
 -- -- easy-align
+-- adds `:EasyAlign`, `:LiveEasyAlign`
+-- in the interactive prompt:
+--   1-9/`*`/`**`/`-` alter options
+--   `<C-F>`/`<C-I>`/`<C-L>`/`<C-R>`/`<C-D>`/`<C-U>`/`<C-G>`/`<C-A>`/`<Left>`/`<Right>`/`<Down>`/`<Enter>` alter alignment
+--   `<C-/>`/`<C-X>` enters regex mode
 vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 
 -- -- surround
--- -- repeat
--- -- commentary
--- -- abolish
--- -- speeddating
--- -- snippets
+-- maps normal `cs`, `ds`, `ys`, and visual `S`
 
--- -- ultisnips
-vim.g.UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
-vim.g.UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
-vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
-vim.g.UltiSnipsListSnippets = '<c-x><c-s>'
-vim.g.UltiSnipsRemoveSelectModeMappings = 0
+-- -- repeat
+-- maps `.`
+
+-- -- commentary
+-- maps `gc`
+
+-- -- abolish
+-- maps `cr`, adds `:Abolish`, `:Subvert`
+
+-- -- speeddating
+-- maps `d<C-X>`, `d<C-A>`
 
 -- }}}
 
 -- {{{ completion
 vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
+
+-- -- ultisnips (+snippets)
+-- adds `:UltiSnipsEdit`, `:UltiSnipsAddFiletypes`
+vim.g.UltiSnipsExpandTrigger = '<Nop>'
+vim.g.UltiSnipsListSnippets = '<Nop>'
+vim.g.UltiSnipsJumpForwardsTrigger = '<Nop>'
+vim.g.UltiSnipsJumpBackwardsTrigger = '<Nop>'
+--vim.g.UltiSnipsRemoveSelectModeMappings = 0
 
 -- -- cmp (+cmp-*)
 local cmp = require('cmp')
@@ -89,11 +141,11 @@ cmp.setup({
   mapping = {
     ['<C-Space>'] = cmp.mapping.complete(),
 
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-F>'] = cmp.mapping.scroll_docs(4),
 
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-N>'] = cmp.mapping.select_next_item(),
+    ['<C-P>'] = cmp.mapping.select_prev_item(),
     ['<Down>'] = cmp.mapping.select_next_item(),
     ['<Up>'] = cmp.mapping.select_prev_item(),
 
@@ -113,28 +165,26 @@ cmp.setup({
     ['<C-e>'] = cmp.mapping.close(),
   },
 
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
-  }, {
     { name = 'buffer', keyword_length = 3 },
-  })
+  },
 })
 
 cmp.setup.cmdline('/', {
   completion = { autocomplete = false },
   sources = {
-    { name = 'buffer', keyword_pattern = [=[[^[:blank:]].*]=] }
-  }
+    { name = 'buffer', keyword_pattern = [=[[^[:blank:]].*]=] },
+  },
 })
 
 cmp.setup.cmdline(':', {
   completion = { autocomplete = false },
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
+  sources = {
+    { name = 'path' },
+    { name = 'cmdline' },
+  },
 })
 
 local cmp_enabled = true
@@ -159,19 +209,53 @@ vim.g.netrw_home = data
 vim.cmd [[command! -bar Reload source $MYVIMRC | echo 'Sourced' $MYVIMRC]]
 vim.cmd [[command! -bar PackUpdate exe 'vert topleft new cd' stdpath('data') . '/site/pack | Git submodule update --remote --merge --recursive .']]
 
--- -- telescope (+telescope-fzf-native +web-devicons)
+-- -- treesitter
+-- adds `:TSUpdate`, `:TSInstall`, `:TSModuleInfo`, and enable/disable commands
+-- after updating, run `:TSUpdate`
+require('nvim-treesitter.configs').setup {
+  ensure_installed = {'c', 'lua', 'vim', 'vimdoc', 'query'},
+  auto_install = false,
+  highlight = {
+    enable = true,
+    -- additional_vim_regex_highlighting = false,
+  }
+}
+
+-- -- telescope (+telescope-fzf-native +plenary +web-devicons)
+-- adds `:Telescope`
+-- after updating, run `make` in `telescope-fzf-native`
 local telescope = require('telescope')
+telescope.setup {
+  defaults = {
+    mappings = {
+      i = {
+        ['<C-h>'] = 'which_key',
+      }
+    }
+  },
+  extensions = {
+    fzf = {}
+  }
+}
 telescope.load_extension('fzf')
 
 -- -- projectionist
+-- adds `:A...`, `:P...`, `:ProjectDo`, and others
+
 -- -- vinegar
--- -- enuch
+-- maps `-`
+-- within netrw, maps `I`, `gh`, `.`, `y.`, `~`
+-- within netrw, vim adds `<C-^>`
+
+-- -- eunuch
+-- adds Linux commands, `:Sudo...`, `:C...`, `:L...`, `:Wall`
 
 -- }}}
 
 -- {{{ integration
 
 -- -- floaterm
+-- adds `:Floaterm...`
 vim.g.floaterm_keymap_toggle = '<F5>'
 vim.g.floaterm_keymap_new    = '<F6>'
 vim.g.floaterm_keymap_prev   = '<F7>'
@@ -180,8 +264,13 @@ vim.g.floaterm_keymap_hide   = '<C-z>'
 vim.g.floaterm_autoclose     = 1
 
 -- -- neomake
+-- adds `:Neomake`
+
 -- -- tbone
+-- adds `:Tmux`, `:T...`
+
 -- -- fugitive
+-- adds `:Git`, `:G...`
 
 -- }}}
 
@@ -192,15 +281,39 @@ vim.opt.shiftwidth = 2
 vim.opt.et = true
 vim.opt.makeprg = 'make'
 
--- -- eunuch
-
 -- -- sleuth
--- -- endwise
--- -- unimpaired
+-- automatically sets various options
 
--- -- ragtag (xml)
--- -- jdaddy (json)
--- -- godot (gdscript)
+-- -- endwise
+-- automatically ends certain constructs
+
+-- -- unimpaired
+-- maps `[...`, `]...`
+-- common ex commands, line manipulation, option toggling, encode/decode
+
+-- -- apathy
+-- sets path-searching options for misc files
+
+-- -- ragtag
+-- xml file mappings
+-- maps `<C-X>...`
+
+-- -- jdaddy
+-- json file mappings
+-- maps `gqaj` (pretty print), `gwaj` (merge from clipboard) and `ij` variants
+-- defines text object `aj`
+
+-- -- godot
+-- gdscript file features
+-- adds `:Godot...`
+
+-- -- neorg
+-- neorg file features
+require('neorg').setup {
+  load = {
+    ["core.defaults"] = {}
+  }
+}
 
 -- -- lspconfig
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -229,7 +342,7 @@ wk.register({
     j = { '<Cmd>FloatermNew julia<CR>', 'Julia' },
     g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
     t = {
-      name = 'Tmux',
+      name = '+tmux',
       a = { '<Cmd>Tattach<CR>', 'Attach' },
       y = { '<Cmd>Tyank<CR>', 'Yank' },
       p = { '<Cmd>Tput<CR>', 'Put' },
@@ -248,14 +361,18 @@ wk.register({
 
   j = {
     name = '+jump',
-    j = { '<Cmd>Telescope marks<CR>', 'Telescope' },
+    j = { '<Cmd>Telescope marks<CR>', 'Marks' },
     d = { '<Cmd>delmarks!<CR>', 'Delete Marks' },
     D = { '<Cmd>delmarks A-Z0-9<CR>', 'Delete All Marks' },
+    h = { harpoon_ui.toggle_quick_menu, 'Harpoon Menu' },
+    H = { harpoon_mark.add_file, 'Harpoon File' },
+    n = { harpoon_ui.nav_next, 'Harpoon Next' },
+    p = { harpoon_ui.nav_prev, 'Harpoon Prev' },
   },
 
   f = {
     name = '+file',
-    f = { '<Cmd>Telescope find_files<CR>', 'Telescope' },
+    f = { '<Cmd>Telescope find_files<CR>', 'Files' },
     r = { '<Cmd>Telescope oldfiles<CR>', 'Recent' },
     s = { '<Cmd>write<CR>', 'Save' },
     S = { '<Cmd>wall<CR>', 'Save All' },
@@ -277,7 +394,7 @@ wk.register({
 
   b = {
     name = '+buffer',
-    b = { '<Cmd>Telescope buffers<CR>', 'Telescope' },
+    b = { '<Cmd>Telescope buffers<CR>', 'Buffers' },
     ['1'] = { '<Cmd>b1<CR>', 'Buffer 1' },
     ['2'] = { '<Cmd>b2<CR>', 'Buffer 2' },
     ['3'] = { '<Cmd>b3<CR>', 'Buffer 3' },
@@ -299,6 +416,7 @@ wk.register({
   t = {
     name = '+toggle',
     t = { '<Cmd>FloatermToggle<CR>', 'Term' },
+    t = { '<Cmd>TSBufToggle<CR>', 'Treesitter' },
     c = { '<Cmd>lua CmpToggle()<CR>', 'Completion' },
     s = { '<Cmd>set spell!<CR>', 'Spell' },
     w = { '<Cmd>set wrap!<CR>', 'Wrap' },
@@ -325,14 +443,14 @@ wk.register({
 
   s = {
     name = '+search',
-    s = { '<Cmd>Telescope live_grep<CR>', 'Telescope' },
-    S = { '<Cmd>Telescope grep_string<CR>', 'Telescope' },
+    s = { '<Cmd>Telescope live_grep<CR>', 'Grep' },
+    S = { '<Cmd>Telescope grep_string<CR>', 'Grep Under Cursor' },
     c = { '<Cmd>nohlsearch<CR>', 'Clear' },
   },
 
   h = {
     name = '+help',
-    h = { '<Cmd>Telescope help_tags<CR>', 'Telescope' },
+    h = { '<Cmd>Telescope help_tags<CR>', 'Tags' },
   },
 
   w = { '<Cmd>WhichKey <C-w><CR>', '+window' },
@@ -411,10 +529,7 @@ wk.register({
     G = 'Undo zG',
   },
 }, { prefix = 'z' })
+
 -- }}}
 
--- {{{ discarded
--- emmet
--- syntastic
--- }}}
 

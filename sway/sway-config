@@ -1,9 +1,9 @@
 ### Variables
 set $mod Mod4
-set $left h
-set $down j
 set $up k
+set $down j
 set $right l
+set $left h
 set $term kitty
 set $exec_menu bemenu-run | xargs swaymsg exec --
 set $app_menu j4-dmenu-desktop --dmenu='bemenu -i' --term='$kitty'
@@ -51,6 +51,7 @@ input type:touchpad {
 	tap enabled
 	natural_scroll disabled
 }
+mouse_warping container
 
 ### Key bindings
 # Basics:
@@ -69,49 +70,53 @@ bindsym $mod+Ctrl+l exec $lock
 # Navigation:
 bindsym $mod+Comma focus parent
 bindsym $mod+Period focus child
+bindsym $mod+Semicolon focus output right
 
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
+bindsym $mod+$up    focus up
+bindsym $mod+$down  focus down
 bindsym $mod+$right focus right
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+$left  focus left
+bindsym $mod+Up     focus up
+bindsym $mod+Down   focus down
+bindsym $mod+Right  focus right
+bindsym $mod+Left   focus left
 
 bindsym $mod+Grave workspace number 0:~
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 10
+bindsym $mod+1     workspace number 1
+bindsym $mod+2     workspace number 2
+bindsym $mod+3     workspace number 3
+bindsym $mod+4     workspace number 4
+bindsym $mod+5     workspace number 5
+bindsym $mod+6     workspace number 6
+bindsym $mod+7     workspace number 7
+bindsym $mod+8     workspace number 8
+bindsym $mod+9     workspace number 9
+bindsym $mod+0     workspace number 10
 
 # Relocation:
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
 bindsym $mod+Shift+$right move right
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Left   move left
+bindsym $mod+Shift+Down   move down
+bindsym $mod+Shift+Up     move up
+bindsym $mod+Shift+Right  move right
+
+bindsym $mod+Shift+Semicolon move to output right
+bindsym $mod+Ctrl+Semicolon  move workspace to output right
 
 bindsym $mod+Shift+Grave move container to workspace number 0:~
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
-bindsym $mod+Shift+4 move container to workspace number 4
-bindsym $mod+Shift+5 move container to workspace number 5
-bindsym $mod+Shift+6 move container to workspace number 6
-bindsym $mod+Shift+7 move container to workspace number 7
-bindsym $mod+Shift+8 move container to workspace number 8
-bindsym $mod+Shift+9 move container to workspace number 9
-bindsym $mod+Shift+0 move container to workspace number 10
+bindsym $mod+Shift+1     move container to workspace number 1
+bindsym $mod+Shift+2     move container to workspace number 2
+bindsym $mod+Shift+3     move container to workspace number 3
+bindsym $mod+Shift+4     move container to workspace number 4
+bindsym $mod+Shift+5     move container to workspace number 5
+bindsym $mod+Shift+6     move container to workspace number 6
+bindsym $mod+Shift+7     move container to workspace number 7
+bindsym $mod+Shift+8     move container to workspace number 8
+bindsym $mod+Shift+9     move container to workspace number 9
+bindsym $mod+Shift+0     move container to workspace number 10
 
 # Layouts:
 bindsym $mod+a fullscreen
@@ -127,7 +132,7 @@ bindsym $mod+Control+Apostrophe sticky toggle
 
 # Scratchpad:
 bindsym $mod+p scratchpad show
-bindsym $mod+Shift+p move scratchpad
+bindsym $mod+Shift+p move to scratchpad
 
 # Opacity:
 bindsym $mod+y opacity minus 0.1
@@ -136,75 +141,115 @@ bindsym $mod+Ctrl+y opacity set 1
 
 # Resizing containers:
 mode "resize" {
-	bindsym $up resize grow height $resize_by
-	bindsym $down resize shrink height $resize_by
-	bindsym $left resize shrink width $resize_by
-	bindsym $right resize grow width $resize_by
+	bindsym $up    resize grow   height $resize_by
+	bindsym $down  resize shrink height $resize_by
+	bindsym $right resize grow   width  $resize_by
+	bindsym $left  resize shrink width  $resize_by
+	bindsym Up     resize grow   height $resize_by
+	bindsym Down   resize shrink height $resize_by
+	bindsym Right  resize grow   width  $resize_by
+	bindsym Left   resize shrink width  $resize_by
 
-	bindsym Shift+$up resize grow height $resize_by_fast
-	bindsym Shift+$down resize shrink height $resize_by_fast
-	bindsym Shift+$left resize shrink width $resize_by_fast
-	bindsym Shift+$right resize grow width $resize_by_fast
-
-	bindsym Up resize grow height $resize_by
-	bindsym Down resize shrink height $resize_by
-	bindsym Left resize shrink width $resize_by
-	bindsym Right resize grow width $resize_by
-
-	bindsym Shift+Up resize grow height $resize_by_fast
-	bindsym Shift+Down resize shrink height $resize_by_fast
-	bindsym Shift+Left resize shrink width $resize_by_fast
-	bindsym Shift+Right resize grow width $resize_by_fast
+	bindsym Shift+$up    resize grow   height $resize_by_fast
+	bindsym Shift+$down  resize shrink height $resize_by_fast
+	bindsym Shift+$right resize grow   width  $resize_by_fast
+	bindsym Shift+$left  resize shrink width  $resize_by_fast
+	bindsym Shift+Up     resize grow   height $resize_by_fast
+	bindsym Shift+Down   resize shrink height $resize_by_fast
+	bindsym Shift+Right  resize grow   width  $resize_by_fast
+	bindsym Shift+Left   resize shrink width  $resize_by_fast
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 
 	bindsym $mod+m mode "move"
+	bindsym $mod+s mode "mouse"
 }
 bindsym $mod+r mode "resize"
 
 # Moving containers:
 mode "move" {
-	bindsym $up move up $move_by
-	bindsym $down move down $move_by
-	bindsym $left move left $move_by
+	bindsym $up    move up    $move_by
+	bindsym $down  move down  $move_by
 	bindsym $right move right $move_by
+	bindsym $left  move left  $move_by
+	bindsym Up     move up    $move_by
+	bindsym Down   move down  $move_by
+	bindsym Right  move right $move_by
+	bindsym Left   move left  $move_by
 
-	bindsym Shift+$up move up $move_by_fast
-	bindsym Shift+$down move down $move_by_fast
-	bindsym Shift+$left move left $move_by_fast
+	bindsym Shift+$up    move up    $move_by_fast
+	bindsym Shift+$down  move down  $move_by_fast
 	bindsym Shift+$right move right $move_by_fast
-
-	bindsym Up move up $move_by
-	bindsym Down move down $move_by
-	bindsym Left move left $move_by
-	bindsym Right move right $move_by
-
-	bindsym Shift+Up move up $move_by_fast
-	bindsym Shift+Down move down $move_by_fast
-	bindsym Shift+Left move left $move_by_fast
-	bindsym Shift+Right move right $move_by_fast
+	bindsym Shift+$left  move left  $move_by_fast
+	bindsym Shift+Up     move up    $move_by_fast
+	bindsym Shift+Down   move down  $move_by_fast
+	bindsym Shift+Right  move right $move_by_fast
+	bindsym Shift+Left   move left  $move_by_fast
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 
 	bindsym $mod+r mode "resize"
+	bindsym $mod+s mode "mouse"
 }
 bindsym $mod+m mode "move"
+
+# Mouse:
+mode "mouse" {
+	bindsym $up    seat * cursor move 0 -$move_by
+	bindsym $down  seat * cursor move 0 $move_by
+	bindsym $right seat * cursor move $move_by 0
+	bindsym $left  seat * cursor move -$move_by 0
+	bindsym Up     seat * cursor move 0 -$move_by
+	bindsym Down   seat * cursor move 0 $move_by
+	bindsym Right  seat * cursor move $move_by 0
+	bindsym Left   seat * cursor move -$move_by 0
+
+	bindsym Shift+$up    seat * cursor move 0 -$move_by_fast
+	bindsym Shift+$down  seat * cursor move 0 $move_by_fast
+	bindsym Shift+$right seat * cursor move $move_by_fast 0
+	bindsym Shift+$left  seat * cursor move -$move_by_fast 0
+	bindsym Shift+Up     seat * cursor move 0 -$move_by_fast
+	bindsym Shift+Down   seat * cursor move 0 $move_by_fast
+	bindsym Shift+Right  seat * cursor move $move_by_fast 0
+	bindsym Shift+Left   seat * cursor move -$move_by_fast 0
+
+	bindsym --no-repeat Space           seat * cursor press   button1
+	bindsym --no-repeat --release Space seat * cursor release button1
+	bindsym --no-repeat a               seat * cursor press   button1
+	bindsym --no-repeat --release a     seat * cursor release button1
+	bindsym --no-repeat o               seat * cursor press   button2
+	bindsym --no-repeat --release o     seat * cursor release button2
+	bindsym --no-repeat e               seat * cursor press   button3
+	bindsym --no-repeat --release e     seat * cursor release button3
+
+	bindsym d       seat * hide_cursor 2000
+	bindsym Shift+d seat * hide_cursor 0
+	bindsym t       seat * hide_cursor when-typing enable
+	bindsym Shift+t seat * hide_cursor when-typing disable
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+
+	bindsym $mod+r mode "resize"
+	bindsym $mod+m mode "move"
+}
+bindsym $mod+s mode "mouse"
 
 # Volume:
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioMute        exec pactl set-sink-mute   @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Player:
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioStop exec playerctl stop
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-bindsym XF86AudioRewind exec playerctl position 5-
+bindsym XF86AudioPlay    exec playerctl play-pause
+bindsym XF86AudioPause   exec playerctl pause
+bindsym XF86AudioStop    exec playerctl stop
+bindsym XF86AudioNext    exec playerctl next
+bindsym XF86AudioPrev    exec playerctl previous
+bindsym XF86AudioRewind  exec playerctl position 5-
 bindsym XF86AudioForward exec playerctl position 5+
 
 # Backlight:
@@ -212,18 +257,18 @@ bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
 # Screenshot:
-bindsym print exec $grimshot copy area
-bindsym Shift+print exec $grimshot copy window
-bindsym Control+print exec $grimshot copy active
-bindsym Shift+Control+print exec $grimshot copy output
-bindsym Alt+print exec $grimshot save area
-bindsym Alt+Shift+print exec $grimshot save window
-bindsym Alt+Control+print exec $grimshot save active
+bindsym print                   exec $grimshot copy area
+bindsym Shift+print             exec $grimshot copy window
+bindsym Control+print           exec $grimshot copy active
+bindsym Shift+Control+print     exec $grimshot copy output
+bindsym Alt+print               exec $grimshot save area
+bindsym Alt+Shift+print         exec $grimshot save window
+bindsym Alt+Control+print       exec $grimshot save active
 bindsym Alt+Shift+Control+print exec $grimshot save output
 
 # Status Bar:
 bar {
-  swaybar_command waybar
+	swaybar_command waybar
 }
 
 # Startup Programs:

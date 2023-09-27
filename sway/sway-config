@@ -51,7 +51,7 @@ input type:touchpad {
 	tap enabled
 	natural_scroll disabled
 }
-mouse_warping container
+#mouse_warping container
 
 ### Key bindings
 # Basics:

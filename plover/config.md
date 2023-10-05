@@ -37,6 +37,10 @@
 - `out/en\_autophrases.json`
 - `out/en\_fingers.json`
 
+## Toki Pona
+
+- `out/toki\_pona.json`
+
 ## Domain-Specific
 
 - `out/en\_computing.json`

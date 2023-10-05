@@ -30,7 +30,6 @@ vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<BS>', false, false, true
 
 -- -- obsession
 -- better session storage
---
 
 -- }}}
 
@@ -71,9 +70,15 @@ vim.g.markdown_folding = 1
 vim.cmd('command! BW :bn|:bd#')
 
 -- -- leap
--- maps `s`, `S`, and `gs`
+-- maps normal `s`, `S`, `gs`
+-- maps visual/operators `s`, `S`, `x`, `X`
 -- while seeking, `<Space>` and `<Tab>` select a group
-require('leap').add_default_mappings()
+--require('leap').add_default_mappings()
+--vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward-to)')
+--vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward-to)')
+vim.keymap.set({'x', 'o'},      'x',  '<Plug>(leap-forward-till)')
+vim.keymap.set({'x', 'o'},      'X',  '<Plug>(leap-backward-till)')
+--vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
 
 -- -- harpoon (+plenary)
 -- jump between marks/files/terminals
@@ -123,10 +128,10 @@ vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
 
 -- -- ultisnips (+snippets)
 -- adds `:UltiSnipsEdit`, `:UltiSnipsAddFiletypes`
-vim.g.UltiSnipsExpandTrigger = '<Nop>'
-vim.g.UltiSnipsListSnippets = '<Nop>'
-vim.g.UltiSnipsJumpForwardsTrigger = '<Nop>'
-vim.g.UltiSnipsJumpBackwardsTrigger = '<Nop>'
+--vim.g.UltiSnipsExpandTrigger = '<Tab>'
+--vim.g.UltiSnipsListSnippets = '<C-Tab>'
+--vim.g.UltiSnipsJumpForwardsTrigger = '<C-j>'
+--vim.g.UltiSnipsJumpBackwardsTrigger = '<C-k>'
 --vim.g.UltiSnipsRemoveSelectModeMappings = 0
 
 -- -- cmp (+cmp-*)
@@ -162,7 +167,7 @@ cmp.setup({
       end,
       { 'i', 's' }
     ),
-    ['<C-e>'] = cmp.mapping.close(),
+    ['<C-E>'] = cmp.mapping.close(),
   },
 
   sources = {
@@ -225,6 +230,7 @@ require('nvim-treesitter.configs').setup {
 -- adds `:Telescope`
 -- after updating, run `make` in `telescope-fzf-native`
 local telescope = require('telescope')
+local telescope_builtins = require('telescope.builtin')
 telescope.setup {
   defaults = {
     mappings = {
@@ -326,143 +332,203 @@ local lspconfig = require('lspconfig')
 local wk = require('which-key')
 
 wk.setup({
-  plugins = {
-    spelling = {
-      enabled = true,
-    }
-  }
+  presets = {
+    windows = false, -- we bind these ourselves
+  },
 })
 
+-- <leader>f
 wk.register({
-  a = {
-    name = '+app',
-    s = { '<Cmd>FloatermNew<CR>', 'Shell' },
-    r = { '<Cmd>FloatermNew ranger<CR>', 'Ranger' },
-    p = { '<Cmd>FloatermNew python<CR>', 'Python' },
-    j = { '<Cmd>FloatermNew julia<CR>', 'Julia' },
-    g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
-    t = {
-      name = '+tmux',
-      a = { '<Cmd>Tattach<CR>', 'Attach' },
-      y = { '<Cmd>Tyank<CR>', 'Yank' },
-      p = { '<Cmd>Tput<CR>', 'Put' },
-      w = { '<Cmd>Twrite<CR>', 'Write' },
-    },
-    T = { '<Cmd>call feedKeys(\':Tmux \')<CR>', 'Tmux' },
+  name = '+file',
+  f = { telescope_builtins.find_files, 'Files' },
+  r = { telescope_builtins.oldfiles, 'Recent' },
+  s = { '<Cmd>write<CR>', 'Save' },
+  S = { '<Cmd>wall<CR>', 'Save All' },
+  n = { '<Cmd>new<CR>', 'New' },
+  R = { '<Cmd>call feedkeys(\':Rename \')<CR>', 'Rename' },
+  M = { '<Cmd>call feedkeys(\':Move \')<CR>', 'Move' },
+  C = { '<Cmd>call feedkeys(\':Chmod \')<CR>', 'Chmod' },
+  D = { '<Cmd>call feedkeys(\':Mkdir \')<CR>', 'Mkdir' },
+  F = {
+    name = '+sudo',
+    e = { '<Cmd>SudoEdit<CR>', 'Edit' },
+    s = { '<Cmd>SUdoWrite<CR>', 'Save' },
   },
+}, { prefix = '<leader>f' })
 
-  q = {
-    name = '+quit',
-    q = { '<Cmd>quitall<CR>', 'Quit' },
-    Q = { '<Cmd>quit<CR>', 'Quit This' },
-    w = { '<Cmd>wqall<CR>', 'Write and Quit' },
-    W = { '<Cmd>wq<CR>', 'Write and Quit This' },
-  },
+-- <leader>b
+wk.register({
+  name = '+buffer',
+  b = { telescope_builtins.buffers, 'Buffers' },
+  ['1'] = { '<Cmd>b1<CR>', 'Buffer 1' },
+  ['2'] = { '<Cmd>b2<CR>', 'Buffer 2' },
+  ['3'] = { '<Cmd>b3<CR>', 'Buffer 3' },
+  ['4'] = { '<Cmd>b4<CR>', 'Buffer 4' },
+  ['5'] = { '<Cmd>b5<CR>', 'Buffer 5' },
+  ['6'] = { '<Cmd>b6<CR>', 'Buffer 6' },
+  ['7'] = { '<Cmd>b7<CR>', 'Buffer 7' },
+  ['8'] = { '<Cmd>b8<CR>', 'Buffer 8' },
+  ['9'] = { '<Cmd>b9<CR>', 'Buffer 9' },
+  ['0'] = { '<Cmd>b10<CR>', 'Buffer 10' },
+  f = { '<Cmd>bfirst<CR>', 'First' },
+  l = { '<Cmd>blast<CR>', 'Last' },
+  n = { '<Cmd>bnext<CR>', 'Next' },
+  p = { '<Cmd>bprevious<CR>', 'Previous' },
+  d = { '<Cmd>bd<CR>', 'Delete' },
+  D = { '<Cmd>BW<CR>', 'Delete and Next' },
+}, { prefix = '<leader>b' })
 
-  j = {
-    name = '+jump',
-    j = { '<Cmd>Telescope marks<CR>', 'Marks' },
-    d = { '<Cmd>delmarks!<CR>', 'Delete Marks' },
-    D = { '<Cmd>delmarks A-Z0-9<CR>', 'Delete All Marks' },
-    h = { harpoon_ui.toggle_quick_menu, 'Harpoon Menu' },
-    H = { harpoon_mark.add_file, 'Harpoon File' },
-    n = { harpoon_ui.nav_next, 'Harpoon Next' },
-    p = { harpoon_ui.nav_prev, 'Harpoon Prev' },
-  },
+-- <leader>x
+wk.register({
+  name = '+text',
+  r = { telescope_builtins.registers, 'Registers' },
+  C = { '<Plug>(abolish-coerce-word)', 'Coerce Word' },
+  s = { telescope_builtins.spell_suggest, 'Spellcheck' },
+}, { prefix = '<leader>x' })
+wk.register({
+  name = '+text',
+  S = { '<Cmd>sort<CR>', 'Sort' },
+  c = { '<Plug>(abolish-coerce)', 'Coerce' },
+}, { prefix = '<leader>x', mode = {'n', 'v'} })
 
-  f = {
-    name = '+file',
-    f = { '<Cmd>Telescope find_files<CR>', 'Files' },
-    r = { '<Cmd>Telescope oldfiles<CR>', 'Recent' },
-    s = { '<Cmd>write<CR>', 'Save' },
-    S = { '<Cmd>wall<CR>', 'Save All' },
-    R = { '<Cmd>call feedkeys(\':Rename \')<CR>', 'Rename' },
-    M = { '<Cmd>call feedkeys(\':Move \')<CR>', 'Move' },
-    C = { '<Cmd>call feedkeys(\':Chmod \')<CR>', 'Chmod' },
-    D = { '<Cmd>call feedkeys(\':Mkdir \')<CR>', 'Mkdir' },
-    c = {
-      name = '+config',
-      e = { '<Cmd>edit $MYVIMRC<CR>', 'Edit' },
-      r = { '<Cmd>Reload<CR>', 'Reload' },
-    },
-    F = {
-      name = '+sudo',
-      e = { '<Cmd>SudoEdit<CR>', 'Edit' },
-      s = { '<Cmd>SUdoWrite<CR>', 'Save' },
-    },
-  },
+-- <leader>n
+wk.register({
+  name = '+number',
+}, { prefix = '<leader>n' })
 
-  b = {
-    name = '+buffer',
-    b = { '<Cmd>Telescope buffers<CR>', 'Buffers' },
-    ['1'] = { '<Cmd>b1<CR>', 'Buffer 1' },
-    ['2'] = { '<Cmd>b2<CR>', 'Buffer 2' },
-    ['3'] = { '<Cmd>b3<CR>', 'Buffer 3' },
-    ['4'] = { '<Cmd>b4<CR>', 'Buffer 4' },
-    ['5'] = { '<Cmd>b5<CR>', 'Buffer 5' },
-    ['6'] = { '<Cmd>b6<CR>', 'Buffer 6' },
-    ['7'] = { '<Cmd>b7<CR>', 'Buffer 7' },
-    ['8'] = { '<Cmd>b8<CR>', 'Buffer 8' },
-    ['9'] = { '<Cmd>b9<CR>', 'Buffer 9' },
-    ['0'] = { '<Cmd>b10<CR>', 'Buffer 10' },
-    f = { '<Cmd>bfirst<CR>', 'First' },
-    l = { '<Cmd>blast<CR>', 'Last' },
-    n = { '<Cmd>bnext<CR>', 'Next' },
-    p = { '<Cmd>bprevious<CR>', 'Previous' },
-    d = { '<Cmd>bd<CR>', 'Delete' },
-    D = { '<Cmd>BW<CR>', 'Delete and Next' },
-  },
+-- <leader>s
+wk.register({
+  name = '+search',
+  s = { telescope_builtins.live_grep, 'Grep' },
+  S = { telescope_builtins.grep_string, 'Grep Under Cursor' },
+  h = { telescope_builtins.search_history, 'History' },
+  f = { telescope_builtins.current_buffer_fuzzy_find, 'Search In File' },
+  c = { '<Cmd>nohlsearch<CR>', 'Clear' },
+}, { prefix = '<leader>s' })
 
+-- <leader>j
+wk.register({
+  name = '+jump',
+  j = { telescope_builtins.marks, 'Marks' },
+  l = { telescope_builtins.jumplist, 'Jump List' },
+  t = { telescope_builtins.tags, 'Tags' },
+  T = { telescope_builtins.current_buffer_tags, 'Tags In File' },
+  r = { telescope_builtins.treesitter, 'Treesitter Symbols' },
+  d = { '<Cmd>delmarks!<CR>', 'Delete Marks' },
+  D = { '<Cmd>delmarks A-Z0-9<CR>', 'Delete All Marks' },
+  h = { harpoon_ui.toggle_quick_menu, 'Harpoon Menu' },
+  H = { harpoon_mark.add_file, 'Harpoon File' },
+  n = { harpoon_ui.nav_next, 'Harpoon Next' },
+  p = { harpoon_ui.nav_prev, 'Harpoon Prev' },
+}, { prefix = '<leader>j', mode = {'n', 'v'} })
+
+-- <leader>r
+wk.register({
+  name = '+run',
+  m = { '<Cmd>make<CR>', 'Make' },
+  n = { '<Cmd>Neomake!<CR>', 'Neomake' },
+  N = { '<Cmd>Neomake<CR>', 'Neomake File' },
+  c = { telescope_builtins.commands, 'Commands' },
+  C = { telescope_builtins.command_history, 'Command History' },
+  t = { telescope_builtins.resume, 'Resume Telescope' },
+  T = { telescope_builtins.pickers, 'Telescope' },
+}, { prefix = '<leader>r', mode = {'n', 'v'} })
+
+-- <leader>a
+wk.register({
+  name = '+app',
+  a = { '<Cmd>call feedKeys(\':FloatermNew \')<CR>', 'Terminal' },
+  s = { '<Cmd>FloatermNew<CR>', 'Shell' },
+  r = { '<Cmd>FloatermNew ranger<CR>', 'Ranger' },
+  p = { '<Cmd>FloatermNew python<CR>', 'Python' },
+  j = { '<Cmd>FloatermNew julia<CR>', 'Julia' },
+  g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
+  T = { '<Cmd>call feedKeys(\':Tmux \')<CR>', 'Tmux' },
   t = {
-    name = '+toggle',
-    t = { '<Cmd>FloatermToggle<CR>', 'Term' },
-    t = { '<Cmd>TSBufToggle<CR>', 'Treesitter' },
-    c = { '<Cmd>lua CmpToggle()<CR>', 'Completion' },
-    s = { '<Cmd>set spell!<CR>', 'Spell' },
-    w = { '<Cmd>set wrap!<CR>', 'Wrap' },
+    name = '+tmux',
+    a = { '<Cmd>Tattach<CR>', 'Attach' },
+    y = { '<Cmd>Tyank<CR>', 'Yank' },
+    p = { '<Cmd>Tput<CR>', 'Put' },
+    w = { '<Cmd>Twrite<CR>', 'Write' },
   },
+}, { prefix = '<leader>a' })
 
-  x = {
-    name = '+text',
-  },
-
-  n = {
-    name = '+number',
-  },
-
-  r = {
-    name = '+run',
-    m = { '<Cmd>make<CR>', 'Make' },
-  },
-
-  g = {
-    name = '+git',
-    g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
-    f = { '<Cmd>Telescope git_files<CR>', 'Files' },
-  },
-
-  s = {
-    name = '+search',
-    s = { '<Cmd>Telescope live_grep<CR>', 'Grep' },
-    S = { '<Cmd>Telescope grep_string<CR>', 'Grep Under Cursor' },
-    c = { '<Cmd>nohlsearch<CR>', 'Clear' },
-  },
-
-  h = {
-    name = '+help',
-    h = { '<Cmd>Telescope help_tags<CR>', 'Tags' },
-  },
-
-  w = { '<Cmd>WhichKey <C-w><CR>', '+window' },
-}, { prefix = '<leader>' })
-
+-- <leader>l
 wk.register({
-  ['='] = { 'm`gg=G``', 'reformat' },
-}, { prefix = '<localleader>' })
+  name = '+lsp',
+  r = { telescope_builtins.lsp_references, 'References' },
+  c = { telescope_builtins.lsp_incoming_calls, 'Incoming Calls' },
+  C = { telescope_builtins.lsp_outgoing_calls, 'Outgoing Calls' },
+  s = { telescope_builtins.lsp_document_symbols, 'Document Symbols' },
+  w = { telescope_builtins.lsp_workspace_symbols, 'Workspace Symbols' },
+  W = { telescope_builtins.lsp_dynamic_workspace_symbols, 'Dynamic Workspace Symbols' },
+  g = { telescope_builtins.diagnostics, 'Diagnostics' },
+  i = { telescope_builtins.lsp_implementations, 'Implementations' },
+  d = { telescope_builtins.lsp_definitions, 'Definitions' },
+  t = { telescope_builtins.lsp_type_definitions, 'Type Definitions' },
+}, { prefix = '<leader>l' })
 
+-- <leader>g
 wk.register({
-  name = 'window',
+  name = '+git',
+  g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
+  f = { telescope_builtins.git_files, 'Files' },
+  c = { telescope_builtins.git_commits, 'Commits' },
+  C = { telescope_builtins.git_bcommits, 'Buffer Commits' },
+  b = { telescope_builtins.git_branches, 'Branches' },
+  s = { telescope_builtins.git_status, 'Status' },
+  S = { telescope_builtins.git_stash, 'Stash' },
+}, { prefix = '<leader>g' })
 
+-- <leader>d
+wk.register({
+  name = '+debug',
+  q = { telescope_builtins.quickfix, 'Quickfix' },
+  Q = { telescope_builtins.quickfixhistory, 'Quickfix History' },
+  l = { telescope_builtins.loclist, 'Location List' },
+}, { prefix = '<leader>d' })
+
+-- <leader>t
+wk.register({
+  name = '+toggle',
+  t = { '<Cmd>FloatermToggle<CR>', 'Term' },
+  t = { '<Cmd>TSBufToggle<CR>', 'Treesitter' },
+  c = { CmpToggle, 'Completion' },
+  s = { '<Cmd>set spell!<CR>', 'Spell' },
+  w = { '<Cmd>set wrap!<CR>', 'Wrap' },
+}, { prefix = '<leader>t' })
+
+-- <leader>c
+wk.register({
+  name = '+config',
+  e = { '<Cmd>edit $MYVIMRC<CR>', 'Edit' },
+  r = { '<Cmd>Reload<CR>', 'Reload' },
+  o = { telescope_builtins.vim_options, 'Set Option' },
+  a = { telescope_builtins.autocommands, 'Autocommands' },
+}, { prefix = '<leader>c' })
+
+-- <leader>h
+wk.register({
+  name = '+help',
+  h = { telescope_builtins.help_tags, 'Tags' },
+  m = { telescope_builtins.man_pages, 'Man Pages' },
+  k = { telescope_builtins.keymaps, 'Keymaps' },
+  f = { telescope_builtins.filetypes, 'Filetypes' },
+  H = { telescope_builtins.highlights, 'Highlights' },
+}, { prefix = '<leader>h' })
+
+-- <leader>q
+wk.register({
+  name = '+quit',
+  q = { '<Cmd>quitall<CR>', 'Quit' },
+  Q = { '<Cmd>quit<CR>', 'Quit This' },
+  w = { '<Cmd>wqall<CR>', 'Write and Quit' },
+  W = { '<Cmd>wq<CR>', 'Write and Quit This' },
+}, { prefix = '<leader>q' })
+
+-- <leader>w CTRL-w
+local wk_window_group = {
+  name = '+window',
   h = 'Go to the left window',
   l = 'Go to the right window',
   k = 'Go to the up window',
@@ -472,7 +538,6 @@ wk.register({
   w = 'Next window',
   p = 'Previous window',
   W = 'Previous window',
-
   ['-'] = 'Decrease height',
   ['+'] = 'Increase height',
   ['<lt>'] = 'Decrease width',
@@ -480,7 +545,6 @@ wk.register({
   ['='] = 'Equalize windows',
   ['_'] = 'Set height',
   ['|'] = 'Set width',
-
   H = 'Move window left',
   L = 'Move window right',
   K = 'Move window up',
@@ -489,7 +553,6 @@ wk.register({
   r = 'Rotate windows downwards',
   R = 'Rotate windows upwards',
   x = 'Exchange windows',
-
   n = 'New window',
   s = 'Split window',
   v = 'Split window vertically',
@@ -500,11 +563,9 @@ wk.register({
   [']'] = 'Jump to tag in a window',
   ['}'] = 'Jump to tag with a preview',
   ['^'] = 'Edit alternate file in a window',
-
   o = 'Keep only this window',
   c = 'Close window',
   q = 'Quit window',
-
   g = {
     name = 'g',
     ['<C-]>'] = ':tjump in a window',
@@ -516,19 +577,26 @@ wk.register({
     T = 'Previous tab',
     ['<Tab>'] = 'Last tab',
   },
-}, { prefix = '<C-w>' })
-
+}
+wk.register(wk_window_group, { prefix = '<C-w>', mode = {'n', 'v'} })
+wk.register(wk_window_group, { prefix = '<leader>w', mode = {'n', 'v'} })
 wk.register({
-  name = 'z',
+  w = { '<C-W>', '+window' },
+}, { prefix = '<leader>', mode = {'n', 'v'} })
 
-  u = {
-    name = 'Undo',
-    w = 'Undo zw',
-    g = 'Undo zg',
-    W = 'Undo zW',
-    G = 'Undo zG',
-  },
-}, { prefix = 'z' })
+-- <localleader>
+wk.register({
+  ['='] = { 'm`gg=G``', 'reformat' },
+}, { prefix = '<localleader>' })
+
+-- zu
+wk.register({
+  name = 'Undo',
+  w = 'Undo zw',
+  g = 'Undo zg',
+  W = 'Undo zW',
+  G = 'Undo zG',
+}, { prefix = 'zu' })
 
 -- }}}
 

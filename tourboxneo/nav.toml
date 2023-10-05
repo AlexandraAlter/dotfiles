@@ -1,0 +1,77 @@
+name = "Navigation"
+
+[layouts]
+
+[layouts.main]
+
+[layouts.main.prime]
+side = "esc"
+top = "tab"
+tall = "space"
+short = "enter"
+
+side_x2 = "none"
+top_x2 = "none"
+tall_x2 = "none"
+short_x2 = "none"
+
+side_top = "none"
+side_tall = "none"
+side_short = "none"
+top_tall = "none"
+top_short = "none"
+tall_short = "none"
+
+[layouts.main.kit]
+tour = "none"
+
+up = "none"
+down = "none"
+left = "none"
+right = "none"
+
+top_up = "none"
+top_down = "none"
+top_left = "none"
+top_right = "none"
+side_up = "none"
+side_down = "none"
+side_left = "none"
+side_right = "none"
+
+c1 = "none"
+c2 = "none"
+
+tall_c1 = "none"
+tall_c2 = "none"
+short_c1 = "none"
+short_c2 = "none"
+
+[layouts.main.knob]
+press = "none"
+turn = "wheel"
+
+tall_turn = "none"
+short_turn = "none"
+top_turn = "none"
+side_turn = "none"
+
+[layouts.main.scroll]
+press = "none"
+turn = "wheel"
+
+tall_turn = "none"
+short_turn = "none"
+top_turn = "none"
+side_turn = "none"
+
+[layouts.main.dial]
+press = "none"
+turn = "none"
+
+[shortcuts]
+
+[macros]
+
+[menus]
+

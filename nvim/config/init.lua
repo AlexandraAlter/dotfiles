@@ -82,8 +82,9 @@ vim.keymap.set({'x', 'o'},      'X',  '<Plug>(leap-backward-till)')
 
 -- -- harpoon (+plenary)
 -- jump between marks/files/terminals
-local harpoon_mark = require('harpoon.mark')
-local harpoon_ui = require('harpoon.ui')
+-- currently broken by changes to events
+--local harpoon_mark = require('harpoon.mark')
+--local harpoon_ui = require('harpoon.ui')
 
 -- -- targets
 -- adds text objects for bracket pairs, quotes, separators, arguments, any block, any quote

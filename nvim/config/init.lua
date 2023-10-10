@@ -417,10 +417,10 @@ wk.register({
   r = { telescope_builtins.treesitter, 'Treesitter Symbols' },
   d = { '<Cmd>delmarks!<CR>', 'Delete Marks' },
   D = { '<Cmd>delmarks A-Z0-9<CR>', 'Delete All Marks' },
-  h = { harpoon_ui.toggle_quick_menu, 'Harpoon Menu' },
-  H = { harpoon_mark.add_file, 'Harpoon File' },
-  n = { harpoon_ui.nav_next, 'Harpoon Next' },
-  p = { harpoon_ui.nav_prev, 'Harpoon Prev' },
+  --h = { harpoon_ui.toggle_quick_menu, 'Harpoon Menu' },
+  --H = { harpoon_mark.add_file, 'Harpoon File' },
+  --n = { harpoon_ui.nav_next, 'Harpoon Next' },
+  --p = { harpoon_ui.nav_prev, 'Harpoon Prev' },
 }, { prefix = '<leader>j', mode = {'n', 'v'} })
 
 -- <leader>r

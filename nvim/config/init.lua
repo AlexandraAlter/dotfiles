@@ -1,5 +1,7 @@
 -- vim:fileencoding=utf-8:foldmethod=marker
 
+-- Where a configuration section concerns a plugin, the name is in (parenthesis)
+
 -- TODO: evaluate leap and decide whether to revert to sneak
 -- TODO: evaluate harpoon and decide whether it's needed
 -- TODO: fill out which-key with more bindings
@@ -25,10 +27,10 @@ vim.opt.timeoutlen = 500
 vim.g.mapleader = ' '
 vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<BS>', false, false, true)
 
--- -- sensible
+-- -- (sensible)
 -- sensible default settings
 
--- -- obsession
+-- -- (obsession)
 -- better session storage
 
 -- }}}
@@ -39,7 +41,7 @@ if vim.fn.exists('g:neovide') then
 end
 vim.opt.termguicolors = true
 
--- -- aurora
+-- -- (aurora)
 vim.g.aurora_italic = 1
 vim.g.aurora_transparent = 1
 vim.g.aurora_bold = 1
@@ -48,14 +50,14 @@ if not pcall(vim.cmd.colorscheme, 'aurora') then
   vim.cmd.colorscheme('industry')
 end
 
--- -- lualine
+-- -- (lualine)
 require('lualine').setup {
   options = {
     theme = 'auto',
   }
 }
 
--- -- characterize
+-- -- (characterize)
 -- maps `ga`, adds `:Obsess`
 
 -- }}}
@@ -69,7 +71,7 @@ vim.g.markdown_folding = 1
 
 vim.cmd('command! BW :bn|:bd#')
 
--- -- leap
+-- -- (leap)
 -- maps normal `s`, `S`, `gs`
 -- maps visual/operators `s`, `S`, `x`, `X`
 -- while seeking, `<Space>` and `<Tab>` select a group
@@ -80,26 +82,26 @@ vim.keymap.set({'x', 'o'},      'x',  '<Plug>(leap-forward-till)')
 vim.keymap.set({'x', 'o'},      'X',  '<Plug>(leap-backward-till)')
 --vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
 
--- -- harpoon (+plenary)
+-- -- (harpoon +plenary)
 -- jump between marks/files/terminals
 -- currently broken by changes to events
 --local harpoon_mark = require('harpoon.mark')
 --local harpoon_ui = require('harpoon.ui')
 
--- -- targets
+-- -- (targets)
 -- adds text objects for bracket pairs, quotes, separators, arguments, any block, any quote
 -- capitalised versions alter whitespace rules
 -- versions with `n` or `l` target next/last instance
 -- all rules use `a`, `i`, `A`, `I`, `?n`, `?l`
 
--- -- wordmotion
+-- -- (wordmotion)
 -- alters `w`, `b`, `e`, etc
 
 -- }}}
 
 -- {{{ editing
 
--- -- easy-align
+-- -- (easy-align)
 -- adds `:EasyAlign`, `:LiveEasyAlign`
 -- in the interactive prompt:
 --   1-9/`*`/`**`/`-` alter options
@@ -107,19 +109,19 @@ vim.keymap.set({'x', 'o'},      'X',  '<Plug>(leap-backward-till)')
 --   `<C-/>`/`<C-X>` enters regex mode
 vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 
--- -- surround
+-- -- (surround)
 -- maps normal `cs`, `ds`, `ys`, and visual `S`
 
--- -- repeat
+-- -- (repeat)
 -- maps `.`
 
--- -- commentary
+-- -- (commentary)
 -- maps `gc`
 
--- -- abolish
+-- -- (abolish)
 -- maps `cr`, adds `:Abolish`, `:Subvert`
 
--- -- speeddating
+-- -- (speeddating)
 -- maps `d<C-X>`, `d<C-A>`
 
 -- }}}
@@ -127,7 +129,7 @@ vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 -- {{{ completion
 vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
 
--- -- ultisnips (+snippets)
+-- -- (ultisnips +snippets)
 -- adds `:UltiSnipsEdit`, `:UltiSnipsAddFiletypes`
 --vim.g.UltiSnipsExpandTrigger = '<Tab>'
 --vim.g.UltiSnipsListSnippets = '<C-Tab>'
@@ -135,7 +137,7 @@ vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
 --vim.g.UltiSnipsJumpBackwardsTrigger = '<C-k>'
 --vim.g.UltiSnipsRemoveSelectModeMappings = 0
 
--- -- cmp (+cmp-*)
+-- -- (cmp +cmp-*)
 local cmp = require('cmp')
 local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
@@ -227,7 +229,7 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
--- -- telescope (+telescope-fzf-native +plenary +web-devicons)
+-- -- (telescope +telescope-fzf-native +plenary +web-devicons)
 -- adds `:Telescope`
 -- after updating, run `make` in `telescope-fzf-native`
 local telescope = require('telescope')
@@ -246,22 +248,22 @@ telescope.setup {
 }
 telescope.load_extension('fzf')
 
--- -- projectionist
+-- -- (projectionist)
 -- adds `:A...`, `:P...`, `:ProjectDo`, and others
 
--- -- vinegar
+-- -- (vinegar)
 -- maps `-`
 -- within netrw, maps `I`, `gh`, `.`, `y.`, `~`
 -- within netrw, vim adds `<C-^>`
 
--- -- eunuch
+-- -- (eunuch)
 -- adds Linux commands, `:Sudo...`, `:C...`, `:L...`, `:Wall`
 
 -- }}}
 
 -- {{{ integration
 
--- -- floaterm
+-- -- (floaterm)
 -- adds `:Floaterm...`
 vim.g.floaterm_keymap_toggle = '<F5>'
 vim.g.floaterm_keymap_new    = '<F6>'
@@ -270,13 +272,13 @@ vim.g.floaterm_keymap_next   = '<F8>'
 vim.g.floaterm_keymap_hide   = '<C-z>'
 vim.g.floaterm_autoclose     = 1
 
--- -- neomake
+-- -- (neomake)
 -- adds `:Neomake`
 
--- -- tbone
+-- -- (tbone)
 -- adds `:Tmux`, `:T...`
 
--- -- fugitive
+-- -- (fugitive)
 -- adds `:Git`, `:G...`
 
 -- }}}
@@ -288,33 +290,33 @@ vim.opt.shiftwidth = 2
 vim.opt.et = true
 vim.opt.makeprg = 'make'
 
--- -- sleuth
+-- -- (sleuth)
 -- automatically sets various options
 
--- -- endwise
+-- -- (endwise)
 -- automatically ends certain constructs
 
--- -- unimpaired
+-- -- (unimpaired)
 -- maps `[...`, `]...`
 -- common ex commands, line manipulation, option toggling, encode/decode
 
--- -- apathy
+-- -- (apathy)
 -- sets path-searching options for misc files
 
--- -- ragtag
+-- -- (ragtag)
 -- xml file mappings
 -- maps `<C-X>...`
 
--- -- jdaddy
+-- -- (jdaddy)
 -- json file mappings
 -- maps `gqaj` (pretty print), `gwaj` (merge from clipboard) and `ij` variants
 -- defines text object `aj`
 
--- -- godot
+-- -- (godot)
 -- gdscript file features
 -- adds `:Godot...`
 
--- -- neorg
+-- -- (neorg)
 -- neorg file features
 require('neorg').setup {
   load = {
@@ -329,7 +331,7 @@ local lspconfig = require('lspconfig')
 
 -- }}}
 
--- {{{ which-key
+-- {{{ (which-key)
 local wk = require('which-key')
 
 wk.setup({

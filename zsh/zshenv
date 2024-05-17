@@ -1,15 +1,19 @@
 
 typeset -U PATH path
 
+if [ -d "~/.local/bin" ]; then
+  path=(~/.local/bin $path)
+fi
+
 if [ -d "~/.cargo" ]; then
   path=(~/.cargo/bin $path)
 fi
 
-if [ -d "/usr/share/sway/scripts/" ]; then
+if [ -d "/usr/share/sway/scripts" ]; then
   path=(/usr/share/sway/scripts $path)
 fi
 
-if [ -d "/usr/lib/pentablet/" ]; then
+if [ -d "/usr/lib/pentablet" ]; then
   path=(/usr/lib/pentablet $path)
 fi
 

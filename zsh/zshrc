@@ -221,3 +221,6 @@ alias -s ace="unace l"
 # {{{ finalization
 gpgtty
 # }}}
+
+# opam configuration
+[[ ! -r /home/lament/.opam/opam-init/init.zsh ]] || source /home/lament/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

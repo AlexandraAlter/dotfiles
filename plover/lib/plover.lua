@@ -1,7 +1,7 @@
 local pl = {}
 
-local json = require'json'
-local yaml = require'yaml'
+local json = require'dkjson'
+local yaml = require'lyaml'
 local inspect = require'inspect'
 
 -- delimiter for multiple strokes

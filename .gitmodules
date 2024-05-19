@@ -143,3 +143,6 @@
 [submodule "nvim/treesitter"]
 	path = nvim/pack/lament/start/treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "nvim/janet"]
+	path = nvim/pack/lament/start/janet
+	url = https://github.com/janet-lang/janet.vim.git

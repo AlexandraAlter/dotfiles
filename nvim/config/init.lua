@@ -37,7 +37,10 @@ vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<BS>', false, false, true
 
 -- {{{ interface
 if vim.fn.exists('g:neovide') then
-  vim.opt.guifont = 'Fira Code,Fira Code Nerd:h14'
+  vim.opt.guifont = 'Fira Code,FiraCode Nerd Font:h12'
+  vim.cmd [[command! FontDefault :set guifont=Fira\ Code,FiraCode\ Nerd\ Font:h12]]
+  vim.cmd [[command! FontSSK :set guifont=sitelen\ seli\ kiwen\ mono\ juniko\ meso:h15]]
+  vim.cmd [[command! FontFairfax :set guifont=Fairfax\ HD:h15]]
 end
 vim.opt.termguicolors = true
 

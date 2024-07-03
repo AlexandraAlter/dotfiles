@@ -321,11 +321,11 @@ vim.opt.makeprg = 'make'
 
 -- -- (neorg)
 -- neorg file features
-require('neorg').setup {
-  load = {
-    ["core.defaults"] = {}
-  }
-}
+-- require('neorg').setup {
+--   load = {
+--     ["core.defaults"] = {}
+--   }
+-- }
 
 -- -- lspconfig
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -443,13 +443,13 @@ wk.register({
 -- <leader>a
 wk.register({
   name = '+app',
-  a = { '<Cmd>call feedKeys(\':FloatermNew \')<CR>', 'Terminal' },
+  a = { '<Cmd>call feedkeys(\':FloatermNew \')<CR>', 'Terminal' },
   s = { '<Cmd>FloatermNew<CR>', 'Shell' },
   r = { '<Cmd>FloatermNew ranger<CR>', 'Ranger' },
   p = { '<Cmd>FloatermNew python<CR>', 'Python' },
   j = { '<Cmd>FloatermNew julia<CR>', 'Julia' },
-  g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
-  T = { '<Cmd>call feedKeys(\':Tmux \')<CR>', 'Tmux' },
+  g = { '<Cmd>call feedkeys(\':Git \')<CR>', 'Git' },
+  T = { '<Cmd>call feedkeys(\':Tmux \')<CR>', 'Tmux' },
   t = {
     name = '+tmux',
     a = { '<Cmd>Tattach<CR>', 'Attach' },

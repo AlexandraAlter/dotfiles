@@ -138,7 +138,7 @@
 	path = nvim/pack/lament/start/lualine
 	url = https://github.com/nvim-lualine/lualine.nvim.git
 [submodule "nvim/neorg"]
-	path = nvim/pack/lament/start/neorg
+	path = nvim/pack/lament/opt/neorg
 	url = https://github.com/nvim-neorg/neorg.git
 [submodule "nvim/treesitter"]
 	path = nvim/pack/lament/start/treesitter

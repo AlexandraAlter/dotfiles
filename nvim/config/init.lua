@@ -23,7 +23,12 @@ vim.opt.spellfile = data .. '/site/spell/en.utf-8.add'
 vim.cmd [[command! SpellUpdate execute "mkspell!" &spellfile]]
 
 vim.g.mapleader = ' '
-vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<BS>', false, false, true)
+vim.g.maplocalleader = ','
+
+-- other keybindings
+vim.keymap.set({'n', 'x'}, 'q', ',')
+vim.keymap.set({'n', 'x'}, '\\', 'q')
+vim.keymap.set({'n', 'x'}, '|', 'Q')
 
 -- -- (sensible)
 -- sensible default settings

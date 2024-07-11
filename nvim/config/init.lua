@@ -15,14 +15,12 @@ vim.opt.encoding = 'utf-8'
 vim.opt.compatible = false
 vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
+vim.opt.timeoutlen = 500
 vim.opt.spell = false
 vim.opt.spelllang = 'en_gb,cjk'
 vim.opt.spellsuggest = 'best,9'
 vim.opt.spellfile = data .. '/site/spell/en.utf-8.add'
-
-vim.cmd('command! SpellUpdate execute "mkspell!" &spellfile')
-
-vim.opt.timeoutlen = 500
+vim.cmd [[command! SpellUpdate execute "mkspell!" &spellfile]]
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<BS>', false, false, true)
@@ -72,7 +70,7 @@ vim.opt.foldopen = 'hor,insert,jump,mark,percent,quickfix,search,tag,undo'
 vim.opt.foldenable = true
 vim.g.markdown_folding = 1
 
-vim.cmd('command! BW :bn|:bd#')
+vim.cmd [[command! BW :bn|:bd#]]
 
 -- -- (leap)
 -- maps normal `s`, `S`, `gs`
@@ -129,83 +127,6 @@ vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 
 -- }}}
 
--- {{{ completion
-vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
-
--- -- (ultisnips +snippets)
--- adds `:UltiSnipsEdit`, `:UltiSnipsAddFiletypes`
---vim.g.UltiSnipsExpandTrigger = '<Tab>'
---vim.g.UltiSnipsListSnippets = '<C-Tab>'
---vim.g.UltiSnipsJumpForwardsTrigger = '<C-j>'
---vim.g.UltiSnipsJumpBackwardsTrigger = '<C-k>'
---vim.g.UltiSnipsRemoveSelectModeMappings = 0
-
--- -- (cmp +cmp-*)
-local cmp = require('cmp')
-local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
-
-cmp.setup({
-  snippet = {
-    expand = function(args) vim.fn['UltiSnips#Anon'](args.body) end,
-  },
-
-  mapping = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-
-    ['<C-D>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-F>'] = cmp.mapping.scroll_docs(4),
-
-    ['<C-N>'] = cmp.mapping.select_next_item(),
-    ['<C-P>'] = cmp.mapping.select_prev_item(),
-    ['<Down>'] = cmp.mapping.select_next_item(),
-    ['<Up>'] = cmp.mapping.select_prev_item(),
-
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping(
-      function(fallback)
-        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-      end,
-      { 'i', 's' }
-    ),
-    ['<S-Tab>'] = cmp.mapping(
-      function(fallback)
-        cmp_ultisnips_mappings.jump_backwards(fallback)
-      end,
-      { 'i', 's' }
-    ),
-    ['<C-E>'] = cmp.mapping.close(),
-  },
-
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'ultisnips' },
-    { name = 'buffer', keyword_length = 3 },
-  },
-})
-
-cmp.setup.cmdline('/', {
-  completion = { autocomplete = false },
-  sources = {
-    { name = 'buffer', keyword_pattern = [=[[^[:blank:]].*]=] },
-  },
-})
-
-cmp.setup.cmdline(':', {
-  completion = { autocomplete = false },
-  sources = {
-    { name = 'path' },
-    { name = 'cmdline' },
-  },
-})
-
-local cmp_enabled = true
-function CmpToggle()
-  cmp_enabled = not cmp_enabled
-  cmp.setup.buffer { enabled = cmp_enabled }
-end
-
--- }}}
-
 -- {{{ filesystem
 vim.opt.swapfile = true
 vim.opt.undofile = true
@@ -219,6 +140,9 @@ vim.g.netrw_home = data
 -- -- files
 vim.cmd [[command! -bar Reload source $MYVIMRC | echo 'Sourced' $MYVIMRC]]
 vim.cmd [[command! -bar PackUpdate exe 'vert topleft new cd' stdpath('data') . '/site/pack | Git submodule update --remote --merge --recursive .']]
+
+-- -- filetypes
+vim.g.c_syntax_for_h = 1
 
 -- -- treesitter
 -- adds `:TSUpdate`, `:TSInstall`, `:TSModuleInfo`, and enable/disable commands
@@ -331,6 +255,83 @@ vim.opt.makeprg = 'make'
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 -- lsp['eslint'].setup { capabilities = capabilities }
+
+-- }}}
+
+-- {{{ completion
+vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
+
+-- -- (ultisnips +snippets)
+-- adds `:UltiSnipsEdit`, `:UltiSnipsAddFiletypes`
+--vim.g.UltiSnipsExpandTrigger = '<Tab>'
+--vim.g.UltiSnipsListSnippets = '<C-Tab>'
+--vim.g.UltiSnipsJumpForwardsTrigger = '<C-j>'
+--vim.g.UltiSnipsJumpBackwardsTrigger = '<C-k>'
+--vim.g.UltiSnipsRemoveSelectModeMappings = 0
+
+-- -- (cmp +cmp-*)
+local cmp = require('cmp')
+local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
+
+cmp.setup({
+  snippet = {
+    expand = function(args) vim.fn['UltiSnips#Anon'](args.body) end,
+  },
+
+  mapping = {
+    ['<C-Space>'] = cmp.mapping.complete(),
+
+    ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-F>'] = cmp.mapping.scroll_docs(4),
+
+    ['<C-N>'] = cmp.mapping.select_next_item(),
+    ['<C-P>'] = cmp.mapping.select_prev_item(),
+    ['<Down>'] = cmp.mapping.select_next_item(),
+    ['<Up>'] = cmp.mapping.select_prev_item(),
+
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping(
+      function(fallback)
+        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+      end,
+      { 'i', 's' }
+    ),
+    ['<S-Tab>'] = cmp.mapping(
+      function(fallback)
+        cmp_ultisnips_mappings.jump_backwards(fallback)
+      end,
+      { 'i', 's' }
+    ),
+    ['<C-E>'] = cmp.mapping.close(),
+  },
+
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'ultisnips' },
+    { name = 'buffer', keyword_length = 3 },
+  },
+})
+
+cmp.setup.cmdline('/', {
+  completion = { autocomplete = false },
+  sources = {
+    { name = 'buffer', keyword_pattern = [=[[^[:blank:]].*]=] },
+  },
+})
+
+cmp.setup.cmdline(':', {
+  completion = { autocomplete = false },
+  sources = {
+    { name = 'path' },
+    { name = 'cmdline' },
+  },
+})
+
+local cmp_enabled = true
+function CmpToggle()
+  cmp_enabled = not cmp_enabled
+  cmp.setup.buffer { enabled = cmp_enabled }
+end
 
 -- }}}
 

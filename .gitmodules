@@ -132,7 +132,7 @@
 	path = nvim/pack/lament/start/aurora
 	url = https://github.com/ray-x/aurora.git
 [submodule "nvim/leap"]
-	path = nvim/pack/lament/start/leap
+	path = nvim/pack/lament/opt/leap
 	url = https://github.com/ggandor/leap.nvim.git
 [submodule "nvim/lualine"]
 	path = nvim/pack/lament/start/lualine
@@ -146,3 +146,6 @@
 [submodule "nvim/janet"]
 	path = nvim/pack/lament/start/janet
 	url = https://github.com/janet-lang/janet.vim.git
+[submodule "nvim/flash"]
+	path = nvim/pack/lament/start/flash
+	url = https://github.com/folke/flash.nvim.git

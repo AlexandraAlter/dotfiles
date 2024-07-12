@@ -2,7 +2,6 @@
 
 -- Where a configuration section concerns a plugin, the name is in (parenthesis)
 
--- TODO: evaluate leap and decide whether to revert to sneak
 -- TODO: evaluate harpoon and decide whether it's needed
 -- TODO: fill out which-key with more bindings
 -- TODO: evaluate norg against markdown
@@ -77,16 +76,19 @@ vim.g.markdown_folding = 1
 
 vim.cmd [[command! BW :bn|:bd#]]
 
--- -- (leap)
--- maps normal `s`, `S`, `gs`
--- maps visual/operators `s`, `S`, `x`, `X`
--- while seeking, `<Space>` and `<Tab>` select a group
---require('leap').add_default_mappings()
---vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward-to)')
---vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward-to)')
-vim.keymap.set({'x', 'o'},      'x',  '<Plug>(leap-forward-till)')
-vim.keymap.set({'x', 'o'},      'X',  '<Plug>(leap-backward-till)')
---vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
+-- -- (flash)
+-- maps normal `s`, `S`
+-- maps operators `r`
+-- maps visual/operators `R`
+-- maps commandline `<C-s>`
+local flash = require('flash')
+flash.setup({
+  labels = 'aoeuidhtns\',.pyfgcrl;qjkxbmwvz',
+})
+vim.keymap.set({'n', 'x', 'o'}, 's', flash.jump)
+vim.keymap.set({'n', 'x', 'o'}, 'S', flash.treesitter)
+vim.keymap.set({'o'}, 'r', flash.remote)
+vim.keymap.set({'o', 'x'}, 'R', flash.treesitter_search)
 
 -- -- (harpoon +plenary)
 -- jump between marks/files/terminals
@@ -148,6 +150,8 @@ vim.cmd [[command! -bar PackUpdate exe 'vert topleft new cd' stdpath('data') . '
 
 -- -- filetypes
 vim.g.c_syntax_for_h = 1
+vim.g.netrw_fastbrowse = 0
+--vim.cmd [[autocmd FileType netrw setl bufhidden=delete]]
 
 -- -- treesitter
 -- adds `:TSUpdate`, `:TSInstall`, `:TSModuleInfo`, and enable/disable commands
@@ -507,7 +511,9 @@ wk.register({
   t = { '<Cmd>TSBufToggle<CR>', 'Treesitter' },
   c = { CmpToggle, 'Completion' },
   s = { '<Cmd>set spell!<CR>', 'Spell' },
+  S = { flash.toggle, 'Flash Search' },
   w = { '<Cmd>set wrap!<CR>', 'Wrap' },
+
 }, { prefix = '<leader>t' })
 
 -- <leader>c

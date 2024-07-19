@@ -1,4 +1,4 @@
--- vim:fileencoding=utf-8:foldmethod=marker
+-- vim: fileencoding=utf-8 foldmethod=marker fdl=0
 
 -- Where a configuration section concerns a plugin, the name is in (parenthesis)
 
@@ -10,9 +10,6 @@
 -- TODO: evaluate harpoon and decide whether it's needed
 -- TODO: fill out which-key with more bindings
 -- TODO: evaluate norg against markdown
-
-local data = vim.fn.expand(vim.fn.stdpath('data'))
-local state = vim.fn.expand(vim.fn.stdpath('state'))
 
 -- {{{ plugin overview
 -- navigation:
@@ -68,11 +65,15 @@ local state = vim.fn.expand(vim.fn.stdpath('state'))
 --   neorg (difficult external dependencies, neorg)
 -- }}}
 
+local data = vim.fn.expand(vim.fn.stdpath('data'))
+local state = vim.fn.expand(vim.fn.stdpath('state'))
+
 -- {{{ general
 vim.opt.encoding = 'utf-8'
 vim.opt.compatible = false
 vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
+vim.opt.sidescrolloff = 24
 vim.opt.timeoutlen = 500
 vim.opt.spell = false
 vim.opt.spelllang = 'en_gb,cjk'
@@ -143,6 +144,11 @@ vim.cmd [[command! BW :bn|:bd#]]
 local flash = require('flash')
 flash.setup({
   labels = 'aoeuidhtns\',.pyfgcrl;qjkxbmwvz',
+  modes = {
+    char = {
+      keys = { 'f', 'F', 't', 'T', ';', [','] = 'q' },
+    },
+  },
 })
 vim.keymap.set({'n', 'x', 'o'}, 's', flash.jump)
 vim.keymap.set({'n', 'x', 'o'}, 'S', flash.treesitter)
@@ -201,7 +207,6 @@ vim.opt.backupdir:remove('.')
 if not vim.fn.isdirectory(state .. '/backup') then
   vim.fn.mkdir(state .. '/backup')
 end
-vim.g.netrw_home = data
 
 -- -- files
 vim.cmd [[command! -bar Reload source $MYVIMRC | echo 'Sourced' $MYVIMRC]]
@@ -209,7 +214,6 @@ vim.cmd [[command! -bar PackUpdate exe 'vert topleft new cd' stdpath('data') . '
 
 -- -- filetypes
 vim.g.c_syntax_for_h = 1
-vim.g.netrw_fastbrowse = 0
 
 -- -- treesitter
 -- adds `:TSUpdate`, `:TSInstall`, `:TSModuleInfo`, and enable/disable commands
@@ -245,10 +249,12 @@ telescope.load_extension('fzf')
 -- -- (projectionist)
 -- adds `:A...`, `:P...`, `:ProjectDo`, and others
 
--- -- (vinegar)
+-- -- (vinegar) / netrw
 -- maps `-`
 -- within netrw, maps `I`, `gh`, `.`, `y.`, `~`
 -- within netrw, vim adds `<C-^>`
+vim.g.netrw_home = data
+vim.g.netrw_fastbrowse = 0
 
 -- -- (eunuch)
 -- adds Linux commands, `:Sudo...`, `:C...`, `:L...`, `:Wall`

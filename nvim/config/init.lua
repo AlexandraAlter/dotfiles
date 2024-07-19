@@ -2,12 +2,71 @@
 
 -- Where a configuration section concerns a plugin, the name is in (parenthesis)
 
+-- TODO: investigate ms-jpq/coq_nvim as an alternative to cmp
+-- TODO: replace shoddy C/C++ alternate jumps with projectionist
+-- TODO: investigate L3MON4D3/LuaSnip as an alternative to ultisnips
+-- TODO: investigate tpope/vim-dispatch as an alternative to neomake
+-- TODO: investigate tpope/vim-flagship as an alternative to lualine
 -- TODO: evaluate harpoon and decide whether it's needed
 -- TODO: fill out which-key with more bindings
 -- TODO: evaluate norg against markdown
 
 local data = vim.fn.expand(vim.fn.stdpath('data'))
 local state = vim.fn.expand(vim.fn.stdpath('state'))
+
+-- {{{ plugin overview
+-- navigation:
+--   targets (additional text objects, wellle)
+--   telescope telescope-fzf-native
+--   wordmotion (word motions, chaoren)
+--   flash (search labels and character motions, folke)
+--   vinegar (netrw extensions, tpope)
+--   projectionist (project configuration, tpope)
+-- editing:
+--   easy-align (text alignment, junegunn)
+--   sleuth (discover buffer options from file, tpope)
+--   speeddating (better increment/decrement, tpope)
+--   unimpaired (bracket mappings, tpope)
+--   commentary (commenting, tpope)
+--   surround (edit 'surrounding characters', tpope)
+--   repeat (repeatable plugin commands, tpope)
+--   abolish (word variant handling, tpope)
+--   characterize (unicode character metadata, tpope)
+-- completion:
+--   cmp cmp-buffer cmp-cmdline cmp-lsp cmp-path (CMP completion kit, hrsh7th)
+--   cmp-ultisnips (cmp/ultisnips integration, quangnguyen30192)
+--   ultisnips (snippets, SirVer)
+--   snippets (default snippets, honza)
+-- tooling:
+--   treesitter (treesitter configuration and abstraction, nvim-treesitter)
+--   floaterm (floating terminals, voldikss)
+--   neomake (asyncronous lint/make, neomake)
+--   obsession (update session files, tpope)
+--   tbone (TMUX integration, tpope)
+--   eunuch (UNIX helpers, tpope)
+--   fugitive (git wrapper, tpope)
+-- UI:
+--   which-key (bindings and popups, folke)
+--   aurora (dark theme, ray-x)
+--   lualine (status line, shadmansaleh)
+--   web-devicons (icons for patched fonts, alex-cortis/kyazdani42)
+-- filetypes:
+--   apathy (set path for files, tpope)
+--   jdaddy (json manipulation, tpope)
+--   endwise (automatic endings, tpope)
+--   ragtag (XML mappings, tpope)
+--   janet (janet mappings, janet-lang)
+--   godot (godot mappings, habamax)
+-- libraries:
+--   plenary (general lua, tjdevries)
+-- other:
+--   lspconfig (LSP quickstart, neovim)
+--   sensible (general configuration, tpope)
+-- unused:
+--   harpoon (startup errors, ThePrimeagen)
+--   leap (replaced by flash, ggandor)
+--   neorg (difficult external dependencies, neorg)
+-- }}}
 
 -- {{{ general
 vim.opt.encoding = 'utf-8'
@@ -151,7 +210,6 @@ vim.cmd [[command! -bar PackUpdate exe 'vert topleft new cd' stdpath('data') . '
 -- -- filetypes
 vim.g.c_syntax_for_h = 1
 vim.g.netrw_fastbrowse = 0
---vim.cmd [[autocmd FileType netrw setl bufhidden=delete]]
 
 -- -- treesitter
 -- adds `:TSUpdate`, `:TSInstall`, `:TSModuleInfo`, and enable/disable commands

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xkbConfigRegistry SYSTEM "xkb.dtd">
+<xkbConfigRegistry version="1.1">
+
+  <modelList>
+  </modelList>
+
+  <layoutList>
+    <layout>
+      <configItem>
+        <name>shavian</name>
+        <shortDescription>sh</shortDescription>
+        <description>English (Shavian)</description>
+		<languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList>
+        <variant>
+          <configItem>
+            <name>sh2l</name>
+            <description>English (Shavian, Shaw2Layer)</description>
+          </configItem>
+        </variant>
+        <variant>
+          <configItem>
+            <name>igc</name>
+            <description>English (Shavian, Imperial)</description>
+          </configItem>
+        </variant>
+        <variant>
+          <configItem>
+            <name>qwerty</name>
+            <description>English (Shavian, QWERTY)</description>
+          </configItem>
+        </variant>
+        <variant>
+          <configItem>
+            <name>iykury</name>
+            <description>English (Shavian, Iykury)</description>
+          </configItem>
+        </variant>
+      </variantList>
+    </layout>
+  </layoutList>
+
+  <optionList>
+  </optionList>
+
+</xkbConfigRegistry>

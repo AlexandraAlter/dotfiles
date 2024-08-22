@@ -1,0 +1,228 @@
+partial alphanumeric_keys
+xkb_symbols "sh2l" {
+
+    name[Group1]= "English (Shavian, Shaw2Layer)";
+
+    key <TLDE> { [        grave,     asciitilde ] };
+    key <AE01> { [            1,         exclam ] };
+    key <AE02> { [            2,             at ] };
+    key <AE03> { [            3,     numbersign ] };
+    key <AE04> { [            4,         dollar ] };
+    key <AE05> { [            5,        percent ] };
+    key <AE06> { [            6,    asciicircum ] };
+    key <AE07> { [            7,      ampersand ] };
+    key <AE08> { [            8,       asterisk ] };
+    key <AE09> { [            9,      parenleft ] };
+    key <AE10> { [            0,     parenright ] };
+    key <AE11> { [        minus,     underscore, emdash,         endash ] };
+    key <AE12> { [        equal,           plus ] };
+
+    key <AD01> { [       U10475,         U1047F ] };
+    key <AD02> { [       U10467,         U10471 ] };
+    key <AD03> { [       U10468,         U10472 ] };
+    key <AD04> { [       U1046D,         U10478 ] };
+    key <AD05> { [       U1046C,         U10476 ] };
+    key <AD06> { [       periodcentered         ] };
+    key <AD07> { [       U1045D,         U10453 ] };
+    key <AD08> { [       U10462,         U10458 ] };
+    key <AD09> { [       U1045E,         U10454 ] };
+    key <AD10> { [       U10463,         U10459 ] };
+    key <AD11> { [  bracketleft,      braceleft ] };
+    key <AD12> { [ bracketright,     braceright ] };
+    key <BKSL> { [    backslash,            bar ] };
+
+    key <AC01> { [       U10464,         U1046E ] };
+    key <AC02> { [       U10466,         U10470 ] };
+    key <AC03> { [       U10469,         U1047E ] };
+    key <AC04> { [       U1046F,         U10465 ] };
+    key <AC05> { [       U10477,         U10479 ] };
+    key <AC06> { [       U10456,         U10460 ] };
+    key <AC07> { [       U10451,         U1045B ] };
+    key <AC08> { [       U10455,         U1045F ] };
+    key <AC09> { [       U10452,         U1045C ] };
+    key <AC10> { [       U10450,         U1045A ] };
+    key <AC11> { [   apostrophe,       quotedbl ] };
+
+    key <AB01> { [       U1046A,         U1047A ] };
+    key <AB02> { [       U10473,         U1047B ] };
+    key <AB03> { [       U1047C, 	 U1047D ] };
+    key <AB04> { [       U10474,         U1046B ] };
+    key <AB05> { [       guillemotleft          ] };
+    key <AB06> { [       guillemotright         ] };
+    key <AB07> { [       U10457,         U10461 ] };
+    key <AB08> { [        comma,           less,  U2039,  guillemotleft ] };
+    key <AB09> { [       period,        greater,  U203A, guillemotright ] };
+    key <AB10> { [        slash,       question,  U203D ] };
+};
+
+partial alphanumeric_keys
+xkb_symbols "igc" {
+
+    name[Group1]= "English (Shavian, Imperial)";
+
+    key <TLDE> { [ periodcentered,          U2E30,        grave,  asciitilde ] };
+    key <AE01> { [         U10476,              1,            1,      exclam ] };
+    key <AE02> { [         U1046C,              2,            2,          at ] };
+    key <AE03> { [         U1046B,              3,            3,  numbersign ] };
+    key <AE04> { [         U1045C,              4,            4,      dollar ] };
+    key <AE05> { [         U10456,              5,            5,     percent ] };
+    key <AE06> { [         U10457,              6,            6, asciicircum ] };
+    key <AE07> { [         U10459,              7,            7,   ampersand ] };
+    key <AE08> { [         U10458,              8,            8,    asterisk ] };
+    key <AE09> { [         U10461,              9,            9,   parenleft ] };
+    key <AE10> { [         U10454,              0,            0,  parenright ] };
+    key <AE11> { [          minus,     underscore,        minus,  underscore ] };
+    key <AE12> { [          equal,           plus,        equal,        plus ] };
+
+    key <AD01> { [         U1046D,         U10478,            q,           Q ] };
+    key <AD02> { [         U10477,         U10479,            w,           W ] };
+    key <AD03> { [         U10475,         U1047F,            e,           E ] };
+    key <AD04> { [         U10471,         U1047A,            r,           R ] };
+    key <AD05> { [         U10473,         U1047B,            t,           T ] };
+    key <AD06> { [         U10453,            yen,            y,           Y ] };
+    key <AD07> { [         U1045E,       EuroSign,            u,           U ] };
+    key <AD08> { [         U10464,          U203D,            i,           I ] };
+    key <AD09> { [         U10465,         degree,            o,           O ] };
+    key <AD10> { [         U10452,        percent,            p,           P ] };
+    key <AD11> { [         U10462,      semicolon,  bracketleft,   braceleft ] };
+    key <AD12> { [         U10463,     apostrophe, bracketright,  braceright ] };
+    key <BKSL> { [         U10460,          UFE00,    backslash,         bar ] };
+
+    key <AC01> { [         U1046A,             at,            a,           A ] };
+    key <AC02> { [         U10468,       asterisk,            s,           S ] };
+    key <AC03> { [         U10466,         dollar,            d,           D ] };
+    key <AC04> { [         U10469,         U1047C,            f,           F ] };
+    key <AC05> { [         U10467,       sterling,            g,           G ] };
+    key <AC06> { [         U10450,     numbersign,            h,           H ] };
+    key <AC07> { [         U1046F,       ellipsis,            j,           J ] };
+    key <AC08> { [         U10451,  guillemotleft,            k,           K ] };
+    key <AC09> { [         U1046E, guillemotright,            l,           L ] };
+    key <AC10> { [         U10455,          colon,    semicolon,       colon ] };
+    key <AC11> { [         U1045B,       quotedbl,   apostrophe,    quotedbl ] };
+
+    key <AB01> { [         U1047E,         U1047D,            z,           Z ] };
+    key <AB02> { [         U10472,         exclam,            x,           X ] };
+    key <AB03> { [         U10474,    asciicircum,            c,           C ] };
+    key <AB04> { [         U10470,      parenleft,            v,           V ] };
+    key <AB05> { [         U1045A,     parenright,            b,           B ] };
+    key <AB06> { [         U1045D,         endash,            n,           N ] };
+    key <AB07> { [         U1045F,         emdash,            m,           M ] };
+    key <AB08> { [          comma,          U2039,        comma,        less ] };
+    key <AB09> { [         period,          U203A,       period,     greater ] };
+    key <AB10> { [          slash,       question,        slash,    question ] };
+};
+
+partial alphanumeric_keys
+xkb_symbols "qwerty" {
+
+    name[Group1]= "English (Shavian, QWERTY)";
+
+    key <TLDE> { [    asciitilde,          U203D,        grave,  asciitilde ] };
+    key <AE01> { [             1,         exclam,            1,      exclam ] };
+    key <AE02> { [             2,             at,            2,          at ] };
+    key <AE03> { [             3,     numbersign,            3,  numbersign ] };
+    key <AE04> { [             4,         dollar,            4,      dollar ] };
+    key <AE05> { [             5,        percent,            5,     percent ] };
+    key <AE06> { [             6,    asciicircum,            6, asciicircum ] };
+    key <AE07> { [             7,      ampersand,            7,   ampersand ] };
+    key <AE08> { [             8,       asterisk,            8,    asterisk ] };
+    key <AE09> { [             9,      parenleft,            9,   parenleft ] };
+    key <AE10> { [             0,     parenright,            0,  parenright ] };
+    key <AE11> { [         minus,         emdash,        minus,  underscore ] };
+    key <AE12> { [         equal,           plus,        equal,        plus ] };
+                                                                                 
+    key <AD01> { [        U10476,         U1046C,            q,           Q ] };
+    key <AD02> { [        U10462,         U1047E,            w,           W ] };
+    key <AD03> { [        U10467,         U10471,            e,           E ] };
+    key <AD04> { [        U1046E,         U10478,            r,           R ] };
+    key <AD05> { [        U10451,         U10454,            t,           T ] };
+    key <AD06> { [        U1046D,         U10477,            y,           Y ] };
+    key <AD07> { [        U10473,         U1046B,            u,           U ] };
+    key <AD08> { [        U10466,         U10470,            i,           I ] };
+    key <AD09> { [        U1046A,         U10474,            o,           O ] };
+    key <AD10> { [        U10450,         U10479,            p,           P ] };
+    key <AD11> { [   bracketleft,      braceleft,  bracketleft,   braceleft ] };
+    key <AD12> { [  bracketright,     braceright, bracketright,  braceright ] };
+    key <BKSL> { [     backslash,          UFE00,    backslash,         bar ] };
+                                                                                 
+    key <AC01> { [        U10469,         U10468,            a,           A ] };
+    key <AC02> { [        U10455,         U10456,            s,           S ] };
+    key <AC03> { [        U1045B,         U1047C,            d,           D ] };
+    key <AC04> { [        U10453,         U10472,            f,           F ] };
+    key <AC05> { [        U1045C, periodcentered,            g,           G ] };
+    key <AC06> { [        U10463,         U1045E,            h,           H ] };
+    key <AC07> { [        U10458,         U10461,            j,           J ] };
+    key <AC08> { [        U10452,  guillemotleft,            k,           K ] };
+    key <AC09> { [        U10464, guillemotright,            l,           L ] };
+    key <AC10> { [     semicolon,          colon,    semicolon,       colon ] };
+    key <AC11> { [    apostrophe,       quotedbl,   apostrophe,    quotedbl ] };
+                                                                                 
+    key <AB01> { [        U1045F,         U10460,            z,           Z ] };
+    key <AB02> { [        U1047B,         U1047A,            x,           X ] };
+    key <AB03> { [        U10457,         U1047D,            c,           C ] };
+    key <AB04> { [        U1045D,         U1047F,            v,           V ] };
+    key <AB05> { [        U1045A,          U2E30,            b,           B ] };
+    key <AB06> { [        U1046F,         U10459,            n,           N ] };
+    key <AB07> { [        U10465,         U10475,            m,           M ] };
+    key <AB08> { [         comma,          U2039,        comma,        less ] };
+    key <AB09> { [        period,          U203A,       period,     greater ] };
+    key <AB10> { [         slash,       question,        slash,    question ] };
+};
+
+partial alphanumeric_keys
+xkb_symbols "iykury" {
+
+    name[Group1]= "English (Shavian, Iykury)";
+
+    key <TLDE> { [        grave,     asciitilde ] };
+    key <AE01> { [            1,         exclam ] };
+    key <AE02> { [            2,             at ] };
+    key <AE03> { [            3,     numbersign ] };
+    key <AE04> { [            4,         dollar ] };
+    key <AE05> { [            5,        percent ] };
+    key <AE06> { [            6,    asciicircum ] };
+    key <AE07> { [            7,      ampersand ] };
+    key <AE08> { [            8,       asterisk ] };
+    key <AE09> { [            9,      parenleft ] };
+    key <AE10> { [            0,     parenright ] };
+    key <AE11> { [        minus,     underscore, emdash,         endash ] };
+    key <AE12> { [        equal,           plus ] };
+
+    key <AD01> { [       U10473,         U1046B ] };
+    key <AD02> { [       U10472,         U1046C ] };
+    key <AD03> { [       U1046A,         U10477 ] };
+    key <AD04> { [       U10470,         U1047E ] };
+    key <AD05> { [       U10471,         U1047A ] };
+    key <AD06> { [       U1045F,         U10460 ] };
+    key <AD07> { [       U1045E,         U10454 ] };
+    key <AD08> { [       U10452,         U1045C ] };
+    key <AD09> { [       U10465,         U1046D ] };
+    key <AD10> { [       U1046E,         U10478 ] };
+    key <AD11> { [  bracketleft,      braceleft ] };
+    key <AD12> { [ bracketright,     braceright ] };
+    key <BKSL> { [    backslash,            bar ] };
+
+    key <AC01> { [       U1047C,         U1047B ] };
+    key <AC02> { [       U10468,         U1047F ] };
+    key <AC03> { [       U10469,         U10475 ] };
+    key <AC04> { [       U10466,         U10474 ] };
+    key <AC05> { [       U10467,         U10479 ] };
+    key <AC06> { [       U10455,         U10456 ] };
+    key <AC07> { [       U1046F,         U10459 ] };
+    key <AC08> { [       U10451,         U10457 ] };
+    key <AC09> { [       U10464,         U10458 ] };
+    key <AC10> { [       U1045B,         U10461 ] };
+    key <AC11> { [   apostrophe,       quotedbl ] };
+
+    key <AB01> { [    semicolon,          colon ] };
+    key <AB02> { [       U10463,          U2E30 ] };
+    key <AB03> { [       U10462, periodcentered ] };
+    key <AB04> { [       U1045D,         U1047D ] };
+    key <AB05> { [       U10453,         U10476 ] };
+    key <AB06> { [       U1045A ] };
+    key <AB07> { [       U10450,          UFE00 ] };
+    key <AB08> { [        comma,           less,  U2039,  guillemotleft ] };
+    key <AB09> { [       period,        greater,  U203A, guillemotright ] };
+    key <AB10> { [        slash,       question,  U203D ] };
+};
+

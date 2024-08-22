@@ -32,5 +32,6 @@ export TASKRC=~/dotfiles/task/taskrc
 export TASKDATA=~/documents/task
 export TIMEWARRIORDB=~/documents/time
 
+export GTK_THEME=Adwaita:dark
 export QT_QPA_PLATFORMTHEME=qt5ct
 

@@ -10,7 +10,7 @@ set $app_menu j4-dmenu-desktop --dmenu='bemenu -i' --term='$kitty'
 set $lock pkill -SIGUSR1 swayidle
 set $laptop <eDP-1>
 set $audio Master
-set $grimshot /usr/share/sway/scripts/grimshot
+set $grimshot /usr/bin/grimshot
 set $move_by 10px
 set $move_by_fast 50px
 set $resize_by 10px
@@ -41,7 +41,7 @@ exec swayidle -w \
 input * {
 	xkb_layout "us,us"
 	xkb_variant ",dvorak"
-	xkb_options "grp:win_space_toggle,caps:ctrl_modifier"
+	xkb_options "grp:win_space_toggle,caps:ctrl_modifier,compose:102,compose:ralt"
 }
 input 1:1:AT_Translated_Set_2_keyboard {
 	xkb_model "pc101"

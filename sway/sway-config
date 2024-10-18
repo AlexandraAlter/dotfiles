@@ -1,4 +1,4 @@
-### Variables
+### Variables:
 set $mod Mod4
 set $up k
 set $down j
@@ -16,7 +16,7 @@ set $move_by_fast 50px
 set $resize_by 10px
 set $resize_by_fast 50px
 
-### Output configuration
+### Output configuration:
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 output * bg `find ~/pictures/backgrounds/ -maxdepth 1 -type f | shuf -n 1` fill
 font pango:Fira Code Mono 10
@@ -24,20 +24,20 @@ bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
 smart_borders on
 
-### Window decoration
+### Window decoration:
 # class                 border  backgr. text    indicator child_border
 #client.focused          #88c0d0 #434c5e #eceff4 #8fbcbb   #88c0d0
 #client.focused_inactive #88c0d0 #2e3440 #d8dee9 #4c566a   #4c566a
 #client.unfocused        #88c0d0 #2e3440 #d8dee9 #4c566a   #4c566a
 #client.urgent           #ebcb8b #ebcb8b #2e3440 #8fbcbb   #ebcb8b
 
-### Idle configuration
+### Idle configuration:
 exec swayidle -w \
 	timeout 300 'swaylock -f -c 000000' \
 	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
 	before-sleep 'swaylock -f -c 000000'
 
-### Input configuration
+### Input configuration:
 input * {
 	xkb_layout "us,us"
 	xkb_variant ",dvorak"
@@ -53,7 +53,7 @@ input type:touchpad {
 }
 #mouse_warping container
 
-### Key bindings
+### Key bindings:
 # Basics:
 floating_modifier $mod normal
 bindsym $mod+Return exec $term
@@ -266,13 +266,18 @@ bindsym Alt+Shift+print         exec $grimshot save window
 bindsym Alt+Control+print       exec $grimshot save active
 bindsym Alt+Shift+Control+print exec $grimshot save output
 
-# Status Bar:
+### Status Bar:
 bar {
 	swaybar_command waybar
 }
 
-# Startup Programs:
+### Startup Programs:
 exec dex --autostart
 
 include /etc/sway/config.d/*
+
+### Application Defaults:
+for_window [app_id="kitty"] opacity 0.9
+
+
 

@@ -68,6 +68,8 @@
 local data = vim.fn.expand(vim.fn.stdpath('data'))
 local state = vim.fn.expand(vim.fn.stdpath('state'))
 
+local starting = vim.fn.has 'vim_starting' == 1
+
 -- {{{ general
 vim.opt.encoding = 'utf-8'
 vim.opt.compatible = false
@@ -75,6 +77,7 @@ vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
 vim.opt.sidescrolloff = 24
 vim.opt.timeoutlen = 500
+--vim.opt.hidden = false
 vim.opt.spell = false
 vim.opt.spelllang = 'en_gb,cjk'
 vim.opt.spellsuggest = 'best,9'
@@ -84,17 +87,96 @@ vim.cmd [[command! SpellUpdate execute "mkspell!" &spellfile]]
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
--- other keybindings
-vim.keymap.set({'n', 'x'}, 'q', ',')
-vim.keymap.set({'n', 'x'}, '\\', 'q')
-vim.keymap.set({'n', 'x'}, '|', 'Q')
-
 -- -- (sensible)
 -- sensible default settings
 
 -- -- (obsession)
 -- better session storage
 
+-- }}}
+
+-- {{{ keymaps / (which-key)
+local wk = require('which-key')
+
+if starting then
+  wk.setup({
+    presets = {
+      windows = false, -- we bind these ourselves
+    },
+  })
+end
+
+-- pre-add groups, simple mappings, expanded mappings and proxies
+wk.add({
+  { '<Leader>f', group = 'file' },
+  { '<Leader>fs', '<Cmd>write<CR>', desc = 'Save' },
+  { '<Leader>fS', '<Cmd>wall<CR>', desc = 'Save All' },
+  { '<Leader>fn', '<Cmd>new<CR>', desc = 'New' },
+
+  -- { '<Leader>b', group = 'buffer' },
+  { '<Leader>b', group = 'buffers', expand = function()
+      return require('which-key.extras').expand.buf()
+    end
+  },
+  { '<Leader>bf', '<Cmd>bfirst<CR>', desc = 'First' },
+  { '<Leader>bl', '<Cmd>blast<CR>', desc = 'Last' },
+  { '<Leader>bn', '<Cmd>bnext<CR>', desc = 'Next' },
+  { '<Leader>bp', '<Cmd>bprevious<CR>', desc = 'Previous' },
+  { '<Leader>bd', '<Cmd>bd<CR>', desc = 'Delete' },
+  { '<Leader>bD', '<Cmd>BW<CR>', desc = 'Delete and Next' },
+
+  { '<Leader>x', group = 'text', icon = { icon = '', color = 'cyan' } },
+  { '<Leader>xS', '<Cmd>sort<CR>', desc = 'Sort' },
+
+  { '<Leader>n', group = 'number' },
+
+  { '<Leader>s', group = 'search' },
+  { '<Leader>sc', '<Cmd>nohlsearch<CR>', desc = 'Clear' },
+
+  -- icons: 󱖫  󰵅  󰓩 󰃤 󰙵 󰅇 󱅻  󰛔 󰈸    󰈔    󰈆 
+  -- colors: 
+  { '<Leader>j', group = 'jump' },
+  { '<Leader>jd', '<Cmd>delmarks!<CR>', desc = 'Delete Marks' },
+  { '<Leader>jD', '<Cmd>delmarks A-Z0-9<CR>', desc = 'Delete All Marks' },
+
+  { '<Leader>r', group = 'run', icon = { icon = '', color = 'red' } },
+  { '<Leader>rm', '<Cmd>make<CR>', desc = 'Make' },
+
+  { '<Leader>a', group = 'app', icon = { icon = '', color = 'red' } },
+  { '<Leader>l', group = 'lsp', icon = { icon = '', color = 'orange' } },
+  { '<Leader>g', group = 'git' },
+  { '<Leader>d', group = 'debug' },
+
+  { '<Leader>t', group = 'toggle' },
+  { '<Leader>tt', '<Cmd>TSBufToggle<CR>', desc = 'Treesitter' },
+  { '<Leader>ts', '<Cmd>set spell!<CR>', desc = 'Spell' },
+  { '<Leader>tw', '<Cmd>set wrap!<CR>', desc = 'Wrap' },
+
+  { '<Leader>c', group = 'config', icon = { icon = '', color = 'cyan' } },
+  { '<Leader>ce', '<Cmd>edit $MYVIMRC<CR>', desc = 'Edit' },
+  { '<Leader>cr', '<Cmd>Reload<CR>', desc = 'Reload' },
+
+  { '<Leader>h', group = 'help' },
+
+  { '<Leader>q', group = 'quit' },
+  { '<Leader>qq', '<Cmd>quitall<CR>', desc = 'Quit' },
+  { '<Leader>qQ', '<Cmd>quit<CR>', desc = 'Quit This' },
+  { '<Leader>qw', '<Cmd>wqall<CR>', desc = 'Write and Quit' },
+  { '<Leader>qW', '<Cmd>wq<CR>', desc = 'Write and Quit This' },
+
+  { '<Leader>w', proxy = '<c-w>', group = 'windows' },
+  { '<C-w>', group = 'windows', expand = function()
+      return require('which-key.extras').expand.win()
+    end
+  },
+
+  { '<LocalLeader> =', 'm`gg=G``', desc = 'reformat' },
+})
+
+-- -- other keymaps
+vim.keymap.set({'n', 'x'}, 'q', ',')
+vim.keymap.set({'n', 'x'}, '\\', 'q')
+vim.keymap.set({'n', 'x'}, '|', 'Q')
 -- }}}
 
 -- {{{ interface
@@ -111,7 +193,17 @@ vim.g.aurora_italic = 1
 vim.g.aurora_transparent = 1
 vim.g.aurora_bold = 1
 vim.g.aurora_darker = 0
-if not pcall(vim.cmd.colorscheme, 'aurora') then
+if pcall(vim.cmd.colorscheme, 'aurora') then
+  -- vim.api.nvim_set_hl(0, 'WhichKeyIconAzure', { link = '' })
+  -- vim.api.nvim_set_hl(0, 'WhichKeyIconBlue', { link = '' })
+  vim.api.nvim_set_hl(0, 'WhichKeyIconCyan', { link = 'Typedef' })
+  vim.api.nvim_set_hl(0, 'WhichKeyIconGreen', { link = 'DiagnosticHint' })
+  -- vim.api.nvim_set_hl(0, 'WhichKeyIconGrey', { link = '' })
+  vim.api.nvim_set_hl(0, 'WhichKeyIconOrange', { link = 'Number' })
+  vim.api.nvim_set_hl(0, 'WhichKeyIconPurple', { link = 'Include' })
+  -- vim.api.nvim_set_hl(0, 'WhichKeyIconRed', { link = '' })
+  vim.api.nvim_set_hl(0, 'WhichKeyIconYellow', { link = 'Constant' })
+else
   vim.cmd.colorscheme('industry')
 end
 
@@ -150,16 +242,27 @@ flash.setup({
     },
   },
 })
-vim.keymap.set({'n', 'x', 'o'}, 's', flash.jump)
-vim.keymap.set({'n', 'x', 'o'}, 'S', flash.treesitter)
-vim.keymap.set({'o'}, 'r', flash.remote)
-vim.keymap.set({'o', 'x'}, 'R', flash.treesitter_search)
+
+wk.add({
+  { 's', flash.jump, desc = 'Flash', mode = { 'n', 'x', 'o' } },
+  -- { 'S', flash.treesitter, desc = 'Flash Treesitter', mode = { 'n', 'x', 'o' } },
+  { 'r', flash.remote, desc = 'Remote Flash', mode = 'o' },
+  { 'R', flash.treesitter_search, desc = 'Treesitter Flash Search', mode = { 'x', 'o' } },
+  { '<C-s>', flash.toggle, desc = 'Toggle Flash Search', mode = 'c' },
+  { '<Leader>tS', flash.toggle, desc = 'Toggle Flash Search' },
+})
 
 -- -- (harpoon +plenary)
 -- jump between marks/files/terminals
 -- currently broken by changes to events
 --local harpoon_mark = require('harpoon.mark')
 --local harpoon_ui = require('harpoon.ui')
+-- wk.add({
+--   { 'h', harpoon_ui.toggle_quick_menu, desc = 'Harpoon Menu' },
+--   { 'H', harpoon_mark.add_file, desc = 'Harpoon File' },
+--   { 'n', harpoon_ui.nav_next, desc = 'Harpoon Next' },
+--   { 'p', harpoon_ui.nav_prev, desc = 'Harpoon Prev' },
+-- })
 
 -- -- (targets)
 -- adds text objects for bracket pairs, quotes, separators, arguments, any block, any quote
@@ -193,6 +296,10 @@ vim.keymap.set({'v', 'n'}, 'gA', '<Plug>(EasyAlign)')
 
 -- -- (abolish)
 -- maps `cr`, adds `:Abolish`, `:Subvert`
+wk.add({
+  { 'xC', '<Plug>(abolish-coerce-word)', desc = 'Coerce Word' },
+  { 'xc', '<Plug>(abolish-coerce)', desc = 'Coerce', mode = { 'n', 'v' } },
+})
 
 -- -- (speeddating)
 -- maps `d<C-X>`, `d<C-A>`
@@ -246,6 +353,65 @@ telescope.setup {
 }
 telescope.load_extension('fzf')
 
+wk.add({
+  icon = { icon = '', color = 'blue' },
+
+  { '<Leader>ff', telescope_builtins.find_files, desc = 'Files' },
+  { '<Leader>fr', telescope_builtins.oldfiles, desc = 'Recent' },
+
+  { '<Leader>bb', telescope_builtins.buffers, desc = 'Buffers' },
+
+  { '<Leader>hh', telescope_builtins.help_tags, desc = 'Tags' },
+  { '<Leader>hm', telescope_builtins.man_pages, desc = 'Man Pages' },
+  { '<Leader>hk', telescope_builtins.keymaps, desc = 'Keymaps' },
+  { '<Leader>hf', telescope_builtins.filetypes, desc = 'Filetypes' },
+  { '<Leader>hH', telescope_builtins.highlights, desc = 'Highlights' },
+
+  { '<Leader>ca', telescope_builtins.autocommands, desc = 'Autocommands' },
+  { '<Leader>co', telescope_builtins.vim_options, desc = 'Set Option' },
+
+  { '<Leader>dq', telescope_builtins.quickfix, desc = 'Quickfix' },
+  { '<Leader>dQ', telescope_builtins.quickfixhistory, desc = 'Quickfix History' },
+  { '<Leader>dl', telescope_builtins.loclist, desc = 'Location List' },
+
+  { '<Leader>gf', telescope_builtins.git_files, desc = 'Files' },
+  { '<Leader>gc', telescope_builtins.git_commits, desc = 'Commits' },
+  { '<Leader>gC', telescope_builtins.git_bcommits, desc = 'Buffer Commits' },
+  { '<Leader>gb', telescope_builtins.git_branches, desc = 'Branches' },
+  { '<Leader>gs', telescope_builtins.git_status, desc = 'Status' },
+  { '<Leader>gS', telescope_builtins.git_stash, desc = 'Stash' },
+
+  { '<Leader>lr', telescope_builtins.lsp_references, desc = 'References' },
+  { '<Leader>lc', telescope_builtins.lsp_incoming_calls, desc = 'Incoming Calls' },
+  { '<Leader>lC', telescope_builtins.lsp_outgoing_calls, desc = 'Outgoing Calls' },
+  { '<Leader>ls', telescope_builtins.lsp_document_symbols, desc = 'Document Symbols' },
+  { '<Leader>lw', telescope_builtins.lsp_workspace_symbols, desc = 'Workspace Symbols' },
+  { '<Leader>lW', telescope_builtins.lsp_dynamic_workspace_symbols, desc = 'Dynamic Workspace Symbols' },
+  { '<Leader>lg', telescope_builtins.diagnostics, desc = 'Diagnostics' },
+  { '<Leader>li', telescope_builtins.lsp_implementations, desc = 'Implementations' },
+  { '<Leader>ld', telescope_builtins.lsp_definitions, desc = 'Definitions' },
+  { '<Leader>lt', telescope_builtins.lsp_type_definitions, desc = 'Type Definitions' },
+
+  { '<Leader>rc', telescope_builtins.commands, desc = 'Commands' },
+  { '<Leader>rC', telescope_builtins.command_history, desc = 'Command History' },
+  { '<Leader>rt', telescope_builtins.resume, desc = 'Resume Telescope' },
+  { '<Leader>rT', telescope_builtins.pickers, desc = 'Telescope' },
+
+  { '<Leader>jj', telescope_builtins.marks, desc = 'Marks' },
+  { '<Leader>jl', telescope_builtins.jumplist, desc = 'Jump List' },
+  { '<Leader>jt', telescope_builtins.tags, desc = 'Tags' },
+  { '<Leader>jT', telescope_builtins.current_buffer_tags, desc = 'Tags In File' },
+  { '<Leader>jr', telescope_builtins.treesitter, desc = 'Treesitter Symbols' },
+
+  { '<Leader>ss', telescope_builtins.live_grep, desc = 'Grep' },
+  { '<Leader>sS', telescope_builtins.grep_string, desc = 'Grep Under Cursor' },
+  { '<Leader>sh', telescope_builtins.search_history, desc = 'History' },
+  { '<Leader>sf', telescope_builtins.current_buffer_fuzzy_find, desc = 'Search In File' },
+
+  { '<Leader>xr', telescope_builtins.registers, desc = 'Registers' },
+  { '<Leader>xs', telescope_builtins.spell_suggest, desc = 'Spellcheck' },
+})
+
 -- -- (projectionist)
 -- adds `:A...`, `:P...`, `:ProjectDo`, and others
 
@@ -254,10 +420,19 @@ telescope.load_extension('fzf')
 -- within netrw, maps `I`, `gh`, `.`, `y.`, `~`
 -- within netrw, vim adds `<C-^>`
 vim.g.netrw_home = data
-vim.g.netrw_fastbrowse = 0
+--vim.g.netrw_fastbrowse = 0
 
 -- -- (eunuch)
 -- adds Linux commands, `:Sudo...`, `:C...`, `:L...`, `:Wall`
+wk.add({
+  { '<Leader>fR', '<Cmd>call feedkeys(\':Rename \')<CR>', desc = 'Rename' },
+  { '<Leader>fM', '<Cmd>call feedkeys(\':Move \')<CR>', desc = 'Move' },
+  { '<Leader>fC', '<Cmd>call feedkeys(\':Chmod \')<CR>', desc = 'Chmod' },
+  { '<Leader>fD', '<Cmd>call feedkeys(\':Mkdir \')<CR>', desc = 'Mkdir' },
+  { '<Leader>fF', group = 'file sudo' },
+  { '<Leader>fFe', '<Cmd>SudoEdit<CR>', desc = 'Edit' },
+  { '<Leader>fFs', '<Cmd>SudoWrite<CR>', desc = 'Save' },
+})
 
 -- }}}
 
@@ -272,14 +447,41 @@ vim.g.floaterm_keymap_next   = '<F8>'
 vim.g.floaterm_keymap_hide   = '<C-z>'
 vim.g.floaterm_autoclose     = 1
 
+wk.add({
+  icon = { icon = '', color = 'red' },
+  { '<Leader>aa', '<Cmd>call feedkeys(\':FloatermNew \')<CR>', desc = 'Terminal' },
+  { '<Leader>as', '<Cmd>FloatermNew<CR>', desc = 'Shell' },
+  { '<Leader>ar', '<Cmd>FloatermNew ranger<CR>', desc = 'Ranger' },
+  { '<Leader>ap', '<Cmd>FloatermNew python<CR>', desc = 'Python' },
+  { '<Leader>aj', '<Cmd>FloatermNew julia<CR>', desc = 'Julia' },
+  { '<Leader>af', '<Cmd>FloatermToggle<CR>', desc = 'Floatterm Toggle' },
+})
+
 -- -- (neomake)
 -- adds `:Neomake`
+wk.add({
+  icon = { icon = '', color = 'red' },
+  { 'rn', '<Cmd>Neomake!<CR>', desc = 'Neomake' },
+  { 'rN', '<Cmd>Neomake<CR>', desc = 'Neomake File' },
+})
 
 -- -- (tbone)
 -- adds `:Tmux`, `:T...`
+wk.add({
+  icon = { icon = '', color = 'red' },
+  { '<Leader>at', group = 'tmux' },
+  { '<Leader>aT', '<Cmd>call feedkeys(\':Tmux \')<CR>', desc = 'Tmux Custom' },
+  { '<Leader>ata', '<Cmd>Tattach<CR>', desc = 'Attach' },
+  { '<Leader>aty', '<Cmd>Tyank<CR>', desc = 'Yank' },
+  { '<Leader>atp', '<Cmd>Tput<CR>', desc = 'Put' },
+  { '<Leader>atw', '<Cmd>Twrite<CR>', desc = 'Write' },
+})
 
 -- -- (fugitive)
 -- adds `:Git`, `:G...`
+wk.add({
+  { '<Leader>gg', '<Cmd>call feedkeys(\':Git \')<CR>', desc = 'Git Custom' },
+})
 
 -- }}}
 
@@ -287,7 +489,7 @@ vim.g.floaterm_autoclose     = 1
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.et = true
+vim.opt.expandtab = true
 vim.opt.makeprg = 'make'
 
 -- -- (sleuth)
@@ -320,7 +522,7 @@ vim.opt.makeprg = 'make'
 -- neorg file features
 -- require('neorg').setup {
 --   load = {
---     ["core.defaults"] = {}
+--     ['core.defaults'] = {}
 --   }
 -- }
 
@@ -328,6 +530,7 @@ vim.opt.makeprg = 'make'
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 -- lsp['eslint'].setup { capabilities = capabilities }
+lspconfig.rust_analyzer.setup({})
 
 -- }}}
 
@@ -406,280 +609,59 @@ function CmpToggle()
   cmp.setup.buffer { enabled = cmp_enabled }
 end
 
--- }}}
-
--- {{{ (which-key)
-local wk = require('which-key')
-
-wk.setup({
-  presets = {
-    windows = false, -- we bind these ourselves
-  },
+wk.add({
+  { '<Leader>tc', CmpToggle, desc = 'Completion' },
 })
 
--- <leader>f
-wk.register({
-  name = '+file',
-  f = { telescope_builtins.find_files, 'Files' },
-  r = { telescope_builtins.oldfiles, 'Recent' },
-  s = { '<Cmd>write<CR>', 'Save' },
-  S = { '<Cmd>wall<CR>', 'Save All' },
-  n = { '<Cmd>new<CR>', 'New' },
-  R = { '<Cmd>call feedkeys(\':Rename \')<CR>', 'Rename' },
-  M = { '<Cmd>call feedkeys(\':Move \')<CR>', 'Move' },
-  C = { '<Cmd>call feedkeys(\':Chmod \')<CR>', 'Chmod' },
-  D = { '<Cmd>call feedkeys(\':Mkdir \')<CR>', 'Mkdir' },
-  F = {
-    name = '+sudo',
-    e = { '<Cmd>SudoEdit<CR>', 'Edit' },
-    s = { '<Cmd>SUdoWrite<CR>', 'Save' },
-  },
-}, { prefix = '<leader>f' })
+-- }}}
 
--- <leader>b
-wk.register({
-  name = '+buffer',
-  b = { telescope_builtins.buffers, 'Buffers' },
-  ['1'] = { '<Cmd>b1<CR>', 'Buffer 1' },
-  ['2'] = { '<Cmd>b2<CR>', 'Buffer 2' },
-  ['3'] = { '<Cmd>b3<CR>', 'Buffer 3' },
-  ['4'] = { '<Cmd>b4<CR>', 'Buffer 4' },
-  ['5'] = { '<Cmd>b5<CR>', 'Buffer 5' },
-  ['6'] = { '<Cmd>b6<CR>', 'Buffer 6' },
-  ['7'] = { '<Cmd>b7<CR>', 'Buffer 7' },
-  ['8'] = { '<Cmd>b8<CR>', 'Buffer 8' },
-  ['9'] = { '<Cmd>b9<CR>', 'Buffer 9' },
-  ['0'] = { '<Cmd>b10<CR>', 'Buffer 10' },
-  f = { '<Cmd>bfirst<CR>', 'First' },
-  l = { '<Cmd>blast<CR>', 'Last' },
-  n = { '<Cmd>bnext<CR>', 'Next' },
-  p = { '<Cmd>bprevious<CR>', 'Previous' },
-  d = { '<Cmd>bd<CR>', 'Delete' },
-  D = { '<Cmd>BW<CR>', 'Delete and Next' },
-}, { prefix = '<leader>b' })
+-- {{{ (which-key) for missing default keymaps
 
--- <leader>x
-wk.register({
-  name = '+text',
-  r = { telescope_builtins.registers, 'Registers' },
-  C = { '<Plug>(abolish-coerce-word)', 'Coerce Word' },
-  s = { telescope_builtins.spell_suggest, 'Spellcheck' },
-}, { prefix = '<leader>x' })
-wk.register({
-  name = '+text',
-  S = { '<Cmd>sort<CR>', 'Sort' },
-  c = { '<Plug>(abolish-coerce)', 'Coerce' },
-}, { prefix = '<leader>x', mode = {'n', 'v'} })
-
--- <leader>n
-wk.register({
-  name = '+number',
-}, { prefix = '<leader>n' })
-
--- <leader>s
-wk.register({
-  name = '+search',
-  s = { telescope_builtins.live_grep, 'Grep' },
-  S = { telescope_builtins.grep_string, 'Grep Under Cursor' },
-  h = { telescope_builtins.search_history, 'History' },
-  f = { telescope_builtins.current_buffer_fuzzy_find, 'Search In File' },
-  c = { '<Cmd>nohlsearch<CR>', 'Clear' },
-}, { prefix = '<leader>s' })
-
--- <leader>j
-wk.register({
-  name = '+jump',
-  j = { telescope_builtins.marks, 'Marks' },
-  l = { telescope_builtins.jumplist, 'Jump List' },
-  t = { telescope_builtins.tags, 'Tags' },
-  T = { telescope_builtins.current_buffer_tags, 'Tags In File' },
-  r = { telescope_builtins.treesitter, 'Treesitter Symbols' },
-  d = { '<Cmd>delmarks!<CR>', 'Delete Marks' },
-  D = { '<Cmd>delmarks A-Z0-9<CR>', 'Delete All Marks' },
-  --h = { harpoon_ui.toggle_quick_menu, 'Harpoon Menu' },
-  --H = { harpoon_mark.add_file, 'Harpoon File' },
-  --n = { harpoon_ui.nav_next, 'Harpoon Next' },
-  --p = { harpoon_ui.nav_prev, 'Harpoon Prev' },
-}, { prefix = '<leader>j', mode = {'n', 'v'} })
-
--- <leader>r
-wk.register({
-  name = '+run',
-  m = { '<Cmd>make<CR>', 'Make' },
-  n = { '<Cmd>Neomake!<CR>', 'Neomake' },
-  N = { '<Cmd>Neomake<CR>', 'Neomake File' },
-  c = { telescope_builtins.commands, 'Commands' },
-  C = { telescope_builtins.command_history, 'Command History' },
-  t = { telescope_builtins.resume, 'Resume Telescope' },
-  T = { telescope_builtins.pickers, 'Telescope' },
-}, { prefix = '<leader>r', mode = {'n', 'v'} })
-
--- <leader>a
-wk.register({
-  name = '+app',
-  a = { '<Cmd>call feedkeys(\':FloatermNew \')<CR>', 'Terminal' },
-  s = { '<Cmd>FloatermNew<CR>', 'Shell' },
-  r = { '<Cmd>FloatermNew ranger<CR>', 'Ranger' },
-  p = { '<Cmd>FloatermNew python<CR>', 'Python' },
-  j = { '<Cmd>FloatermNew julia<CR>', 'Julia' },
-  g = { '<Cmd>call feedkeys(\':Git \')<CR>', 'Git' },
-  T = { '<Cmd>call feedkeys(\':Tmux \')<CR>', 'Tmux' },
-  t = {
-    name = '+tmux',
-    a = { '<Cmd>Tattach<CR>', 'Attach' },
-    y = { '<Cmd>Tyank<CR>', 'Yank' },
-    p = { '<Cmd>Tput<CR>', 'Put' },
-    w = { '<Cmd>Twrite<CR>', 'Write' },
-  },
-}, { prefix = '<leader>a' })
-
--- <leader>l
-wk.register({
-  name = '+lsp',
-  r = { telescope_builtins.lsp_references, 'References' },
-  c = { telescope_builtins.lsp_incoming_calls, 'Incoming Calls' },
-  C = { telescope_builtins.lsp_outgoing_calls, 'Outgoing Calls' },
-  s = { telescope_builtins.lsp_document_symbols, 'Document Symbols' },
-  w = { telescope_builtins.lsp_workspace_symbols, 'Workspace Symbols' },
-  W = { telescope_builtins.lsp_dynamic_workspace_symbols, 'Dynamic Workspace Symbols' },
-  g = { telescope_builtins.diagnostics, 'Diagnostics' },
-  i = { telescope_builtins.lsp_implementations, 'Implementations' },
-  d = { telescope_builtins.lsp_definitions, 'Definitions' },
-  t = { telescope_builtins.lsp_type_definitions, 'Type Definitions' },
-}, { prefix = '<leader>l' })
-
--- <leader>g
-wk.register({
-  name = '+git',
-  g = { '<Cmd>call feedKeys(\':Git \')<CR>', 'Git' },
-  f = { telescope_builtins.git_files, 'Files' },
-  c = { telescope_builtins.git_commits, 'Commits' },
-  C = { telescope_builtins.git_bcommits, 'Buffer Commits' },
-  b = { telescope_builtins.git_branches, 'Branches' },
-  s = { telescope_builtins.git_status, 'Status' },
-  S = { telescope_builtins.git_stash, 'Stash' },
-}, { prefix = '<leader>g' })
-
--- <leader>d
-wk.register({
-  name = '+debug',
-  q = { telescope_builtins.quickfix, 'Quickfix' },
-  Q = { telescope_builtins.quickfixhistory, 'Quickfix History' },
-  l = { telescope_builtins.loclist, 'Location List' },
-}, { prefix = '<leader>d' })
-
--- <leader>t
-wk.register({
-  name = '+toggle',
-  t = { '<Cmd>FloatermToggle<CR>', 'Term' },
-  t = { '<Cmd>TSBufToggle<CR>', 'Treesitter' },
-  c = { CmpToggle, 'Completion' },
-  s = { '<Cmd>set spell!<CR>', 'Spell' },
-  S = { flash.toggle, 'Flash Search' },
-  w = { '<Cmd>set wrap!<CR>', 'Wrap' },
-
-}, { prefix = '<leader>t' })
-
--- <leader>c
-wk.register({
-  name = '+config',
-  e = { '<Cmd>edit $MYVIMRC<CR>', 'Edit' },
-  r = { '<Cmd>Reload<CR>', 'Reload' },
-  o = { telescope_builtins.vim_options, 'Set Option' },
-  a = { telescope_builtins.autocommands, 'Autocommands' },
-}, { prefix = '<leader>c' })
-
--- <leader>h
-wk.register({
-  name = '+help',
-  h = { telescope_builtins.help_tags, 'Tags' },
-  m = { telescope_builtins.man_pages, 'Man Pages' },
-  k = { telescope_builtins.keymaps, 'Keymaps' },
-  f = { telescope_builtins.filetypes, 'Filetypes' },
-  H = { telescope_builtins.highlights, 'Highlights' },
-}, { prefix = '<leader>h' })
-
--- <leader>q
-wk.register({
-  name = '+quit',
-  q = { '<Cmd>quitall<CR>', 'Quit' },
-  Q = { '<Cmd>quit<CR>', 'Quit This' },
-  w = { '<Cmd>wqall<CR>', 'Write and Quit' },
-  W = { '<Cmd>wq<CR>', 'Write and Quit This' },
-}, { prefix = '<leader>q' })
-
--- <leader>w CTRL-w
-local wk_window_group = {
-  name = '+window',
-  h = 'Go to the left window',
-  l = 'Go to the right window',
-  k = 'Go to the up window',
-  j = 'Go to the down window',
-  t = 'Go to the top window',
-  b = 'Go to the bottom window',
-  w = 'Next window',
-  p = 'Previous window',
-  W = 'Previous window',
-  ['-'] = 'Decrease height',
-  ['+'] = 'Increase height',
-  ['<lt>'] = 'Decrease width',
-  ['>'] = 'Increase width',
-  ['='] = 'Equalize windows',
-  ['_'] = 'Set height',
-  ['|'] = 'Set width',
-  H = 'Move window left',
-  L = 'Move window right',
-  K = 'Move window up',
-  J = 'Move window down',
-  P = 'Previous window',
-  r = 'Rotate windows downwards',
-  R = 'Rotate windows upwards',
-  x = 'Exchange windows',
-  n = 'New window',
-  s = 'Split window',
-  v = 'Split window vertically',
-  T = 'Break out into a new tab',
-  d = 'Jump to definition in a window',
-  i = 'Jump to identifier in a window',
-  f = 'Edit file name in a window',
-  [']'] = 'Jump to tag in a window',
-  ['}'] = 'Jump to tag with a preview',
-  ['^'] = 'Edit alternate file in a window',
-  o = 'Keep only this window',
-  c = 'Close window',
-  q = 'Quit window',
-  g = {
-    name = 'g',
-    ['<C-]>'] = ':tjump in a window',
-    [']'] = ':tselect in a window',
-    ['}'] = ':ptjump in a window',
-    f = 'Edit file name in a tab',
-    F = 'Edit file name and line number in a tab',
-    t = 'Next tab',
-    T = 'Previous tab',
-    ['<Tab>'] = 'Last tab',
-  },
-}
-wk.register(wk_window_group, { prefix = '<C-w>', mode = {'n', 'v'} })
-wk.register(wk_window_group, { prefix = '<leader>w', mode = {'n', 'v'} })
-wk.register({
-  w = { '<C-W>', '+window' },
-}, { prefix = '<leader>', mode = {'n', 'v'} })
-
--- <localleader>
-wk.register({
-  ['='] = { 'm`gg=G``', 'reformat' },
-}, { prefix = '<localleader>' })
+-- <Leader>w CTRL-w
+wk.add({
+  preset = true,
+  mode = { 'n', 'x' },
+  { '<C-w>t', desc = 'Go to the top window' },
+  { '<C-w>b', desc = 'Go to the bottom window' },
+  { '<C-w>p', desc = 'Switch windows backwards' },
+  { '<C-w>W', desc = 'Switch windows backwards' },
+  { '<C-w>P', desc = 'Switch windows backwards' },
+  { '<C-w>H', desc = 'Move window left' },
+  { '<C-w>L', desc = 'Move window right' },
+  { '<C-w>K', desc = 'Move window up' },
+  { '<C-w>J', desc = 'Move window down' },
+  { '<C-w>r', desc = 'Rotate windows downwards' },
+  { '<C-w>R', desc = 'Rotate windows upwards' },
+  { '<C-w>n', desc = 'New window' },
+  { '<C-w>f', desc = 'Open file name in a window' },
+  { '<C-w>d', desc = 'Open definition in a window' },
+  { '<C-w>i', desc = 'Open identifier in a window' },
+  { '<C-w>]', desc = 'Open tag in a window' },
+  { '<C-w>}', desc = 'Open tag with a preview' },
+  { '<C-w>^', desc = 'Open alternate file in a window' },
+  { '<C-w>c', desc = 'Close a window' },
+  { '<C-w>g', group = 'window-g' },
+  { '<C-w>g<C-]>', desc = ':tjump in a window' },
+  { '<C-w>g]', desc = ':tselect in a window' },
+  { '<C-w>g}', desc = ':ptjump in a window' },
+  { '<C-w>gf', desc = 'Open file name in a tab' },
+  { '<C-w>gF', desc = 'Open file name and line number in a tab' },
+  { '<C-w>gt', desc = 'Next tab' },
+  { '<C-w>gT', desc = 'Previous tab' },
+  { '<C-w>g<Tab>', desc = 'Last tab' },
+  unpack(require('which-key.plugins.presets').windows),
+})
 
 -- zu
-wk.register({
-  name = 'Undo',
-  w = 'Undo zw',
-  g = 'Undo zg',
-  W = 'Undo zW',
-  G = 'Undo zG',
-}, { prefix = 'zu' })
+wk.add({
+  { 'zu', group = 'z-undo' },
+  { 'zuw', desc = 'Undo zw' },
+  { 'zug', desc = 'Undo zg' },
+  { 'zuW', desc = 'Undo zW' },
+  { 'zuG', desc = 'Undo zG' },
+})
 
 -- }}}
+
 
 

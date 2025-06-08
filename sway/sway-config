@@ -10,7 +10,7 @@ set $app_menu j4-dmenu-desktop --dmenu='bemenu -i' --term='$kitty'
 set $lock pkill -SIGUSR1 swayidle
 set $laptop <eDP-1>
 set $audio Master
-set $grimshot /usr/bin/grimshot
+set $grimshot /usr/share/sway-contrib/grimshot
 set $move_by 10px
 set $move_by_fast 50px
 set $resize_by 10px
